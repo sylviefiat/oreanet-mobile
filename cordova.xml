@@ -23,7 +23,7 @@
         Domains are assumed blocked unless set otherwise
          -->
 
-  <access origin="http://oreanet.ird.nc" subdomains="true"/>
+  <access origin="http://umr-entropie.ird.nc" subdomains="true"/>
 
         <!-- <access origin="https://example.com" /> allow any secure requests to example.com -->
         <!-- <access origin="https://example.com" subdomains="true" /> such as above, but including subdomains, such as www -->
