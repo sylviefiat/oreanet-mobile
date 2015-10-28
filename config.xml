@@ -22,6 +22,7 @@
     <!--
       This allows your app to load assets from all *.oreanet.ird.nc domains
     -->
+    <access origin="http://umr-entropie.ird.nc" subdomains="true" />
     <access origin="http://oreanet.ird.nc" subdomains="true" />
 
 </widget>
