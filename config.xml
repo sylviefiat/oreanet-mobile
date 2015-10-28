@@ -18,5 +18,10 @@
     <author href="https://umr-entropie.ird.nc" email="sylvie.fiat@ird.fr">
         Sylvie Fiat
     </author>
+    
+    <!--
+      This allows your app to load assets from all *.oreanet.ird.nc domains
+    -->
+    <access origin="http://oreanet.ird.nc" subdomains="true" />
 
 </widget>
