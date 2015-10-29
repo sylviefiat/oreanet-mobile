@@ -24,7 +24,7 @@
     -->
     <gap:access origin="http://oreanet.ird.nc" subdomains="true" />
     
-    <gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
+    <gap:plugin name="cordova-plugin-inappbrowser" source="npm">
 
 
 </widget>
