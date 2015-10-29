@@ -22,9 +22,9 @@
     <!--
       This allows your app to load assets from all *.oreanet.ird.nc domains
     -->
-    <access origin="http://oreanet.ird.nc" subdomains="true" />
+    <gap:access origin="http://oreanet.ird.nc" subdomains="true" />
     
-    <gap:plugin name="org.li8.inappbrowser"/>
+    <gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
 
 
 </widget>
