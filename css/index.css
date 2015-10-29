@@ -54,8 +54,8 @@ body {
     height:94px;                   /* text area height */
     width:500px;                   /* text area width */
     text-align:center;
-    padding:74px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
-    margin:-250px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
+    padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
+    margin:-250px 0px 0px -250px;  /* offset vertical: half of image height and text area height */
                                    /* offset horizontal: half of text area width */
 }
 
