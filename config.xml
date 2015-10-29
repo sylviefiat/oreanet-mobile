@@ -24,7 +24,6 @@
     -->
     <access origin="http://oreanet.ird.nc" subdomains="true" />
     
-    <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />
-    <plugin name="InAppBrowser" value="CDVInAppBrowser" />
+    <gap:plugin name="org.li8.inappbrowser" version="0.1" />
 
 </widget>
