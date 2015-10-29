@@ -25,7 +25,7 @@
     <gap:access origin="http://oreanet.ird.nc" subdomains="true" />
     
     <gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
-    <gap:plugin name="com.phonegap.plugins.childbrowser" source="npm" />
+    <gap:plugin name="com.phonegap.plugins.childbrowser" version="5.0.0" />
 
 
 </widget>
