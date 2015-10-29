@@ -23,5 +23,8 @@
       This allows your app to load assets from all *.oreanet.ird.nc domains
     -->
     <access origin="http://oreanet.ird.nc" subdomains="true" />
+    
+    <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />
+    <plugin name="InAppBrowser" value="CDVInAppBrowser" />
 
 </widget>
