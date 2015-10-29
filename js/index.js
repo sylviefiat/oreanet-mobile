@@ -46,7 +46,8 @@ var app = {
 
         console.log('Received Event: ' + id);
         
-        var ref = window.open('http://oreanet.ird.nc', '_blank', 'location=yes');
+        window.plugins.ChildBrowser.showWebPage('http://oreanet.ird.nc',
+                                        { showLocationBar: false });
         
         console.log('Redirected to: http://oreanet.ird.nc');
     }
