@@ -45,5 +45,9 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+        
+        window.location.href = 'http://oreanet.ird.nc';
+        
+        console.log('Redirected to: http://oreanet.ird.nc');
     }
 };
