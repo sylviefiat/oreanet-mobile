@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "nc.oreanet.mobile"
         versionCode = "1" 
-        version     = "0.0.1" >
+        version     = "0.0.2" >
 
     <!-- versionCode is optional and Android only -->
 
@@ -20,12 +20,10 @@
     </author>
     
     <!--
-      This allows your app to load assets from all *.oreanet.ird.nc domains
-    -->
+      This allows your app to load assets from all *.oreanet.ird.nc domains    
     <gap:access origin="http://oreanet.ird.nc" subdomains="true" />
-    
-    <gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
-    <gap:plugin name="com.phonegap.plugins.childbrowser" version="5.0.0" />
+    -->
+    <gap:access origin="*" />
 
 
 </widget>

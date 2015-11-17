@@ -45,10 +45,13 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+	var link = document.querySelector('link[rel="import"]');
+    	var content = link.import;
+
+    	// Grab DOM from form.html's document.
+    	var el = content.querySelector('.form');
+
+    	receivedElement.appendChild(el.cloneNode(true));
         
-        window.plugins.ChildBrowser.showWebPage('http://oreanet.ird.nc',
-                                        { showLocationBar: false });
-        
-        console.log('Redirected to: http://oreanet.ird.nc');
     }
 };
