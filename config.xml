@@ -13,7 +13,7 @@
         Oreanet NC Mobile build. 
     </description>
     
-    <icon src="oreanet_NC.png" />
+    <icon src="pin3_oreanet.png" />
 
     <author href="https://umr-entropie.ird.nc" email="sylvie.fiat@ird.fr">
         Sylvie Fiat
@@ -23,7 +23,10 @@
       This allows your app to load assets from all *.oreanet.ird.nc domains    
     <gap:access origin="http://oreanet.ird.nc" subdomains="true" />
     -->
-    <gap:access origin="*" />
-
+    <access origin="*" />
+    <feature name="debug-server" required="true">
+        <param name="domain" value="http://193.51.249.205"/>
+        <param name="key" value="vcot"/>
+    </feature>
 
 </widget>
