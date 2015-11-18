@@ -1,5 +1,5 @@
-
-<form method="get" id="user_form" class="form">
+<div class="form">
+<form method="get" id="user_form">
 	<div>
         	<input type="string" id="name" name="name" placeholder="Enter your name" size="50" />
 	</div>
@@ -18,14 +18,13 @@
 </form>
 <script>
 	$(document).ready(function() {
-	console.log("onload page synchronize remote");
-	synchronizeRemote();
-	$('#user_form').submit(function() {
-		console.log("form submit");
-		var insert = insertUser($('#name').val(), $('#email').val(), $('#password').val(),$('#status').val());
+		$('#user_form').submit(function() {
+			console.log("form submit");
+			var insert = insertUser($('#name').val(), $('#email').val(), $('#password').val(),$('#status').val());
 		
-		return false;
-	});
+			return false;
+		});
 	});
 </script>
+</div>
  

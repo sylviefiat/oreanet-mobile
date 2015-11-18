@@ -39,19 +39,17 @@ var app = {
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+        parentElement.setAttribute('style', 'display:none;');
 
         console.log('Received Event: ' + id);
-	var link = document.querySelector('link[rel="import"]');
-    	var content = link.import;
-
-    	// Grab DOM from form.html's document.
-    	var el = content.querySelector('.form');
-
-    	receivedElement.appendChild(el.cloneNode(true));
-        
-    }
+	db.synchronizeRemote();
+	$('#user_form').submit(function() {
+		console.log("form submit");
+		var insert = db.insertUser($('#name').val(), $('#email').val(), $('#password').val(),$('#status').val());
+		return false;
+	});	
+	
+    } 
+    
 };
