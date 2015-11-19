@@ -29,6 +29,7 @@
         <gap:param name="key" value="vcot"/>
     </gap:feature>
 
-    <gap:plugin name="cordova-plugin-whitelist" source="npm" />
+    <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
+    <allow-navigation href="http://193.51.249.205/*" />
 
 </widget>
