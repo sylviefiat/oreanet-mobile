@@ -16,9 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+
+/* gloabl app management */
 var app = {
     // Application Constructor
     initialize: function() {
+    	updateMsg("");
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -39,17 +43,33 @@ var app = {
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
-
         listeningElement.setAttribute('style', 'display:none;');
 
         console.log('Received Event: ' + id);
 	db.synchronizeRemote();
-	$('#user_form').submit(function() {
+		
+    },
+
+    clearForm: function() {
+        $("#user_form").trigger('reset');
+
+    },
+
+    updateMsg: function(msg) {
+        document.getElementById("msg").innerHtml = msg;
+
+    },
+
+    submitForm: function(){
+    	$('#user_form').submit(function() {
 		console.log("form submit");
 		var insert = db.insertUser($('#name').val(), $('#email').val(), $('#password').val(),$('#status').val());
+		if(insert){		
+			app.clearForm();
+			updateMsg("Formulaire sauvegardé, merci !");
+		}		
 		return false;
 	});	
-	
     } 
     
 };

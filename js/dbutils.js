@@ -13,8 +13,9 @@ var db = {
 		usersDb.transaction(function(transaction) {
 			transaction.executeSql('INSERT INTO users (id, name, email, paswword,status) VALUES (null, ?, ?, ?, "local")', [name, email, password], function(transaction, results) {
 				db.synchronizeRemote();
+				return results.insertId;
 			}, function(e) {
-		    	console.log("some error inserting data");
+		    	return 0;
 		});
 	    });
 	},
@@ -30,7 +31,8 @@ var db = {
 		       		console.log(json.status + ", " + json.msg  + " updating id "+id);
 				// update results status as "synchronized"
 				if(json.status)	{
-					db.updateUser(id); 
+					db.updateUser(id);
+					updateMsg("Le formulaire ".id." a été envoyé, merci !"); 
 				}		
 		    	}
 		}
@@ -61,20 +63,20 @@ var db = {
 		transaction.executeSql('UPDATE users set status="synchronized" where id=?', [id], function(transaction, results) {
 		    console.log("update users status to synchronized ok");
 		    return 1;
-		}, function(e) {
+		}, function(e) {		    
 		    console.log("some error updating data");
+		    return 0;
 		});
 	    });
 	},
 
 
 
-	synchronizeRemote: function(){
+	synchronizeRemote: function(insertId){
 	 	if(navigator.onLine){
 			return db.synchronizeUsers();
-		} else {
-			console.log("Offline keeping local data");
 		}
+		updateMsg("Le formulaire sera envoyé à la prochaine connexion à internet");
 	 }
 
 }
