@@ -6,43 +6,264 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-	<script language="javascript" type="text/javascript" src="js/jquery-1.11.3.min.js"></script>	
+	<!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">-->
 	
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/addresspicker.css" />
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=false&language=en"></script>
+	<script language="javascript" type="text/javascript" src="js/jquery-1.11.3.min.js"></script>	
+	<script language="javascript" type="text/javascript" src="js/bootstrap.min.js"></script>	
         <title>Oreanet NC</title>
     </head>
     <body>
-        <div class="app">
-            
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
+        <div class="app">            
+            <div id="deviceready">		
+                <div class="event listening">
+			<img src="img/logo.png" title="logo"/>
+			<p class="blink">Connecting to Device</p>
+		</div>
             </div>
-	    <div class="form">
-		<div id="msg"></div>		
-		<form method="get" id="user_form">
-			<div>
-				<input type="string" id="name" name="name" placeholder="Enter your name" size="50" />
+	    <div class="container contenu">
+	    	
+		<div class="row">
+		    <div class="col-lg-12">
+			<div class="cot_admin_edit front-end-edit">
+	    		    <div class="form">
+				<div class="page-header">
+				    <h1 data-res="add_item_title"></h1>
+				    <p class="lead" id="msg" data-res="add_item_desc"></p>
+				</div>
+				<form method="get" id="form-cot_admin">
+				    <div class="row">
+			    		<label class="col-xs-12" data-res="observer_name"></label>
+			    		<div class="col-lg-4 col-md-6 col-xs-12">
+					    <div class="input-group">
+				    		<span class="input-group-addon exergue"><span class="fa fa-user"></span></span> 
+				    		<input type="text" name="observer_name" id="observer_name" value="" class="form-control required invalid" data-res="observer_name.placeholder" required="required" aria-required="true" aria-invalid="true"/> 
+				    		<span style="display:none;" >
+				    		    <input type="text" id="id" name="id" class="form-control" readonly="readonly" value="" size="32"/>
+				    		</span>
+					    </div>
+			    		</div>
+			    		<div class="col-lg-4 col-md-6 col-xs-12">
+					    <div class="input-group">
+				    		<span class="input-group-addon"><span class="fa fa-phone"></span></span>
+				    		<input type="tel" name="observer_tel" class="form-control" id="observer_tel" value="" data-res="observer_tel.placeholder" aria-invalid="false"/>
+					    </div>
+			    		</div>
+			    		<div class="col-lg-4 col-md-6 col-xs-12">
+					    <div class="input-group">
+	    				        <span class="input-group-addon"><span class="fa fa-envelope"></span></span>
+				    		<input type="email" name="observer_email" class="validate-email form-control" id="observer_email" value="" data-res="observer_mail.placeholder" aria-invalid="false"/>
+					    </div>
+			    		</div>
+				    </div>
+				    <div class="row">
+				    	<label class="col-xs-12" data-res="observation_date"></label>
+				    	<div class="col-lg-4 col-md-6 col-xs-12">
+					    <div class="input-group">
+					    	<span class="input-group-addon exergue"><span class="fa fa-calendar"></span></span> 
+					    	<input type="text" name="observation_date" id="observation_date" value="" class="form-control required invalid" data-res="observation_date.placeholder" required="required" aria-required="true" aria-invalid="true"/>
+					    </div>
+				    	</div>
+				    	<div class="col-lg-8 col-md-6 col-xs-12">
+					    <div class="input-group">
+					    	<span class="input-group-addon"><span class="fa fa-location-arrow"></span></span>
+					    	<textarea name="observation_location" id="observation_location" class="form-control" data-res="observation_location.placeholder" aria-invalid="false"></textarea>
+					    </div>
+				    	</div>
+				    </div>	
+				    <div class="row">
+				    	<label class="col-xs-12" data-res="observation_localisation"></label>
+				    	<div class="col-md-12 col-md-12 col-xs-12">
+					    <div class="input-group">
+						<span class="input-group-addon exergue"><span class="fa fa-map-marker"></span></span>
+						<input type="text" id="observation_localisation" name="observation_localisation" class="formatted_address form-control" value="" size="32" autocomplete="off" aria-invalid="false">					    
+					    </div>
+				    	</div>
+				    </div>
+				    <div class="row">
+				    	<div class="col-md-6 col-md-6 col-xs-12">
+					    <div class="input-group">
+					    	<span class="input-group-addon"></span>
+					    	<input type="text" name="observation_region" id="observation_region" value="" class="region form-control" readonly="" data-res="observation_region.placeholder" aria-invalid="false"/>
+					    </div>
+				    	</div>
+				    	<div class="col-md-6 col-md-6 col-xs-12">
+					    <div class="input-group">
+					    	<span class="input-group-addon"></span>
+					    	<input type="text" name="observation_country" id="observation_country" value="" class="country form-control" readonly="" data-res="observation_country.placeholder" aria-invalid="false"/>
+					    </div>
+				    	</div>
+				    </div>	
+				    <div class="row">			
+					<div class="col-md-6 col-md-6 col-xs-12">
+					    <div class="input-group">
+					   	<span class="input-group-addon"></span>
+					        <input type="text" name="observation_latitude" id="observation_latitude" value="" class="latitude form-control" readonly="" data-res="observation_latitude.placeholder" aria-invalid="false"/>
+					    </div>
+				    	</div>			    
+				    	<div class="col-md-6 col-md-6 col-xs-12">
+					    <div class="input-group">
+					    	<span class="input-group-addon"></span>
+					    	<input type="text" name="observation_longitude" id="observation_longitude" value="" class="longitude form-control" readonly="" data-res="observation_longitude.placeholder" aria-invalid="false"/>
+					    </div>
+				    	</div>
+				    </div>	
+				    <div class="row">
+				    	<label class="col-xs-12" data-res="observation_number"></label>
+				    	<div class="col-lg-6 col-md-6 col-xs-12">
+					    <div class="input-group">
+					    	<span class="input-group-addon"><span class="fa fa-tachometer"></span></span> 
+					    	<input type="text" name="observation_number" id="observation_number" value="" class="form-control" data-res="observation_number.placeholder" aria-invalid="false"/>
+					    </div>
+				    	</div>
+				    	<div class="col-lg-6 col-md-6 col-xs-12">
+					    <div class="input-group">
+					    	<span class="input-group-addon"><span class="fa fa-refresh"></span></span>
+					    	<input type="text" name="observation_culled" id="observation_culled" value="" class="form-control" data-res="observation_culled.placeholder" aria-invalid="false"/>
+					    </div>
+				    	</div>
+				    </div>
+				    <div class="row">	    
+				    	<div class="col-lg-6 col-md-6 col-xs-12">
+					    <div class="form-group">
+					    	<label data-res="observation_method"></label>
+					    	<div class="col-xs-offset-2 col-xs-10">
+						    <div class="checkbox">
+						    	<label>
+							    <fieldset id="observation_method" class="checkboxes" "form-control="" required"="" required="" aria-required="true">
+							    	<ul>
+								    <li>
+								    	<input type="checkbox" id="observation_method0" name="observation_method0" data-res="observation_1method.value"/>
+								    	<label for="observation_method0" data-res="observation_1method"></label>
+								    </li>
+								    <li>
+								    	<input type="checkbox" id="observation_method1" name="observation_method1" data-res="observation_2method.value"/>
+								    	<label for="observation_method1" data-res="observation_2method"></label>
+								    </li>
+							    	</ul>
+							    </fieldset>
+						    	</label>
+						    </div>
+					    	</div>
+					    </div>
+				   	</div>
+				    	<div class="col-lg-6 col-md-6 col-xs-12">				
+					    <div class="form-group">
+					    	<label data-res="depth_range"></label>
+					    	<div class="col-xs-offset-2 col-xs-10">
+						    <div class="checkbox">
+						   	<label>
+							    <fieldset id="depth_range" class="checkboxes" "form-control="" required"="" required="" aria-required="true">
+							    	<ul>
+								    <li>
+								    	<input type="checkbox" id="depth_range0" name="depth_range0" data-res="depth_1range.value">
+								    	<label for="depth_range0" data-res="depth_1range"></label>
+								    </li>
+								    <li>
+								    	<input type="checkbox" id="depth_range1" name="depth_range1" data-res="depth_2range.value">
+								    	<label for="depth_range1" data-res="depth_2range"></label>
+								    </li>
+								    <li>
+								    	<input type="checkbox" id="depth_range2" name="depth_range" data-res="depth_3range.value">
+								    	<label for="depth_range2" data-res="depth_3range"></label>
+								    </li>
+							    	</ul>
+							    </fieldset>
+						    	</label>
+						    </div>
+					    	</div>
+					    </div>
+				    	</div>
+				    </div>
+				    <div class="row">
+				    	<div class="col-xs-12" data-res="counting_method_desc.title">
+					    <label id="counting_method_label" class="hasTooltip" data-res="counting_method_title">
+		                            </label>
+				    </div>
+				    <div class="col-lg-4 col-md-6 col-xs-12">
+					<div class="input-group">
+					   <span class="input-group-addon">
+						<input id="counting_method_timed_swim_chbx" class="control-label" type="checkbox" name="counting_method_timed_swim" onclick="app.enable_timed_swim(this.checked)">
+					   </span>
+	    			           <input type="text" name="counting_method_timed_swim" id="counting_method_timed_swim" value="" class="form-control" data-res="timed_swim.placeholder" readonly="readonly" aria-invalid="false">
+					</div>
+				    </div>
+				    <div class="col-lg-4 col-md-6 col-xs-12">
+					<div class="input-group">
+					   <span class="input-group-addon">
+						<input id="counting_method_distance_swim_chbx" class="control-label" type="checkbox" name="counting_method_distance_swim" onclick="app.enable_distance_swim(this.checked)" >
+					   </span>
+	    			           <input type="text" name="counting_method_distance_swim" id="counting_method_distance_swim" value="" class="form-control" data-res="distance_swim.placeholder" readonly="readonly" aria-invalid="false">
+					</div>
+				    </div>
+				    <div class="col-lg-4 col-md-6 col-xs-12">
+					<div class="input-group">
+					   <span class="input-group-addon">
+						<input id="counting_method_other_chbx" class="control-label" type="checkbox" name="counting_method_other" onclick="app.enable_other(this.checked)" >
+					   </span>
+	    			           <input type="text" name="counting_method_other" id="counting_method_other" value="" class="form-control" data-res="other_swim.placeholder" readonly="readonly" aria-invalid="false">
+					</div>
+				    </div>
+				</div>	
+				<div class="row">
+				    <label class="col-xs-12" data-res="remarks"></label>
+				    <div class="col-lg-12 col-md-12 col-xs-12">
+					<div class="input-group">
+					    <span class="input-group-addon"><span class="fa fa-comment "></span></span> 
+					    <textarea name="remarks" id="remarks" class="form-control" data-res="remarks.placeholder" aria-invalid="false"></textarea>
+					</div>
+				    </div>
+				</div>
+
+				<div class="row">
+				    <label class="col-xs-12" data-res="observation_state"></label>
+				    <div class="col-lg-12 col-md-12 col-xs-12">
+					<div class="input-group">
+					    <span class="input-group-addon"><span class="fa fa-bolt"></span></span> 
+					    <select id="observation_state" name="observation_state" class="form-control" size="1" aria-invalid="false">
+						<option data-res="observation_1state" data-res="observation_1state.value"></option>
+						<option data-res="observation_2state" data-res="observation_2state.value"></option>
+						<option data-res="observation_3state" data-res="observation_3state.value"></option>
+					</select> 
+					</div>
+				    </div>
+				</div>
+
+				    <div class="row">
+				    	<label class="col-xs-12" data-res="recaptcha"></label>
+				    	<div class="col-lg-12 col-md-12 col-xs-12">
+					    <div class="input-group">
+					    	<div class="g-recaptcha" data-sitekey="6LeAj_kSAAAAAMh9O7PmSc9d5PUfeiae34KPn7QD"></div>
+					    </div>
+				    	</div>					
+				    </div>
+				    <div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+					    <li>
+						<button type="submit" class="validate" data-res="submit"></button>    
+					    </li><li>
+		    				<a onclick="return app.clearForm()" data-res="cancel" data-res="cancel.title"></a>
+					    </li>
+					</ul>
+				    </div>
+				</form>
+			    </div>
 			</div>
-			<div>
-				<input type="email" id="email" placeholder="Enter your email address" size="40"/>
-			</div>
-			<div>
-				<input type="password" id="password" placeholder="Enter your password" size="40"/>
-			</div>
-			<div>
-				<input type="string" id="status" placeholder="Enter your status" size="40"/>
-			</div>
-			<div>
-				<input type="submit" value="Save user" />
-			</div>
-		</form>
-		
+		    </div>
+		</div>
             </div>
 	
-	<script language="javascript" type="text/javascript" src="cordova.js"></script>
+	<!--<script language="javascript" type="text/javascript" src="cordova.js"></script>-->
         <script language="javascript" type="text/javascript" src="js/index.js"></script>
         <script language="javascript" type="text/javascript" src="js/h5utils.js"></script>
+	<script language="javascript" type="text/javascript" src="js/sql.js"></script>
         <script language="javascript" type="text/javascript" src="js/dbutils.js"></script>
+	<script language="javascript" type="text/javascript" src="js/addresspicker.js"></script>
         <script language="javascript" type="text/javascript">
         	app.initialize();
         </script>

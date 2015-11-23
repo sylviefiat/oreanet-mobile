@@ -1,22 +1,52 @@
+
 var db = {
 	
 	openDB: function() {
-		var usersDb = window.openDatabase("users", "1.0", "Users table", 1024*1000);
-		usersDb.transaction(function(transaction) {
-			transaction.executeSql("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name VARCHAR(100), email VARCHAR(100), paswword VARCHAR(100), status VARCHAR(100))");
+		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+		cotsDb.transaction(function(transaction) {
+		    transaction.executeSql(sql.CREATE, [], function(transaction, results) {
+			console.log("checked cots database creation");
+			
+		    }, function(transaction, error) {
+		    	    console.log("erro creating db: "+error.message);
+		    });
 		});
-		return usersDb;
+		return cotsDb;
 	},
 
-	insertUser: function(name, email, password) {
-		var usersDb = db.openDB();
-		usersDb.transaction(function(transaction) {
-			transaction.executeSql('INSERT INTO users (id, name, email, paswword,status) VALUES (null, ?, ?, ?, "local")', [name, email, password], function(transaction, results) {
-				db.synchronizeRemote();
-				return results.insertId;
-			}, function(e) {
-		    	return 0;
-		});
+	insertCOT: function(observer_name, observer_tel, observer_email, observation_date, observation_location, 
+				observation_localisation, observation_region, observation_country, observation_country_code, 
+				observation_latitude, observation_longitude, observation_number, observation_culled, 
+				observation_state, counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
+				depth_range0, depth_range1, depth_range2, observation_method0, observation_method1, remarks, localisation, admin_validation) {
+		var cotsDb = db.openDB();
+		
+		var depth_range = ( depth_range0.length > 0 ? depth_range0 : "")
+					+((depth_range0.length > 0 && depth_range1.length > 0) ? ", " : ((depth_range0.length>0 && depth_range2.length > 0) ? ", " : ""))
+					+(depth_range1.length>0?depth_range1:"")
+					+(depth_range1.length>0 && depth_range2.length>0?", ":"")
+					+(depth_range2.length>0?depth_range2:"");
+		var observation_method = (observation_method0.length > 0 ? observation_method0 : "")
+					+((observation_method0.length>0 && observation_method1.length) > 0 ? ", " : "")
+					+(observation_method1.length>0?observation_method1:"");
+
+		cotsDb.transaction(function(transaction) {
+			transaction.executeSql(sql.INSERT, 
+				[observer_name, observer_tel, observer_email, observation_date, observation_location, 
+					observation_localisation, observation_region, observation_country, observation_country_code, 
+					observation_latitude, observation_longitude, observation_number, observation_culled, observation_state, 
+					counting_method_timed_swim, counting_method_distance_swim, counting_method_other, depth_range, observation_method, 
+					remarks, localisation, admin_validation], 
+				function(transaction, results) {
+					console.log("id: "+results.insertId)
+					app.clearForm();
+					app.updateMsg("Formulaire sauvegardé, merci ! ".depth_range);
+					db.synchronizeRemote();				
+					return results.insertId;
+				}, function(e) {
+		    			return 0;
+				}
+			);
 	    });
 	},
 
@@ -31,23 +61,23 @@ var db = {
 		       		console.log(json.status + ", " + json.msg  + " updating id "+id);
 				// update results status as "synchronized"
 				if(json.status)	{
-					db.updateUser(id);
-					updateMsg("Le formulaire ".id." a été envoyé, merci !"); 
+					db.updateCOT(id);
+					app.updateMsg("Le formulaire "+ id +" a été envoyé, merci !"); 
 				}		
 		    	}
 		}
 		xhr.send(json);
 	},
 
-	synchronizeUsers: function() {
-	    var usersDb = db.openDB();
-	    usersDb.transaction(function(transaction) {
-		transaction.executeSql('SELECT id, name, email, paswword FROM users where status<>"synchronized"', [], function(transaction, results) {
-			console.log("select users: "+results.rows.length);
+	synchronizeCOTs: function() {
+	    var cotsDb = db.openDB();
+	    cotsDb.transaction(function(transaction) {
+		transaction.executeSql(sql.SELECT, [], function(transaction, results) {
+			console.log("select cots: "+results.rows.length);
 			for(i=0; i<results.rows.length;i++){
 				// parse results in JSON
 		    		var item = JSON.stringify(results.rows.item(i));			
-				console.log("select user json: "+item);
+				console.log("select cot json: "+item);
 				// send results
 				db.sendRemote(item,results.rows.item(i).id);			
 			}
@@ -57,11 +87,11 @@ var db = {
 	    });
 	},
 
-	updateUser: function(id) {
-	    var usersDb = db.openDB();
-	    usersDb.transaction(function(transaction) {
-		transaction.executeSql('UPDATE users set status="synchronized" where id=?', [id], function(transaction, results) {
-		    console.log("update users status to synchronized ok");
+	updateCOT: function(id) {
+	    var cotsDb = db.openDB();
+	    cotsDb.transaction(function(transaction) {
+		transaction.executeSql(sql.UPDATE, [id], function(transaction, results) {
+		    console.log("update COTs status to synchronized ok");
 		    return 1;
 		}, function(e) {		    
 		    console.log("some error updating data");
@@ -70,11 +100,22 @@ var db = {
 	    });
 	},
 
-
+	deleteCOT: function(id) {
+	    var cotsDb = db.openDB();
+	    cotsDb.transaction(function(transaction) {
+		transaction.executeSql(sql.DELETE, [], function(transaction, results) {
+		    console.log("delete COTs ok");
+		    return 1;
+		}, function(transaction,error) {		    
+		    console.log("some error updating data: "+error.message);
+		    return 0;
+		});
+	    });
+	},
 
 	synchronizeRemote: function(insertId){
 	 	if(navigator.onLine){
-			return db.synchronizeUsers();
+			return db.synchronizeCOTs();
 		}
 		updateMsg("Le formulaire sera envoyé à la prochaine connexion à internet");
 	 }

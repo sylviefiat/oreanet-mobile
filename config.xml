@@ -13,7 +13,7 @@
         Oreanet NC Mobile app. 
     </description>
    
-    <icon src="pin_oreanet.png" />
+    <icon src="pin3-oreanet.png" />
 
     <author href="https://umr-entropie.ird.nc" email="sylvie.fiat@ird.fr">
         Sylvie Fiat
@@ -22,14 +22,10 @@
     <!--
       This allows your app to load assets from all *.oreanet.ird.nc domains    
     <gap:access origin="http://oreanet.ird.nc" subdomains="true" />
-    -->
     <gap:access origin="*" />
-    <gap:feature name="debug-server" required="true">
-        <gap:param name="domain" value="http://193.51.249.205"/>
-        <gap:param name="key" value="vcot"/>
-    </gap:feature>
-
+    -->   
+    
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
-    <allow-navigation href="http://193.51.249.205/*" />
+    <gap:allow-navigation href="http://193.51.249.205/*" />
 
 </widget>
