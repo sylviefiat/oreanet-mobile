@@ -41,8 +41,39 @@ body {
 }
 
 .page-header {
-	margin: 0px 0px 20px !important;
+	/*margin: 20px 0px 20px !important;*/
 	border-bottom:2px dotted #EE9A4D !important;
+}
+
+@media screen and (min-width: 768px) {
+.navbar-nav {
+	font-size: 16px !important;   
+}
+}
+
+.navbar-nav {
+  width: 100%;
+  text-align: center;
+  font-size: 3.6vw; 
+}
+
+.navbar-nav > li {
+  float: none !important;
+  display: inline-block !important;
+}
+.navbar-nav > li {
+  float: none !important;
+  display: inline-block !important;
+}
+.navbar-nav .pull-left {
+  float: left !important;
+}
+.navbar-nav .pull-right {
+  float: right !important;
+}
+
+.navbar .primary a {
+	text-transform: capitalize;
 }
 
 h1 {
@@ -60,22 +91,14 @@ h1 {
     text-rendering: optimizelegibility;    
 }
 
-@media (min-width: 768px)
-{
-       h1
-       {
-       	  font-size:32px !important;          
-       }
-}
-
-.event {
+/*.event {
     border-radius:4px;
     -webkit-border-radius:4px;
     color:#FFFFFF;
     font-size:12px;
     margin:0px 30px;
     padding:2px 0px;
-}
+}*/
 
 .event.listening p {
     background-color:#333333;
@@ -86,13 +109,15 @@ h1 {
 .event.listening {
     
     position:absolute;             /* position in the center of the screen */
-    left:50%;
-    top:50%;
-    height:94px;                   /* text area height */
-    width:500px;                   /* text area width */
+    left:0;
+    top:0;
+    height:100%;                   /* text area height */
+    width:100vw;                   /* text area width */
     text-align:center;
-    padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
-    margin:-250px 0px 0px -250px;  /* offset vertical: half of image height and text area height */
+    background-color: white;
+    z-index: 10000;
+  /*  padding:180px 0px 0px 0px; */    /* image height is 200px (bottom 20px are overlapped with text) */
+   /* margin:-250px 0px 0px -250px; */ /* offset vertical: half of image height and text area height */
                                    /* offset horizontal: half of text area width */
 }
 

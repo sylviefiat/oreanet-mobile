@@ -22,10 +22,13 @@
 var app = {
     // Application Constructor
     initialize: function() {
-    	this.updateMsg("");
+    	this.updateMsg("un petit message pour vous dire que tout va bien");
         this.bindEvents();
-	this.onDeviceReady();
-	this.loadLocalizedString();
+	setTimeout(function(){
+    	    //app.onDeviceReady();
+	}, 2000);
+		
+	lang.loadLocalizedString();
     },
     // Bind Event Listeners
     //
@@ -50,12 +53,13 @@ var app = {
         console.log('Received Event: ' + id);
 	app.addressPicker();
 	db.synchronizeRemote();
-	app.submitForm();	
+	app.addSubmitForm();
+			
     },
 
     clearForm: function() {
         $("#form-cot_admin").trigger('reset');
-
+	window.location.reload();
     },
 
     updateMsg: function(msg) {
@@ -70,7 +74,7 @@ var app = {
 	    });	
     },
 
-    submitForm: function(){
+    addSubmitForm: function(){
     	$('#form-cot_admin').submit(function() {
 		console.log("form submit");
 		db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(),$('#observation_date').val(),
@@ -86,6 +90,10 @@ var app = {
 			$('#remarks').val(),$('#localisation').val(),$('#admin_validation').val());				
 		return false;
 	});	
+    },
+
+    submitForm: function(){
+    	$( "#form-cot_admin" ).submit();
     },
 
     loadForm: function(){
@@ -124,74 +132,7 @@ var app = {
                 document.getElementById("counting_method_other").removeAttribute('readonly');
         }
     },
-
-    loadLocalizedString: function(langParam/*optional*/) {
-        var language = window.navigator.language, lang; 
-        console.log('loadLocalizedString with Navigator Language: ' + language);
-        if (!langParam) {
-            //Try to guess the best suited language
-            if(language) {
-                 lang = language.substring(0,2); 
-            } else {
-                lang = 'fr';
-            }
-            if($.inArray(lang, this.SUPPORTED_LANGUAGE) <= -1) {
-                lang = 'fr';//If the language is not available : english by default
-            }
-        } else {
-            lang = langParam;
-        }
-
-       console.log('language: ' + lang);
-
-        this.loadString('lib/string-'+lang+'.js');
-	this.updateLanguage();
-    },
-    
-    SUPPORTED_LANGUAGE : ["en", "fr"],
-
-    loadString:function(fileName) {
-        try {
-            $.ajaxSetup({async: false});
-            $.getScript(fileName);//We don't use the async callback, because we need the translation in the next method
-            $.ajaxSetup({async: true});
-
-        } catch (e) {
-            console.error('Error while loading : ' + fileName);
-        }
-
-    },
-
-    updateLanguage: function(){
-	// Get all HTML elements that have a resource key.
-	var resElms = document.querySelectorAll('[data-res]');
-	for (var n = 0; n < resElms.length; n++) {
-	    var resEl = resElms[n];
-	    // Get the resource key from the element.
-	    var resKey = resEl.getAttribute('data-res');
-	    if (resKey) {
-		// Get all the resources that start with the key.
-		for (var key in app.STR) {
-		    if (key.indexOf(resKey) == 0) {
-		        var resValue = app.STR[key];
-		        if (key.indexOf('.') == -1) {
-		            // No dot notation in resource key,
-		            // assign the resource value to the element's
-		            // innerHTML.
-		            resEl.innerHTML = resValue;
-		        }
-		        else {
-		            // Dot notation in resource key, assign the
-		            // resource value to the element's property
-		            // whose name corresponds to the substring
-		            // after the dot.
-		            var attrKey = key.substring(key.indexOf('.') + 1);
-		            resEl[attrKey] = resValue;
-		        }
-		    }
-		}
-	    }
-	}
-    }
     
 };
+
+

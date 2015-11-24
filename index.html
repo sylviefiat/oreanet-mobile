@@ -23,7 +23,8 @@
             <div id="deviceready">		
                 <div class="event listening">
 			<img src="img/logo.png" title="logo"/>
-			<p class="blink">Connecting to Device</p>
+			<p data-res="loading_title"></p>
+			<p data-res="loading_desc"></p>
 		</div>
             </div>
 	    <div class="container contenu">
@@ -32,11 +33,22 @@
 		    <div class="col-lg-12">
 			<div class="cot_admin_edit front-end-edit">
 	    		    <div class="form">
-				<div class="page-header">
-				    <h1 data-res="add_item_title"></h1>
-				    <p class="lead" id="msg" data-res="add_item_desc"></p>
-				</div>
+				    
 				<form method="get" id="form-cot_admin">
+				    <nav class="navbar navbar-default navbar-fixed-top" role="navigation"> 
+					<div class="container">					    
+					    <div id="navbar">
+						<ul class="nav navbar-nav">
+					    	    <li class="pull-left"><a href="#" onclick="return app.clearForm()" data-res="cancel" data-res="cancel.title"></a></li>
+						    <li><a onclick="" data-res="add_item_title"></a></li>
+					    	    <li class="pull-right primary"><a href="#" onclick="return app.submitForm()" data-res="submit"></a></li>					       
+					  	</ul>
+					    </div>
+					</div>
+				    </nav>
+				    <div class="page-header">   
+				    	<p id="msg"></p>
+				    </div>
 				    <div class="row">
 			    		<label class="col-xs-12" data-res="observer_name"></label>
 			    		<div class="col-lg-4 col-md-6 col-xs-12">
@@ -72,7 +84,7 @@
 				    	<div class="col-lg-8 col-md-6 col-xs-12">
 					    <div class="input-group">
 					    	<span class="input-group-addon"><span class="fa fa-location-arrow"></span></span>
-					    	<textarea name="observation_location" id="observation_location" class="form-control" data-res="observation_location.placeholder" aria-invalid="false"></textarea>
+					    	<textarea name="observation_location" id="observation_location" class="form-control" data-res="observation_location.placeholder" required="required" aria-required="true" aria-invalid="true"></textarea>
 					    </div>
 				    	</div>
 				    </div>	
@@ -242,7 +254,7 @@
 					    </div>
 				    	</div>					
 				    </div>
-				    <div id="navbar" class="navbar-collapse collapse">
+				    <footer id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 					    <li>
 						<button type="submit" class="validate" data-res="submit"></button>    
@@ -250,7 +262,7 @@
 		    				<a onclick="return app.clearForm()" data-res="cancel" data-res="cancel.title"></a>
 					    </li>
 					</ul>
-				    </div>
+				    </footer>
 				</form>
 			    </div>
 			</div>
@@ -260,6 +272,7 @@
 	
 	<!--<script language="javascript" type="text/javascript" src="cordova.js"></script>-->
         <script language="javascript" type="text/javascript" src="js/index.js"></script>
+        <script language="javascript" type="text/javascript" src="js/lang.js"></script>
         <script language="javascript" type="text/javascript" src="js/h5utils.js"></script>
 	<script language="javascript" type="text/javascript" src="js/sql.js"></script>
         <script language="javascript" type="text/javascript" src="js/dbutils.js"></script>
