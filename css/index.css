@@ -136,17 +136,16 @@ body {
 
 /* Portrait layout (default) */
 .splashscreen, .thankyoupage {
-    position:absolute;             /* position in the center of the screen */   
+    position:absolute;         
     top:30%;
+
 }
 
 /* Landscape layout (with min-width) */
-@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
-    .splashscreen img, .thankyoupage img {
+@media screen and (min-aspect-ratio: 1/1) and (min-width:768px) {
+    .splashscreen, .thankyoupage {
         background-position:left center;
-        /*padding:75px 0px 75px 170px;*/  /* padding-top + padding-bottom + text area = image height */
-        /*margin:-90px 0px 0px -198px; */ /* offset vertical: half of image height */
-                                      /* offset horizontal: half of image width and text area width */
+        left: 30%;
     }
 }
 
@@ -172,14 +171,14 @@ body {
 	font-weight: bold;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-      to { opacity: 1; }
+@keyframes fade {
+    from { opacity: 1; }
+      to { opacity: 0; }
 }
  
-@-webkit-keyframes fadeIn {
-    from { opacity: 0; }
-      to { opacity: 1; }
+@-webkit-keyframes fade {
+    from { opacity: 1; }
+      to { opacity: 0; }
 }
  
 .blink {
@@ -187,7 +186,8 @@ body {
     -webkit-animation:fade 3000ms infinite;
     position: fixed;
     bottom:0;
-    width:100%
+    width:100%;
+    left: 0;
 }
 
 #system-message-container {
