@@ -22,11 +22,7 @@
 var app = {
     // Application Constructor
     initialize: function() {    	
-        this.bindEvents();
-	/*setTimeout(function(){
-    	    app.onDeviceReady();	    
-	}, 2000);*/
-	app.closeMsg();	
+        this.bindEvents();		
 	lang.loadLocalizedString();
     },
     // Bind Event Listeners
@@ -34,6 +30,7 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
+    	console.log('bindEvents');
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
@@ -41,17 +38,20 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+    	console.log('onDeviceReady');
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
+    	console.log('received event ');
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         listeningElement.className='event connecting';
     	listeningElement.addEventListener("transitionend",  function(e) {
 	    listeningElement.className='event ready';
 	},false);
-        console.log('Received Event: ' + id);
+	app.closeMsg();
+        console.log('Received Event');
 	app.addressPicker();
 	db.synchronizeRemote();
 	app.addSubmitForm();
