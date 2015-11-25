@@ -39,8 +39,7 @@ var db = {
 					remarks, localisation, admin_validation], 
 				function(transaction, results) {
 					console.log("id: "+results.insertId)
-					app.clearForm();
-					app.updateMsg("Formulaire sauvegardé, merci ! ".depth_range);
+					//app.clearForm();
 					db.synchronizeRemote();				
 					return results.insertId;
 				}, function(e) {
@@ -61,8 +60,7 @@ var db = {
 		       		console.log(json.status + ", " + json.msg  + " updating id "+id);
 				// update results status as "synchronized"
 				if(json.status)	{
-					db.updateCOT(id);
-					app.updateMsg("Le formulaire "+ id +" a été envoyé, merci !"); 
+					db.updateCOT(id);					
 				}		
 		    	}
 		}
@@ -92,6 +90,8 @@ var db = {
 	    cotsDb.transaction(function(transaction) {
 		transaction.executeSql(sql.UPDATE, [id], function(transaction, results) {
 		    console.log("update COTs status to synchronized ok");
+		    app.updateMsg(lang.STR["form_sent"]); 
+		    app.close();
 		    return 1;
 		}, function(e) {		    
 		    console.log("some error updating data");
@@ -117,7 +117,7 @@ var db = {
 	 	if(navigator.onLine){
 			return db.synchronizeCOTs();
 		}
-		updateMsg("Le formulaire sera envoyé à la prochaine connexion à internet");
+		app.updateMsg("Le formulaire sera envoyé à la prochaine connexion à internet");
 	 }
 
 }

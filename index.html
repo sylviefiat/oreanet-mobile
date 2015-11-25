@@ -15,6 +15,8 @@
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<script src="http://maps.google.com/maps/api/js?sensor=false&language=en"></script>
 	<script language="javascript" type="text/javascript" src="js/jquery-1.11.3.min.js"></script>	
+	<script language="javascript" type="text/javascript" src="js/jquery.validate.js"></script>
+	<script language="javascript" type="text/javascript" src="js/additional-methods.js"></script>
 	<script language="javascript" type="text/javascript" src="js/bootstrap.min.js"></script>	
         <title>Oreanet NC</title>
     </head>
@@ -22,39 +24,57 @@
         <div class="app">            
             <div id="deviceready">		
                 <div class="event listening">
+		    <div class="splashscreen">
 			<img src="img/logo.png" title="logo"/>
 			<p data-res="loading_title"></p>
 			<p data-res="loading_desc"></p>
+			<p class="blink" data-res="connexion"></p>
+		    </div>
+		</div>
+		<div class="event onclose">
+		    <div class="thankyoupage">
+			<img src="img/logo_end.png" title="logo"/>
+			<p data-res="thanks_title"></p>
+			<p><a onclick="return app.reloadForm()" data-res="thanks_again"></a></p>
+			<p><a href="http://oreanet.ird.fr" data-res="thanks_oreanet"></a></p>
+		    </div>
 		</div>
             </div>
-	    <div class="container contenu">
-	    	
+	    <div id="system-message-container">
+		<div id="system-message">
+		    <div class="alert fade in" id="message">
+			<a class="close" onclick="return app.closeMsg()">×</a>
+			<p id="msg" class="alert-message">
+			    
+			</p>
+		    </div>
+		</div>
+	    </div>
+	    <div class="container contenu">	    	
 		<div class="row">
 		    <div class="col-lg-12">
 			<div class="cot_admin_edit front-end-edit">
 	    		    <div class="form">
 				    
-				<form method="get" id="form-cot_admin">
+				<form method="get" id="form-cot_admin" role="form">
 				    <nav class="navbar navbar-default navbar-fixed-top" role="navigation"> 
 					<div class="container">					    
 					    <div id="navbar">
 						<ul class="nav navbar-nav">
-					    	    <li class="pull-left"><a href="#" onclick="return app.clearForm()" data-res="cancel" data-res="cancel.title"></a></li>
+					    	    <li class="pull-left"><a href="#" onclick="return app.reloadForm()" data-res="cancel" data-res="cancel.title"></a></li>
 						    <li><a onclick="" data-res="add_item_title"></a></li>
 					    	    <li class="pull-right primary"><a href="#" onclick="return app.submitForm()" data-res="submit"></a></li>					       
 					  	</ul>
 					    </div>
 					</div>
 				    </nav>
-				    <div class="page-header">   
-				    	<p id="msg"></p>
-				    </div>
+				    
 				    <div class="row">
-			    		<label class="col-xs-12" data-res="observer_name"></label>
+			    		<label class="col-xs-12" for="observer_name" data-res="observer_name"></label>
 			    		<div class="col-lg-4 col-md-6 col-xs-12">
 					    <div class="input-group">
 				    		<span class="input-group-addon exergue"><span class="fa fa-user"></span></span> 
-				    		<input type="text" name="observer_name" id="observer_name" value="" class="form-control required invalid" data-res="observer_name.placeholder" required="required" aria-required="true" aria-invalid="true"/> 
+				    		<input type="text" name="observer_name" id="observer_name" value="" class="form-control required invalid" data-res="observer_name.placeholder" required="required" aria-required="true" aria-invalid="true" required/> 
 				    		<span style="display:none;" >
 				    		    <input type="text" id="id" name="id" class="form-control" readonly="readonly" value="" size="32"/>
 				    		</span>
@@ -74,26 +94,26 @@
 			    		</div>
 				    </div>
 				    <div class="row">
-				    	<label class="col-xs-12" data-res="observation_date"></label>
+				    	<label class="col-xs-12" for="observation_date" data-res="observation_date"></label>
 				    	<div class="col-lg-4 col-md-6 col-xs-12">
 					    <div class="input-group">
 					    	<span class="input-group-addon exergue"><span class="fa fa-calendar"></span></span> 
-					    	<input type="text" name="observation_date" id="observation_date" value="" class="form-control required invalid" data-res="observation_date.placeholder" required="required" aria-required="true" aria-invalid="true"/>
+					    	<input type="text" name="observation_date" id="observation_date" value="" class="form-control required invalid" data-res="observation_date.placeholder" required="required" aria-required="true" aria-invalid="true" required/>
 					    </div>
 				    	</div>
 				    	<div class="col-lg-8 col-md-6 col-xs-12">
 					    <div class="input-group">
 					    	<span class="input-group-addon"><span class="fa fa-location-arrow"></span></span>
-					    	<textarea name="observation_location" id="observation_location" class="form-control" data-res="observation_location.placeholder" required="required" aria-required="true" aria-invalid="true"></textarea>
+					    	<textarea name="observation_location" id="observation_location" class="form-control" data-res="observation_location.placeholder"></textarea>
 					    </div>
 				    	</div>
 				    </div>	
 				    <div class="row">
-				    	<label class="col-xs-12" data-res="observation_localisation"></label>
+				    	<label class="col-xs-12" for="observation_localisation" data-res="observation_localisation"></label>
 				    	<div class="col-md-12 col-md-12 col-xs-12">
 					    <div class="input-group">
 						<span class="input-group-addon exergue"><span class="fa fa-map-marker"></span></span>
-						<input type="text" id="observation_localisation" name="observation_localisation" class="formatted_address form-control" value="" size="32" autocomplete="off" aria-invalid="false">					    
+						<input type="text" id="observation_localisation" name="observation_localisation" class="formatted_address form-control" value="" size="32" autocomplete="off" aria-invalid="false" required></input>					    
 					    </div>
 				    	</div>
 				    </div>
@@ -115,13 +135,13 @@
 					<div class="col-md-6 col-md-6 col-xs-12">
 					    <div class="input-group">
 					   	<span class="input-group-addon"></span>
-					        <input type="text" name="observation_latitude" id="observation_latitude" value="" class="latitude form-control" readonly="" data-res="observation_latitude.placeholder" aria-invalid="false"/>
+					        <input type="text" name="observation_latitude" id="observation_latitude" value="" class="latitude form-control" readonly="" data-res="observation_latitude.placeholder" aria-invalid="false" required/>
 					    </div>
 				    	</div>			    
 				    	<div class="col-md-6 col-md-6 col-xs-12">
 					    <div class="input-group">
 					    	<span class="input-group-addon"></span>
-					    	<input type="text" name="observation_longitude" id="observation_longitude" value="" class="longitude form-control" readonly="" data-res="observation_longitude.placeholder" aria-invalid="false"/>
+					    	<input type="text" name="observation_longitude" id="observation_longitude" value="" class="longitude form-control" readonly="" data-res="observation_longitude.placeholder" aria-invalid="false" required/>
 					    </div>
 				    	</div>
 				    </div>	
@@ -254,15 +274,7 @@
 					    </div>
 				    	</div>					
 				    </div>
-				    <footer id="navbar" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav">
-					    <li>
-						<button type="submit" class="validate" data-res="submit"></button>    
-					    </li><li>
-		    				<a onclick="return app.clearForm()" data-res="cancel" data-res="cancel.title"></a>
-					    </li>
-					</ul>
-				    </footer>
+				   
 				</form>
 			    </div>
 			</div>

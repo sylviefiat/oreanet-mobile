@@ -21,13 +21,12 @@
 /* gloabl app management */
 var app = {
     // Application Constructor
-    initialize: function() {
-    	this.updateMsg("un petit message pour vous dire que tout va bien");
+    initialize: function() {    	
         this.bindEvents();
-	setTimeout(function(){
-    	    //app.onDeviceReady();
-	}, 2000);
-		
+	/*setTimeout(function(){
+    	    app.onDeviceReady();	    
+	}, 2000);*/
+	app.closeMsg();	
 	lang.loadLocalizedString();
     },
     // Bind Event Listeners
@@ -48,30 +47,79 @@ var app = {
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
-        listeningElement.setAttribute('style', 'display:none;');
-
+        listeningElement.className='event connecting';
+    	listeningElement.addEventListener("transitionend",  function(e) {
+	    listeningElement.className='event ready';
+	},false);
         console.log('Received Event: ' + id);
 	app.addressPicker();
 	db.synchronizeRemote();
 	app.addSubmitForm();
+	app.validForm();
 			
     },
 
-    clearForm: function() {
+    close: function(){
+    	var parentElement = document.getElementById("deviceready");
+        var listeningElement = parentElement.querySelector('.onclose');
+        listeningElement.className='event closing';
+    	listeningElement.addEventListener("transitionend",  function(e) {
+	    listeningElement.className='event closed';
+	},false);
+    },
+
+    reloadForm: function() {
         $("#form-cot_admin").trigger('reset');
 	window.location.reload();
     },
 
     updateMsg: function(msg) {
-        document.getElementById("msg").innerHtml = msg;
-
+        document.getElementById("msg").innerHTML = msg;
+	document.getElementById("system-message").style.display = "block";
     },    
 
+    closeMsg: function() {
+	document.getElementById("system-message").style.display = "none";
+    }, 
+
     addressPicker: function(){	
-	$( "#observation_localisation" ).addressPickerByGiro(
+	$("#observation_localisation" ).addressPickerByGiro(
 	    {
 		distanceWidget: true
 	    });	
+    },
+
+    validForm: function(){
+    	$("#form-cot_admin").validate({
+            rules: {
+        	observer_name: {
+                    minlength: 2,
+                    required: true
+                },
+                observer_email: {
+                    required: true,
+                    email: true
+                },
+                observation_date: {
+                    required: true
+                },
+	        observation_localisation: {
+                    required: true
+                },
+	        observation_latitude: {
+                    required: true
+                },
+	        observation_longitude: {
+                    required: true
+                }
+            },
+	    highlight: function(element, errorClass, validClass) {
+	        $(element).addClass(errorClass).removeClass(validClass);
+  	    },
+  	    unhighlight: function(element, errorClass, validClass) {
+    		$(element).removeClass(errorClass).addClass(validClass);
+  	    }
+        });
     },
 
     addSubmitForm: function(){
@@ -93,7 +141,13 @@ var app = {
     },
 
     submitForm: function(){
-    	$( "#form-cot_admin" ).submit();
+    	if($("#form-cot_admin" ).valid()){
+	    $("#form-cot_admin" ).submit();
+	} else {
+	    app.updateMsg(lang.STR["form_error"]
+      		        + $("#form-cot_admin" ).validate().numberOfInvalids()
+      		        + lang.STR["form_error2"]);
+	}
     },
 
     loadForm: function(){
