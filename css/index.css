@@ -66,6 +66,7 @@ body {
   display: inline-block !important;
 }
 .navbar-nav .pull-left {
+  
   float: left !important;
 }
 .navbar-nav .pull-right {
@@ -73,7 +74,7 @@ body {
 }
 
 .navbar .primary a {
-	text-transform: capitalize;
+  font-weight: bold;
 }
 
 .event.listening h1 {
@@ -219,6 +220,13 @@ body {
 .form-group {
 	@media (min-width: 768px) {
 		padding: 5px 0;
+	}
+}
+
+.input-group {
+	padding-bottom: 5px;
+	@media (min-width: 768px) {
+		padding-bottom: 0px;
 	}
 }
 

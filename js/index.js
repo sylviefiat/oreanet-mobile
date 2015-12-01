@@ -24,7 +24,7 @@ var app = {
     initialize: function() {    	
         this.bindEvents();		
 	lang.loadLocalizedString();
-	/*setTimeout(function(){app.receivedEvent('deviceready');},2000);*/
+setTimeout(function(){app.receivedEvent('deviceready');},2000);
     },
     // Bind Event Listeners
     //
@@ -46,12 +46,7 @@ var app = {
     receivedEvent: function(id) {
     	console.log('received event ');
 	setTimeout(function(){
-            var parentElement = document.getElementById(id);
-            var listeningElement = parentElement.querySelector('.listening');
-            listeningElement.className='event connecting';
-    	    listeningElement.addEventListener("transitionend",  function(e) {
-	         listeningElement.className='event ready';
-	    },false);
+            app.open();
 	    app.closeMsg();
             console.log('Received Event');
 	    app.addressPicker();
@@ -59,6 +54,15 @@ var app = {
 	    app.addSubmitForm();
 	    app.validForm();
 	}, 2000);		
+    },
+
+    open: function(){
+    	var parentElement = document.getElementById("deviceready");
+        var listeningElement = parentElement.querySelector('.listening');
+        listeningElement.className='event connecting';
+    	listeningElement.addEventListener("transitionend",  function(e) {
+	    listeningElement.className='event ready';
+	},false);
     },
 
     close: function(){
@@ -73,6 +77,7 @@ var app = {
     reloadForm: function() {
         $("#form-cot_admin").trigger('reset');
 	window.location.reload();
+	app.open();
     },
 
     updateMsg: function(msg) {
