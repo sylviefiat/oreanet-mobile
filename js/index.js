@@ -24,14 +24,13 @@ var app = {
     initialize: function() {    	
         this.bindEvents();		
 	lang.loadLocalizedString();
-setTimeout(function(){app.receivedEvent('deviceready');},2000);
+	/*setTimeout(function(){app.receivedEvent('deviceready');},2000);*/
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-    	console.log('bindEvents');
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
@@ -44,11 +43,9 @@ setTimeout(function(){app.receivedEvent('deviceready');},2000);
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-    	console.log('received event ');
 	setTimeout(function(){
             app.open();
 	    app.closeMsg();
-            console.log('Received Event');
 	    app.addressPicker();
 	    db.synchronizeRemote();
 	    app.addSubmitForm();
