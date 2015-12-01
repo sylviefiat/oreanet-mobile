@@ -56,12 +56,6 @@ body {
 		font-size: 2.6vw; 
 	}
 
-	.custom-navbar {
-	  width: 100vw;
-	  margin-left: -15px;
-	  left:0;
-	  text-align: center;
-	}
 
 	.custom-navbar > li {
 	  float: none !important;
