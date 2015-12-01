@@ -24,7 +24,7 @@ var app = {
     initialize: function() {    	
         this.bindEvents();		
 	lang.loadLocalizedString();
-	/*setTimeout(function(){app.receivedEvent('deviceready');},2000);*/
+	/*setTimeout(function(){*/app.receivedEvent('deviceready');/*},2000);*/
     },
     // Bind Event Listeners
     //
@@ -50,7 +50,7 @@ var app = {
 	    db.synchronizeRemote();
 	    app.addSubmitForm();
 	    app.validForm();
-	}, 2000);		
+	}, 20);		
     },
 
     open: function(){
