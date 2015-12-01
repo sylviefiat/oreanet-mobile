@@ -79,11 +79,11 @@ var app = {
 
     updateMsg: function(msg) {
         document.getElementById("msg").innerHTML = msg;
-	document.getElementById("system-message").style.display = "block";
+	document.getElementById("system-message-container").style.display = "block";
     },    
 
     closeMsg: function() {
-	document.getElementById("system-message").style.display = "none";
+	document.getElementById("system-message-container").style.display = "none";
     }, 
 
     addressPicker: function(){	

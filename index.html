@@ -57,18 +57,38 @@
 	    		    <div class="form">
 				    
 				<form method="get" id="form-cot_admin" role="form">
-				    <nav class="navbar navbar-default navbar-fixed-top" role="navigation"> 
-					<div class="container">					    
-					    <div id="navbar">
-						<ul class="nav navbar-nav">
-						    <li class="pull-left"><a onclick="" data-res="add_item_title"></a></li>						    
-					    	    <li class="pull-right primary"><a href="#" onclick="return app.submitForm()"><i class="fa fa-paper-plane"></i></a></li>
-						    <li class="pull-right"><a href="#" onclick="return app.reloadForm()"><i class="fa fa-refresh"></i></a></li>		       
-					  	</ul>
-					    </div>
-					</div>
+				    <nav class="navbar navbar-default navbar-static-top custom-navbar" role="navigation">
+				        <div>
+				    	    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+				      		<span class="sr-only">Toggle navigation</span>
+				      		<span class="icon-bar"></span>
+				      		<span class="icon-bar"></span>
+				      		<span class="icon-bar"></span>
+				    	    </button>
+				    	    <div class="navbar-header">
+				      	    	<a class="navbar-brand" rel="home" href="#" title="Home" data-res="add_item_title"></a>
+				    	    </div>
+				    	    <!-- Non-collapsing right-side icons -->
+				    	    <ul class="nav navbar-nav navbar-right">
+				      		<li>
+						    <a href="#" onclick="return app.submitForm()" class="fa fa-paper-plane"></a>
+				      		</li>
+				      		<li>
+						    <a href="#" onclick="return app.reloadForm()" class="fa fa-refresh"></a>
+				      		</li>
+				    	    </ul>
+				    	    <!-- the collapsing menu -->
+				    	    <div class="collapse navbar-collapse navbar-left" id="navbar-collapse-1">
+				     		 <ul class="nav navbar-nav">
+						    <li><a href="#">Info</a></li>
+						    <li><a href="http://oreanet.ird.nc" data-res="thanks_oreanet"></a></li>
+				      		</ul>
+				    	    </div>
+				    	<!--/.nav-collapse -->
+				  	</div>
+				      <!--/.container -->
 				    </nav>
-				    
+
 				    <div class="row">
 			    		<label class="col-xs-12" for="observer_name" data-res="observer_name"></label>
 			    		<div class="col-lg-4 col-md-6 col-xs-12">
