@@ -26,6 +26,6 @@
     -->   
     
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
-    <gap:allow-navigation href="http://193.51.249.205/*" />
+    <gap:allow-navigation href="http://193.51.249.53/*" />
 
 </widget>

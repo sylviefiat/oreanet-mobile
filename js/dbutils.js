@@ -51,7 +51,8 @@ var db = {
 
 	sendRemote: function(json,id){
 		xhr = new XMLHttpRequest();
-		var url = "http://193.51.249.205/testRest/cot.php";
+		//var url = "http://oreanet-rest.ird.nc/restcotnc/cot.php";
+		var url = "http://193.51.249.53:83/restcotnc/cot.php";
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-type", "application/json");
 		xhr.onreadystatechange = function () { 
