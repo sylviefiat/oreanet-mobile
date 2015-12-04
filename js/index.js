@@ -23,7 +23,6 @@ var app = {
     // Application Constructor
     initialize: function() {    	
         this.bindEvents();		
-	lang.loadLocalizedString();
 	/*setTimeout(function(){*/app.receivedEvent('deviceready');/*},2000);*/
     },
     // Bind Event Listeners
@@ -148,9 +147,9 @@ var app = {
     	if($("#form-cot_admin" ).valid()){
 	    $("#form-cot_admin" ).submit();
 	} else {
-	    app.updateMsg(lang.STR["form_error"]
+	    app.updateMsg("Votre formulaire contient "
       		        + $("#form-cot_admin" ).validate().numberOfInvalids()
-      		        + lang.STR["form_error2"]);
+      		        + "erreur(s), voir le détail ci-dessous.");
 	}
     },
 

@@ -91,7 +91,7 @@ var db = {
 	    cotsDb.transaction(function(transaction) {
 		transaction.executeSql(sql.UPDATE, [id], function(transaction, results) {
 		    console.log("update COTs status to synchronized ok");
-		    app.updateMsg(lang.STR["form_sent"]); 
+		    app.updateMsg("Merci d'avoir signalé la présence d'acanthasters, les données seront traitées le plus rapidement possible."); 
 		    app.close();
 		    return 1;
 		}, function(e) {		    

@@ -93,10 +93,9 @@ body {
 	float: right;
 }
 
-
-
-
-
+.cot_admin_edit{
+	margin-top:70px;
+}
 
 .event.listening h1 {
     /*font-size:24px;*/

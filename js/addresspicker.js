@@ -153,8 +153,8 @@ if(!bg){
 				mapWidth: '100%',
 				mapHeight: '300px',
                 mapOptions: {
-                    zoom: 9,
-                    center: [-22.3047726, 166.4442272],
+                    zoom: 7,
+                    center: [-21.5, 165.5],
                     scrollwheel: true,
                     mapTypeId: "hybrid"
                 },
