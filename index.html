@@ -9,11 +9,13 @@
 	<!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">-->
 	
         <link rel="stylesheet" type="text/css" href="css/index.css" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/addresspicker.css" />
 	<script src="http://maps.google.com/maps/api/js"></script>
 	<script language="javascript" type="text/javascript" src="js/jquery-1.11.3.min.js"></script>	
+	<script language="javascript" type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
 	<script language="javascript" type="text/javascript" src="js/jquery.validate.js"></script>
 	<script language="javascript" type="text/javascript" src="js/additional-methods.js"></script>
 	<script language="javascript" type="text/javascript" src="js/bootstrap.min.js"></script>	
@@ -87,203 +89,137 @@
 	    		    <div class="form">
 				 
 				<form method="get" id="form-cot_admin" role="form">
+				    
+				    
+				    <label><span class="input-group-addon exergue"><span class="fa fa-user"></span> Observateur</span></label>
+
+				    <div data-role="fieldcontain" class="ui-hide-label">
+				        <label for="observer_name">Observateur</label>	
+				    	<input type="text" name="observer_name" id="observer_name" value="" placeholder="Nom de l'observateur" data-mini="true" required/>
+				     	<span style="display:none;" >
+			    		    <input type="text" id="id" name="id" readonly="readonly" value="" size="32"/>
+			    	    	</span>
+				    </div>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observer_tel">N° de l'observateur</label>				    		
+				    	<input type="tel" name="observer_tel" id="observer_tel" value="" placeholder="N° de l'observateur"/>
+				    </div>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observer_email">Email</label>				    		
+				    	<input type="email" name="observer_email" id="observer_email" value="" placeholder="Email de l'observateur"/>
+				    </div>
+
+				    <label><span class="input-group-addon exergue"><span class="fa fa-calendar"></span> Date et lieu</span></label>	
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observation_date">Date</label>				    
+				    	<input type="text" name="observation_date" id="observation_date" value="" placeholder="Date de l'observation" required/>
+				    </div>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observer_location">Contexte</label>				    		
+				    	<textarea name="observation_location" id="observation_location" placeholder="Contexte de l'observation"></textarea>
+				    </div>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observer_localisation">Localisation</label>				    		
+				    	<input type="text" id="observation_localisation" name="observation_localisation" value="" size="32" autocomplete="off" placeholder="Sélectionner la localisation sur la carte" required></input>
+				    </div>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observer_region">Région</label>				    		
+				    	<input type="text" name="observation_region" id="observation_region" value="" class="region form-control" placeholder="Région" readonly=""/>
+				    </div>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observer_pays">Pays</label>				    		
+				    	<input type="text" name="observation_pays" id="observation_pays" value="" class="country form-control" placeholder="Pays" readonly=""/>
+				    </div>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observer_latitude">Latitude</label>				    		
+				    	<input type="text" name="observation_latitude" id="observation_latitude" value="" class="latitude form-control" placeholder="Latitude" readonly=""/>
+				    </div>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observer_longitude">Longitude</label>				    		
+				    	<input type="text" name="observation_longitude" id="observation_longitude" value="" class="longitude form-control" placeholder="Longitude" readonly=""/>
+				    </div>
+
+				    <label><span class="input-group-addon exergue"><span class="fa fa-eye"></span> Acanthasters</span></label>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observation_number">Acanthasters observées</label>				    
+				    	<input type="text" name="observation_number" id="observation_number" value="" placeholder="Nombre d'acanthasters observées" required/>
+				    </div>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observer_culled">Acanthasters Nettoyées</label>				    		
+				    	<input type="text" name="observation_culled" id="observation_culled" value="" placeholder="Nombre d'acanthasters nettoyées"/>
+				    </div>
+			    		
+			    	    <label><span class="input-group-addon exergue"><span class="fa fa-binoculars"></span> Méthode d'observation</span></label>	
+				    <div data-role="fieldcontain" class="ui-hide-label">
+				        <fieldset data-role="controlgroup">
+					    <legend>Méthode d'observation</legend>
+					    <input type="checkbox" name="observation_method0" id="observation_method0" value="snorkelling"/>
+					    <label for="observation_method0">PMT</label>
+					    <input type="checkbox" name="observation_method1" id="observation_method1" value="scuba diving"/>
+					    <label for="observation_method1">Plongée bouteille</label>
+				        </fieldset>
+				    </div>
+
+				    <label><span class="input-group-addon exergue"><span class="fa fa-arrows-v"></span> Tranches de profondeur</span></label>	
+				    <div data-role="fieldcontain" class="ui-hide-label">
+				        <fieldset data-role="controlgroup">
+					    <legend>Tranches de profondeur</legend>
+					    <input type="checkbox" id="depth_range0" name="depth_range0" value="shallow">
+					    <label for="depth_range0">Moins de 2m</label>
+					    <input type="checkbox" id="depth_range1" name="depth_range1" value="medium">
+					    <label for="depth_range1">Entre 2 et 10m</label>
+					    <input type="checkbox" id="depth_range2" name="depth_range" value="deep">
+					    <label for="depth_range2">Plus de 10m</label>
+				        </fieldset>
+				    </div>
+				   
+				    <label><span class="input-group-addon exergue"><span class="fa fa-cogs"></span> Méthode de comptage</span></label>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+				        <fieldset data-role="controlgroup" data-type="horizontal">
+					    <legend>Méthode de comptage</legend>
+					    <input type="checkbox" id="counting_method_timed_swim_chbx" name="counting_method_timed_swim_chbx" onclick="app.enable_timed_swim(this.checked)"></input>
+					    <label for="counting_method_timed_swim_chbx">Temps de nage</label>
+					    <input type="checkbox" id="counting_method_distance_swim_chbx" name="counting_method_distance_swim_chbx" onclick="app.enable_distance_swim(this.checked)"></input>
+					    <label for="counting_method_distance_swim_chbx">Distance parcourue</label>
+					    <input type="checkbox" id="counting_method_other_chbx" name="counting_method_other_chbx" onclick="app.enable_other(this.checked)"></input>
+					    <label for="counting_method_other_chbx">Autre</label>
+				        </fieldset>
+				    </div>
+
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="counting_method_timed_swim">Temps</label>
+					<input type="text" name="counting_method_timed_swim" id="counting_method_timed_swim" value="" class="form-control" placeholder="Temps de nage" readonly="readonly">
+				    </div>
+				   
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="counting_method_distance_swim" class="ui-hidden-accessible">Distance</label>
+					<input type="text" name="counting_method_distance_swim" id="counting_method_distance_swim" value="" class="form-control" placeholder="Distance parcourue" readonly="readonly"></input>
+				    </div>
+				    
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="counting_method_other" class="ui-hidden-accessible">Other</label>
+					<input type="text" name="counting_method_other" id="counting_method_other" value="" class="form-control" placeholder="Autre" readonly="readonly"></input>			
+				    </div>
+
+				    <label><span class="input-group-addon exergue"><span class="fa fa-comment"></span> Remarques</span></label>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="remarks">Remarques</label>				    		
+				    	<textarea name="remarks" id="remarks" placeholder="Ex: couverture de corail vivant, coraux morts, blanchiment, présence d'algues…"></textarea>
+				    </div>
+
+				    <label><span class="input-group-addon exergue"><span class="fa fa-bolt"></span> Impact des acanthasters</span></label>
+				    <div data-role="fieldcontain" class="ui-hide-label">
+					<label for="observation_state" class="select">Impact des acanthasters</label>
+					<select id="observation_state" name="observation_state" size="1">
+					    <option value="low">Faible ou à confirmer</option>
+					    <option value="medium">Moyen</option>
+					    <option value="hight">Elevé</option>
+					</select> 
+				    </div>
+				   
 				   
 
-				    <div class="row">
-			    		<label class="col-xs-12" for="observer_name">Observateur</label>
-			    		<div class="col-lg-4 col-md-6 col-xs-12">
-					    <div class="input-group">
-				    		<span class="input-group-addon exergue"><span class="fa fa-user"></span></span> 
-				    		<input type="text" name="observer_name" id="observer_name" value="" class="form-control required invalid" placeholder="Nom de l'observateur" required="required" aria-required="true" aria-invalid="true" required/> 
-				    		<span style="display:none;" >
-				    		    <input type="text" id="id" name="id" class="form-control" readonly="readonly" value="" size="32"/>
-				    		</span>
-					    </div>
-			    		</div>
-			    		<div class="col-lg-4 col-md-6 col-xs-12">
-					    <div class="input-group">
-				    		<span class="input-group-addon"><span class="fa fa-phone"></span></span>
-				    		<input type="tel" name="observer_tel" class="form-control" id="observer_tel" value="" placeholder="N° de l'observateur" aria-invalid="false"/>
-					    </div>
-			    		</div>
-			    		<div class="col-lg-4 col-md-6 col-xs-12">
-					    <div class="input-group">
-	    				        <span class="input-group-addon"><span class="fa fa-envelope"></span></span>
-				    		<input type="email" name="observer_email" class="validate-email form-control" id="observer_email" value="" placeholder="Email de l'observateur" aria-invalid="false"/>
-					    </div>
-			    		</div>
-				    </div>
-				    <div class="row">
-				    	<label class="col-xs-12" for="observation_date">Date de l'observation</label>
-				    	<div class="col-lg-4 col-md-6 col-xs-12">
-					    <div class="input-group">
-					    	<span class="input-group-addon exergue"><span class="fa fa-calendar"></span></span> 
-					    	<input type="text" name="observation_date" id="observation_date" value="" class="form-control required invalid" placeholder="Date de l'observation" required="required" aria-required="true" aria-invalid="true" required/>
-					    </div>
-				    	</div>
-				    	<div class="col-lg-8 col-md-6 col-xs-12">
-					    <div class="input-group">
-					    	<span class="input-group-addon"><span class="fa fa-location-arrow"></span></span>
-					    	<textarea name="observation_location" id="observation_location" class="form-control" placeholder="Localisation de l'observation"></textarea>
-					    </div>
-				    	</div>
-				    </div>	
-				    <div class="row">
-				    	<label class="col-xs-12" for="observation_localisation">Localisation de l'observation</label>
-				    	<div class="col-md-12 col-md-12 col-xs-12">
-					    <div class="input-group">
-						<span class="input-group-addon exergue"><span class="fa fa-map-marker"></span></span>
-						<input type="text" id="observation_localisation" name="observation_localisation" class="formatted_address form-control" value="" size="32" autocomplete="off" aria-invalid="false" required></input>					    
-					    </div>
-				    	</div>
-				    </div>
-				    <div class="row">
-				    	<div class="col-md-6 col-md-6 col-xs-12">
-					    <div class="input-group">
-					    	<span class="input-group-addon"></span>
-					    	<input type="text" name="observation_region" id="observation_region" value="" class="region form-control" placeholder="Région" aria-invalid="false"/>
-					    </div>
-				    	</div>
-				    	<div class="col-md-6 col-md-6 col-xs-12">
-					    <div class="input-group">
-					    	<span class="input-group-addon"></span>
-					    	<input type="text" name="observation_country" id="observation_country" value="" class="country form-control" placeholder="Pays" aria-invalid="false"/>
-					    </div>
-				    	</div>
-				    </div>	
-				    <div class="row">			
-					<div class="col-md-6 col-md-6 col-xs-12">
-					    <div class="input-group">
-					   	<span class="input-group-addon"></span>
-					        <input type="text" name="observation_latitude" id="observation_latitude" value="" class="latitude form-control" placeholder="Latitude" aria-invalid="false" required/>
-					    </div>
-				    	</div>			    
-				    	<div class="col-md-6 col-md-6 col-xs-12">
-					    <div class="input-group">
-					    	<span class="input-group-addon"></span>
-					    	<input type="text" name="observation_longitude" id="observation_longitude" value="" class="longitude form-control" placeholder="Longitude" aria-invalid="false" required/>
-					    </div>
-				    	</div>
-				    </div>	
-				    <div class="row">
-				    	<label class="col-xs-12">Nombre d'acanthaster</label>
-				    	<div class="col-lg-6 col-md-6 col-xs-12">
-					    <div class="input-group">
-					    	<span class="input-group-addon"><span class="fa fa-tachometer"></span></span> 
-					    	<input type="text" name="observation_number" id="observation_number" value="" class="form-control" placeholder="Nombre d'acanthasters observées" aria-invalid="false"/>
-					    </div>
-				    	</div>
-				    	<div class="col-lg-6 col-md-6 col-xs-12">
-					    <div class="input-group">
-					    	<span class="input-group-addon"><span class="fa fa-refresh"></span></span>
-					    	<input type="text" name="observation_culled" id="observation_culled" value="" class="form-control" placeholder="Nombre d'acanthasters nettoyées" aria-invalid="false"/>
-					    </div>
-				    	</div>
-				    </div>
-				    <div class="row">	    
-				    	<div class="col-lg-6 col-md-6 col-xs-12">
-					    <div class="form-group">
-					    	<label>Méthode d'observation</label>
-					    	<div class="col-xs-offset-2 col-xs-10">
-						    <div class="checkbox">
-						    	<label>
-							    <fieldset id="observation_method" class="checkboxes" "form-control="" required"="" required="" aria-required="true">
-							    	<ul>
-								    <li>
-								    	<input type="checkbox" id="observation_method0" name="observation_method0" value="snorkelling">
-								    	<label for="observation_method0">PMT</label>
-								    </li>
-								    <li>
-								    	<input type="checkbox" id="observation_method1" name="observation_method1" value="scuba diving"/>
-								    	<label for="observation_method1">Plongée bouteille</label>
-								    </li>
-							    	</ul>
-							    </fieldset>
-						    	</label>
-						    </div>
-					    	</div>
-					    </div>
-				   	</div>
-				    	<div class="col-lg-6 col-md-6 col-xs-12">				
-					    <div class="form-group">
-					    	<label>Tranche de profondeur</label>
-					    	<div class="col-xs-offset-2 col-xs-10">
-						    <div class="checkbox">
-						   	<label>
-							    <fieldset id="depth_range" class="checkboxes" "form-control="" required"="" required="" aria-required="true">
-							    	<ul>
-								    <li>
-								    	<input type="checkbox" id="depth_range0" name="depth_range0" value="shallow">
-								    	<label for="depth_range0">Moins de 2m</label>
-								    </li>
-								    <li>
-								    	<input type="checkbox" id="depth_range1" name="depth_range1" value="medium">
-								    	<label for="depth_range1">Entre 2 et 10m</label>
-								    </li>
-								    <li>
-								    	<input type="checkbox" id="depth_range2" name="depth_range" value="deep">
-								    	<label for="depth_range2">Plus de 10m</label>
-								    </li>
-							    	</ul>
-							    </fieldset>
-						    	</label>
-						    </div>
-					    	</div>
-					    </div>
-				    	</div>
-				    </div>
-				    <div class="row">
-				    	<div class="col-xs-12">
-					    <label id="counting_method_label" class="hasTooltip" title="Merci d'indiquer la méthode utilisée : 'nage minutée', si vous avez nagé un certain temps, 'distance parcourue' si vous avez nagé une certaine distance, ou une autre méthode">Méthode de comptage</label>
-				    </div>
-				    <div class="col-lg-4 col-md-6 col-xs-12">
-					<div class="input-group">
-					   <span class="input-group-addon">
-						<input id="counting_method_timed_swim_chbx" class="control-label" type="checkbox" name="counting_method_timed_swim" onclick="app.enable_timed_swim(this.checked)">
-					   </span>
-	    			           <input type="text" name="counting_method_timed_swim" id="counting_method_timed_swim" value="" class="form-control" placeholder="Temps de nage" readonly="readonly" aria-invalid="false">
-					</div>
-				    </div>
-				    <div class="col-lg-4 col-md-6 col-xs-12">
-					<div class="input-group">
-					   <span class="input-group-addon">
-						<input id="counting_method_distance_swim_chbx" class="control-label" type="checkbox" name="counting_method_distance_swim" onclick="app.enable_distance_swim(this.checked)" >
-					   </span>
-	    			           <input type="text" name="counting_method_distance_swim" id="counting_method_distance_swim" value="" class="form-control" placeholder="Distance parcourue" readonly="readonly" aria-invalid="false">
-					</div>
-				    </div>
-				    <div class="col-lg-4 col-md-6 col-xs-12">
-					<div class="input-group">
-					   <span class="input-group-addon">
-						<input id="counting_method_other_chbx" class="control-label" type="checkbox" name="counting_method_other" onclick="app.enable_other(this.checked)" >
-					   </span>
-	    			           <input type="text" name="counting_method_other" id="counting_method_other" value="" class="form-control" placeholder="Autre" readonly="readonly" aria-invalid="false">
-					</div>
-				    </div>
-				</div>	
-				<div class="row">
-				    <label class="col-xs-12">Remarques</label>
-				    <div class="col-lg-12 col-md-12 col-xs-12">
-					<div class="input-group">
-					    <span class="input-group-addon"><span class="fa fa-comment "></span></span> 
-					    <textarea name="remarks" id="remarks" class="form-control" placeholder="Ex: couverture de corail vivant, coraux morts, blanchiment, présence d'algues…" aria-invalid="false"></textarea>
-					</div>
-				    </div>
-				</div>
-
-				<div class="row">
-				    <label class="col-xs-12">Impact des acanthasters</label>
-				    <div class="col-lg-12 col-md-12 col-xs-12">
-					<div class="input-group">
-					    <span class="input-group-addon"><span class="fa fa-bolt"></span></span> 
-					    <select id="observation_state" name="observation_state" class="form-control" size="1" aria-invalid="false">
-						<option value="low">Faible ou à confirmer</option>
-						<option value="medium">Moyen</option>
-						<option value="hight">Elevé</option>
-					</select> 
-					</div>
-				    </div>
-				</div>
+				
 				   
 				</form>
 			    </div>

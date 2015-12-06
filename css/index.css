@@ -36,6 +36,26 @@ body {
     background-color: #EBEBEB !important;
 }
 
+/* SURCHARGE JQUERY MOBILE COLORS */
+.ui-page-theme-a a, html .ui-bar-a a, html .ui-body-a a, html body .ui-group-theme-a a {
+	color: #EE9A4D !important;
+}
+.ui-page-theme-a a:visited, html .ui-bar-a a:visited, html .ui-body-a a:visited, html body .ui-group-theme-a a:visited {
+	color: #AB5B11 !important;
+}
+.ui-page-theme-a a:hover, html .ui-bar-a a:hover, html .ui-body-a a:hover, html body .ui-group-theme-a a:hover {
+	color: #DC7C24 !important;
+}
+.ui-page-theme-a .ui-btn.ui-btn-active, html .ui-bar-a .ui-btn.ui-btn-active, html .ui-body-a .ui-btn.ui-btn-active, html body .ui-group-theme-a .ui-btn.ui-btn-active, html head+body .ui-btn.ui-btn-a.ui-btn-active, .ui-page-theme-a .ui-checkbox-on:after, html .ui-bar-a .ui-checkbox-on:after, html .ui-body-a .ui-checkbox-on:after, html body .ui-group-theme-a .ui-checkbox-on:after, .ui-btn.ui-checkbox-on.ui-btn-a:after, .ui-page-theme-a .ui-flipswitch-active, html .ui-bar-a .ui-flipswitch-active, html .ui-body-a .ui-flipswitch-active, html body .ui-group-theme-a .ui-flipswitch-active, html body .ui-flipswitch.ui-bar-a.ui-flipswitch-active, .ui-page-theme-a .ui-slider-track .ui-btn-active, html .ui-bar-a .ui-slider-track .ui-btn-active, html .ui-body-a .ui-slider-track .ui-btn-active, html body .ui-group-theme-a .ui-slider-track .ui-btn-active, html body div.ui-slider-track.ui-body-a .ui-btn-active {
+	background-color:#EE9A4D !important;
+	border-color:#EE9A4D !important;
+	color: white;
+	text-shadow: 0 1px 0 #AB5B11;
+}
+.ui-input-text input, .ui-input-search input {
+	font-size: 16px;
+}
+
 .contenu {
 	background-color: white;
 }
@@ -256,6 +276,8 @@ body {
 
 #form-cot_admin .exergue {
 	background-color:#EE9A4D;
+	font-weight: bold;
+	font-size: 18px;
 }
 
 #form-cot_admin .success {
@@ -271,4 +293,10 @@ body {
 	display: none !important;
 }
 
+.navbar button.ui-btn {
+	width: 10%;
+}
 
+input[type=checkbox], input[type=radio] {
+	display: none;
+}
