@@ -101,7 +101,7 @@ var db = {
 	    });
 	},
 
-	deleteCOT: function(id) {
+	deleteCOT: function() {
 	    var cotsDb = db.openDB();
 	    cotsDb.transaction(function(transaction) {
 		transaction.executeSql(sql.DELETE, [], function(transaction, results) {

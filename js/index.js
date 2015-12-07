@@ -23,7 +23,7 @@ var app = {
     // Application Constructor
     initialize: function() {    	
         this.bindEvents();		
-	/*setTimeout(function(){*/app.receivedEvent('deviceready');/*},2000);*/
+	setTimeout(function(){app.receivedEvent('deviceready');},2000);
     },
     // Bind Event Listeners
     //
@@ -55,18 +55,20 @@ var app = {
     open: function(){
     	var parentElement = document.getElementById("deviceready");
         var listeningElement = parentElement.querySelector('.listening');
-        listeningElement.className='event connecting';
+        listeningElement.className='event connecting row vertical-align';
     	listeningElement.addEventListener("transitionend",  function(e) {
 	    listeningElement.className='event ready';
+	    parentElement.style.visibility = "hidden";
 	},false);
     },
 
     close: function(){
     	var parentElement = document.getElementById("deviceready");
+	parentElement.style.visibility = "visible";
         var listeningElement = parentElement.querySelector('.onclose');
-        listeningElement.className='event closing';
+        listeningElement.className='event closing row vertical-align';
     	listeningElement.addEventListener("transitionend",  function(e) {
-	    listeningElement.className='event closed';
+	    listeningElement.className='event closed row vertical-align';
 	},false);
     },
 
@@ -80,6 +82,11 @@ var app = {
         document.getElementById("msg").innerHTML = msg;
 	document.getElementById("system-message-container").style.display = "block";
     },    
+
+    showInfoMsg: function() {
+        msg = "L'analyse de la présence des acanthasters nous permet de comprendre pour mieux agir. En nous signalant les acanthasters que vous rencontrez, vous nous aidez à protéger les récifs de Nouvelle-Calédonie.";
+	app.updateMsg(msg);
+    }, 
 
     closeMsg: function() {
 	document.getElementById("system-message-container").style.display = "none";

@@ -134,6 +134,20 @@ body {
     text-rendering: optimizelegibility;    
 }
 
+#deviceready {
+    position:absolute;             /* position in the center of the screen */
+    left:0;
+    top:0;
+    height:100vh;                  
+    width:100vw;
+    z-index: 10000;
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
 .event {
     background-color:#FEFDF0;
     background-image:linear-gradient(top, #E0CDA9 0%, #FEFDF0 51%);
@@ -147,18 +161,16 @@ body {
         color-stop(0.51, #FEFDF0)
     );
     background-attachment:fixed;
-    position:absolute;             /* position in the center of the screen */
-    left:0;
-    top:0;
     height:100%;                  
     width:100vw;
     text-align:center;    
     z-index: 10000;
 }
 
+
 .event.listening, .event.closed {    
     opacity: 1;
-    display: block;          
+    display: flex;          
 }
 
 .event.connecting {   
@@ -175,19 +187,19 @@ body {
     display: none;
 }
 
-/* Portrait layout (default) */
+/* Portrait layout (default) 
 .splashscreen, .thankyoupage {
     position:absolute;         
     top:30%;
 
-}
+}*/
 
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:768px) {
-    .splashscreen, .thankyoupage {
+   /* .splashscreen, .thankyoupage {
         background-position:left center;
         left: 30%;
-    }
+    }*/
 }
 
 .splashscreen img {
@@ -195,8 +207,8 @@ body {
 }
 
 .splashscreen img, .thankyoupage img {
-    text-align:center;
-    margin-bottom:30px;
+  /*  text-align:center;
+    margin-bottom:30px;*/
 }
 
 .splashscreen p, .thankyoupage p {
@@ -294,7 +306,7 @@ body {
 }
 
 .navbar button.ui-btn {
-	width: 10%;
+	width: auto;
 }
 
 input[type=checkbox], input[type=radio] {

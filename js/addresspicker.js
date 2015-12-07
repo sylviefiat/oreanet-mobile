@@ -156,6 +156,8 @@ if(!bg){
                     zoom: 7,
                     center: [-21.5, 165.5],
                     scrollwheel: true,
+		    zoomGesturesEnabled: true,
+		    scrollGesturesEnabled: true,
                     mapTypeId: "hybrid"
                 },
 				makerType: false, /* labeled, styled */

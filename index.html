@@ -24,16 +24,16 @@
     <body>
         <div class="app">            
             <div id="deviceready">		
-                <div class="event listening">
-		    <div class="splashscreen">
+                <div class="event listening row vertical-align">
+		    <div class="splashscreen col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
 			<img src="img/logo.png" title="logo"/>
 			<p>L'analyse de la présence des acanthasters nous permet de comprendre pour mieux agir.</p>
 			<p>En nous signalant les acanthasters que vous rencontrez, vous nous aidez à protéger les récifs de Nouvelle-Calédonie.</p>
 			<p class="blink">Connecting</p>
 		    </div>
 		</div>
-		<div class="event onclose">
-		    <div class="thankyoupage">
+		<div class="event onclose row vertical-align">
+		    <div class="thankyoupage col-md-4 col-md-offset-4">
 			<img src="img/logo_end.png" title="logo"/>
 			<p>Merci d'avoir rapporté la présence d'acanthaster en Nouvelle-Calédonie !</p>
 			<p><a onclick="return app.reloadForm()">Signaler d'autres acanthasters</a></p>
@@ -76,8 +76,8 @@
 				    	    <!-- the collapsing menu -->
 				    	    <div class="collapse navbar-collapse navbar-left col-md-4" id="navbar-collapse-1">
 				     		 <ul class="nav navbar-nav">
-						    <li><a href="#">Info</a></li>
-						    <li><a href="http://oreanet.ird.nc">Voir le site</a></li>
+						    <li><a href="#" onclick="return app.showInfoMsg()" data-toggle="collapse" data-target="#navbar-collapse-1.in">Info</a></li>
+						    <li><a href="http://oreanet.ird.nc" data-toggle="collapse" data-target="#navbar-collapse-1.in">Voir le site</a></li>
 				      		</ul>
 				    	    </div>
 				    	<!--/.nav-collapse -->
