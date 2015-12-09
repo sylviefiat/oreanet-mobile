@@ -165,6 +165,7 @@ body {
     width:100vw;
     text-align:center;    
     z-index: 10000;
+    margin: 0 !important;
 }
 
 

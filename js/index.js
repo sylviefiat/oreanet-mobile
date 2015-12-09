@@ -24,40 +24,68 @@ var app = {
     initialize: function() {    	
         this.bindEvents();		
 	/*DEV  */setTimeout(function(){app.receivedEvent('deviceready');},2000);
+	
     },
     // Bind Event Listeners
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
-	//document.addEventListener('online', this.onOnline, false);
-	//document.addEventListener('offline', this.onOffline, false);
+	document.addEventListener('online', this.onOnline, false);
+	document.addEventListener('offline', this.onOffline, false);
     },
     // deviceready Event Handler
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+    },
+    // online Event Handler
+    onOnline: function() {
+        app.turnOnline();
+    },
+    // offline Event Handler
+    onOffline: function() {
+        app.turnOffline();
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 	setTimeout(function(){
             app.open();
 	    app.closeMsg();
-	    app.addressPicker();
-	    db.deleteCOT();
+	    app.isOnline(function(){
+	    	app.turnOffline();
+		console.log("offline on received event");
+	    },function(){
+	    	app.addressPicker();
+		db.synchronizeRemote();
+		console.log("online on received event");
+	    });
 	    app.addSubmitForm();
 	    app.validForm();
-	}, 20);		
+	}, 2000);		
+    },
+    // Turn app to online mode
+    turnOnline(){
+    	app.addressPicker();
+	app.reloadForm();
+	db.synchronizeRemote("online");
+    },
+    // Turn app to offline mode
+    turnOffline(){
+    	app.updateMsg("L'application est actuellement hors ligne, certaines fonctionnalités ne seront pas disponibles et les données seront envoyées à la prochaine connexion.");
     },
     // Remove splascreen
     open: function(){
     	var parentElement = document.getElementById("deviceready");
         var listeningElement = parentElement.querySelector('.listening');
-        listeningElement.className='event connecting row vertical-align';
-    	listeningElement.addEventListener("transitionend",  function(e) {
-	    listeningElement.className='event ready';
-	    parentElement.style.visibility = "hidden";
-	},false);
+	if(listeningElement != null){
+            listeningElement.className='event connecting row vertical-align';
+    	    listeningElement.addEventListener("transitionend",  function(e) {
+	    	listeningElement.className='event ready';
+	    	parentElement.style.visibility = "hidden";
+	    },false);
+	}
     },
     // ser closing screen
     close: function(){
+    	window.scrollTo(0, 0);
     	var parentElement = document.getElementById("deviceready");
 	parentElement.style.visibility = "visible";
         var listeningElement = parentElement.querySelector('.onclose');
@@ -70,7 +98,7 @@ var app = {
     reloadForm: function() {
         $("#form-cot_admin").trigger('reset');
 	window.location.reload();
-	app.open();
+	//app.open();
     },
 
     updateMsg: function(msg) {
@@ -191,6 +219,22 @@ var app = {
                 document.getElementById("counting_method_other").removeAttribute('readonly');
         }
     },
+
+    isOnline: function(no,yes){
+    	var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHttp');
+    	xhr.onload = function(){
+            if(yes instanceof Function){
+            	yes();
+            }
+    	}
+    	xhr.onerror = function(){
+            if(no instanceof Function){
+            	no();
+            }
+    	}
+	xhr.open("GET","http://193.51.249.53:83/restcotnc/cot.php",true);
+    	xhr.send();
+    }
     
 };
 

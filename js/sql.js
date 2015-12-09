@@ -25,8 +25,9 @@ var sql = {
 			"admin_validation BOOLEAN NOT NULL default 0,"+
 			"status VARCHAR(100)"+
 		");",
-	SELECT : "SELECT id, observer_name, observer_tel, observer_email, observation_date, observation_location, observation_localisation, observation_region, observation_country, observation_country_code, observation_latitude, observation_longitude, observation_number, observation_culled, observation_state, counting_method_timed_swim, counting_method_distance_swim, counting_method_other, depth_range, observation_method, remarks, localisation, admin_validation, status FROM cot_admin where status<>'synchronized'",
-	INSERT : "INSERT INTO cot_admin(id, observer_name, observer_tel, observer_email, observation_date, observation_location, observation_localisation, observation_region, observation_country, observation_country_code, observation_latitude, observation_longitude, observation_number, observation_culled, observation_state, counting_method_timed_swim, counting_method_distance_swim, counting_method_other, depth_range, observation_method, remarks, localisation, admin_validation, status) VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'local')",
-	UPDATE : "UPDATE cot_admin set status='synchronized' where id=?",
-	DELETE : "DELETE from cot_admin"
+	SELECT : "SELECT id, observer_name, observer_tel, observer_email, observation_date, observation_location, observation_localisation, observation_region, observation_country, observation_country_code, observation_latitude, observation_longitude, observation_number, observation_culled, observation_state, counting_method_timed_swim, counting_method_distance_swim, counting_method_other, depth_range, observation_method, remarks, localisation, admin_validation, status FROM cot_admin where status<>'synchronized';",
+	INSERT : "INSERT INTO cot_admin(id, observer_name, observer_tel, observer_email, observation_date, observation_location, observation_localisation, observation_region, observation_country, observation_country_code, observation_latitude, observation_longitude, observation_number, observation_culled, observation_state, counting_method_timed_swim, counting_method_distance_swim, counting_method_other, depth_range, observation_method, remarks, localisation, admin_validation, status) VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'local');",
+	UPDATE : "UPDATE cot_admin set status = 'synchronized' where id = ?;",
+	REMOVE : "DELETE FROM cot_admin where id = ?;",
+	DELETE : "DELETE from cot_admin;"
 }

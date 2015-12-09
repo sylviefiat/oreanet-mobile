@@ -38,10 +38,7 @@ var db = {
 					counting_method_timed_swim, counting_method_distance_swim, counting_method_other, depth_range, observation_method, 
 					remarks, localisation, admin_validation], 
 				function(transaction, results) {
-					console.log("id: "+results.insertId)
-					//app.clearForm();
-					db.synchronizeRemote();				
-					return results.insertId;
+					db.synchronizeRemote("form");	
 				}, function(e) {
 		    			return 0;
 				}
@@ -49,7 +46,31 @@ var db = {
 	    });
 	},
 
-	sendRemote: function(json,id){
+	synchronizeRemote: function(from){
+	 	if(navigator.onLine){
+			return db.synchronizeCOTs(from);
+		}
+		app.updateMsg("Le formulaire sera envoyé à la prochaine connexion à internet");
+	 },
+
+	synchronizeCOTs: function(from) {
+	    var cotsDb = db.openDB();
+	    cotsDb.transaction(function(transaction) {
+		transaction.executeSql(sql.SELECT, [], function(transaction, results) {
+			console.log("select cots: "+results.rows.length);
+			for(i=0; i<results.rows.length;i++){
+				// parse results in JSON
+		    		var item = JSON.stringify(results.rows.item(i));
+				// send results
+				db.sendRemote(item,results.rows.item(i).id,from);			
+			}
+		}, function(e) {
+		    console.log("some error getting questions");
+		});
+	    });
+	},
+
+	sendRemote: function(json,id,from){
 		xhr = new XMLHttpRequest();
 		//var url = "http://oreanet-rest.ird.nc/restcotnc/cot.php";
 		var url = "http://193.51.249.53:83/restcotnc/cot.php";
@@ -58,45 +79,35 @@ var db = {
 		xhr.onreadystatechange = function () { 
 		    	if (xhr.readyState == 4 && xhr.status == 200) {
 				var json = JSON.parse(xhr.responseText);
-		       		console.log(json.status + ", " + json.msg  + " updating id "+id);
 				// update results status as "synchronized"
+				db.updateCOT(id);
 				if(json.status)	{
-					db.updateCOT(id);					
+				    if(from == "form"){
+					app.updateMsg("Merci d'avoir signalé la présence d'acanthasters, les données seront traitées le plus rapidement possible."); 
+		    			app.close();
+				    } else {
+				    	app.updateMsg("Les données enregistrées hors connexion ont bien été transmises.");
+				    }
+				} else {
+					app.updateMsg("Une erreur est survenue lors de l'envoi du formulaire, merci de bien vouloir réessayer.");
 				}		
 		    	}
 		}
-		xhr.send(json);
-	},
-
-	synchronizeCOTs: function() {
-	    var cotsDb = db.openDB();
-	    cotsDb.transaction(function(transaction) {
-		transaction.executeSql(sql.SELECT, [], function(transaction, results) {
-			console.log("select cots: "+results.rows.length);
-			for(i=0; i<results.rows.length;i++){
-				// parse results in JSON
-		    		var item = JSON.stringify(results.rows.item(i));			
-				console.log("select cot json: "+item);
-				// send results
-				db.sendRemote(item,results.rows.item(i).id);			
-			}
-		}, function(e) {
-		    console.log("some error getting questions");
-		});
-	    });
+		try {
+        	    xhr.send(json);
+    		} catch(z) {
+        	    alert("Network failure");
+        	    return;
+    		}		
 	},
 
 	updateCOT: function(id) {
 	    var cotsDb = db.openDB();
 	    cotsDb.transaction(function(transaction) {
-		transaction.executeSql(sql.UPDATE, [id], function(transaction, results) {
-		    console.log("update COTs status to synchronized ok");
-		    app.updateMsg("Merci d'avoir signalé la présence d'acanthasters, les données seront traitées le plus rapidement possible."); 
-		    app.close();
-		    return 1;
-		}, function(e) {		    
-		    console.log("some error updating data");
-		    return 0;
+		transaction.executeSql(sql.REMOVE, [id], function(transaction, results) {
+		    console.log("update COTs status to synchronized ok");		    
+		}, function(transaction, error) {		    
+		    console.log("some error updating data "+error.message);
 		});
 	    });
 	},
@@ -112,14 +123,7 @@ var db = {
 		    return 0;
 		});
 	    });
-	},
-
-	synchronizeRemote: function(insertId){
-	 	if(navigator.onLine){
-			return db.synchronizeCOTs();
-		}
-		app.updateMsg("Le formulaire sera envoyé à la prochaine connexion à internet");
-	 }
+	}
 
 }
 
