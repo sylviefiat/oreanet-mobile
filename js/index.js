@@ -23,7 +23,7 @@ var app = {
     // Application Constructor
     initialize: function() {    	
         this.bindEvents();		
-	/*DEV  */setTimeout(function(){app.receivedEvent('deviceready');},2000);
+	/*DEV  setTimeout(function(){app.receivedEvent('deviceready');},2000);*/
 	
     },
     // Bind Event Listeners
@@ -62,13 +62,13 @@ var app = {
 	}, 2000);		
     },
     // Turn app to online mode
-    turnOnline(){
+    turnOnline: function(){
     	app.addressPicker();
 	app.reloadForm();
 	db.synchronizeRemote("online");
     },
     // Turn app to offline mode
-    turnOffline(){
+    turnOffline: function(){
     	app.updateMsg("L'application est actuellement hors ligne, certaines fonctionnalités ne seront pas disponibles et les données seront envoyées à la prochaine connexion.");
     },
     // Remove splascreen
