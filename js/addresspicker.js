@@ -285,9 +285,12 @@ if(!bg){
             var that = this, item = item || that.$element.val();
 	    var data = this.addressMapping[item] || {};
    	    var propertiesMap,cleanData = {};
-	    data.geometry.location = query;
-	    var latLng = data.geometry.location;	    
-	    //var latLng = query;
+	    if(data.geometry.location === null){
+	    	data.geometry.location = query;
+	    } else {
+	    	var latLng = data.geometry.location;	    
+	    	//var latLng = query;
+	    }
 
             if (!data) {
                 return;

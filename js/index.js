@@ -23,21 +23,16 @@ var app = {
     // Application Constructor
     initialize: function() {    	
         this.bindEvents();		
-	setTimeout(function(){app.receivedEvent('deviceready');},2000);
+	/*DEV  */setTimeout(function(){app.receivedEvent('deviceready');},2000);
     },
     // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+	document.addEventListener('online', this.onOnline, false);
+	document.addEventListener('offline', this.onOffline, false);
     },
     // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-    	console.log('onDeviceReady');
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
@@ -46,12 +41,12 @@ var app = {
             app.open();
 	    app.closeMsg();
 	    app.addressPicker();
-	    db.synchronizeRemote();
+	    db.deleteCOT();
 	    app.addSubmitForm();
 	    app.validForm();
 	}, 20);		
     },
-
+    // Remove splascreen
     open: function(){
     	var parentElement = document.getElementById("deviceready");
         var listeningElement = parentElement.querySelector('.listening');
@@ -61,7 +56,7 @@ var app = {
 	    parentElement.style.visibility = "hidden";
 	},false);
     },
-
+    // ser closing screen
     close: function(){
     	var parentElement = document.getElementById("deviceready");
 	parentElement.style.visibility = "visible";
@@ -71,7 +66,7 @@ var app = {
 	    listeningElement.className='event closed row vertical-align';
 	},false);
     },
-
+    // Reload form
     reloadForm: function() {
         $("#form-cot_admin").trigger('reset');
 	window.location.reload();
