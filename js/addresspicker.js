@@ -208,9 +208,15 @@ if(!bg){
 			}
 
 				
-			// load current address if any
-			if(that.$element.val() != ''){
-				that.geocodeLookup(that.$element.val(), false, '', true);
+			// load current address if any - using latLng
+			if(that.$element.val() != ''){				
+				$lat = $(".latitude");
+				$lng = $(".longitude");
+				if($lat != null && $lng != null){
+					that.geocodeLookup($lat.val()+","+$lng.val(), false, 'latLng', true);
+				} else {
+					that.geocodeLookup(that.$element.val(), false, '', true);
+				}
 			}
         },
         initMap: function () {
@@ -285,12 +291,13 @@ if(!bg){
             var that = this, item = item || that.$element.val();
 	    var data = this.addressMapping[item] || {};
    	    var propertiesMap,cleanData = {};
-	    if(data.geometry.location === null){
-	    	data.geometry.location = query;
-	    } else {
-	    	var latLng = data.geometry.location;	    
-	    	//var latLng = query;
-	    }
+	    if (typeof query != "string") {
+	        if(query.lat != null && query.lng != null){
+	    	    data.geometry.location = query;	    
+		}
+	    } 
+	    var latLng = data.geometry.location;	    
+	    //var latLng = query;	    
 
             if (!data) {
                 return;
