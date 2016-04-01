@@ -232,7 +232,7 @@ var app = {
             	no();
             }
     	}
-	xhr.open("GET","http://193.51.249.53:83/restcotnc/cot.php",true);
+	xhr.open("GET","http://193.51.249.49:83/restcotnc/cot.php",true);
     	xhr.send();
     }
     
