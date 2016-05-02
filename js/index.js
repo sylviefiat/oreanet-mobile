@@ -83,11 +83,24 @@ var app = {
 	    },false);
 	}
     },
+   // Sending form wait splashscreen
+    sending: function(){
+    	window.scrollTo(0, 0);
+    	var parentElement = document.getElementById("deviceready");
+	parentElement.style.visibility = "visible";
+        var listeningElement = parentElement.querySelector('.onsend');
+	if(listeningElement != null){
+            listeningElement.className='event sending row vertical-align';    	    
+	}
+    },
     // ser closing screen
     close: function(){
     	window.scrollTo(0, 0);
     	var parentElement = document.getElementById("deviceready");
-	parentElement.style.visibility = "visible";
+	var listeningElement = parentElement.querySelector('.sending');
+	if(listeningElement != null){
+            listeningElement.className='event sent row vertical-align';    	    
+	}
         var listeningElement = parentElement.querySelector('.onclose');
         listeningElement.className='event closing row vertical-align';
     	listeningElement.addEventListener("transitionend",  function(e) {
@@ -175,6 +188,7 @@ var app = {
 
     submitForm: function(){
     	if($("#form-cot_admin" ).valid()){
+    	    app.sending();
 	    $("#form-cot_admin" ).submit();
 	} else {
 	    app.updateMsg("Votre formulaire contient "
