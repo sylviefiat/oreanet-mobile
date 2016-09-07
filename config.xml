@@ -26,6 +26,6 @@
     -->   
     
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
-    <gap:allow-navigation href="http://rest-oreanet.ird.nc/*" />
+    <gap:allow-navigation href="http://rest-oreanet.ird.nc" />
 
 </widget>
