@@ -23,7 +23,7 @@ var app = {
     // Application Constructor
     initialize: function() {    	
         this.bindEvents();		
-	/*DEV  setTimeout(function(){app.receivedEvent('deviceready');},2000);*/
+	setTimeout(function(){app.receivedEvent('deviceready');},2000);
 	
     },
     // Bind Event Listeners
@@ -47,17 +47,29 @@ var app = {
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 	setTimeout(function(){
+	    // enleve le splashscreen et affiche le formulaire
             app.open();
+	    // supprime tout message afficher (si il y en a)
 	    app.closeMsg();
-	    app.isOnline(function(){
-	    	app.turnOffline();
-		console.log("offline on received event");
-	    },function(){
-	    	app.addressPicker();
-		db.synchronizeRemote();
-		console.log("online on received event");
+	    // test pour voir si on est connecté à internet
+	    app.isOnline(
+	    	// si on N'EST PAS connecté alors
+	    	function(){
+	    	    // passer en status hors ligne
+	    	    app.turnOffline();
+		    console.log("offline on received event");
+	        },
+		// si on EST connecté
+		function(){
+		    // démarrer le plugin addressPicker
+	    	    app.addressPicker();
+		    // synchroniser la base de données déconnectée avec la base de données en ligne
+		    db.synchronizeRemote();
+		    console.log("online on received event");
 	    });
+	    // ajouter un listener sur le formulaire
 	    app.addSubmitForm();
+	    // ajouter un "validateur" de formulaire
 	    app.validForm();
 	}, 2000);		
     },
@@ -73,6 +85,7 @@ var app = {
     },
     // Remove splascreen
     open: function(){
+    	
     	var parentElement = document.getElementById("deviceready");
         var listeningElement = parentElement.querySelector('.listening');
 	if(listeningElement != null){

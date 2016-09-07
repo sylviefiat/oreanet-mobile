@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="css/addresspicker.css" />
 	<script src="http://maps.google.com/maps/api/js"></script>
 	<script language="javascript" type="text/javascript" src="js/jquery-1.11.3.min.js"></script>	
-	<script language="javascript" type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+	<!-- <script language="javascript" type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script> -->
 	<script language="javascript" type="text/javascript" src="js/jquery.validate.js"></script>
 	<script language="javascript" type="text/javascript" src="js/additional-methods.js"></script>
 	<script language="javascript" type="text/javascript" src="js/bootstrap.min.js"></script>	
@@ -23,18 +23,21 @@
     </head>
     <body>
         <div class="app">            
-            <div id="deviceready">		
-                <div class="event listening row vertical-align">
+            <div id="deviceready">	
+		<!-- Splashscreen du debut -->	
+                <div class="event listening row vertical-align">		    
 		    <div class="splashscreen col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
 			<img src="img/logo.png" title="logo"/>
 			<p class="blink">Connecting</p>
 		    </div>
 		</div>
+		<!-- Splashscreen en cours d'envoi -->
 		<div class="event onsend row vertical-align">
 		    <div class="splashscreen col-xs-12 col-sm-12 col-md-6 col-md-offset-3">			
 			<p class="blink">Sending report</p>
 		    </div>
 		</div>
+		<!-- Splashscreen de la fin -->
 		<div class="event onclose row vertical-align">
 		    <div class="thankyoupage col-md-4 col-md-offset-4">
 			<img src="img/logo_end.png" title="logo"/>
@@ -44,6 +47,7 @@
 		    </div>
 		</div>
             </div>
+	    <!-- module d'affichage des messages (erreur ou info) -->
 	    <div id="system-message-container">
 		<div id="system-message">
 		    <div class="alert fade in" id="message">
@@ -54,9 +58,11 @@
 		    </div>
 		</div>
 	    </div>
+	    <!-- page principale -->
 	    <div class="container contenu">	    	
 		<div class="row">
- <nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation">
+		<!--barre de navigation -->
+ 			<nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation">
 				        <div>
 				    	    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
 				      		<span class="sr-only">Toggle navigation</span>
@@ -86,16 +92,17 @@
 				    	<!--/.nav-collapse -->
 				  	</div>
 				      <!--/.container -->
-				    </nav>   
+			</nav>   
+		     <!-- formulaire -->
 		    <div class="col-lg-12">
 			<div class="cot_admin_edit front-end-edit">
 	    		    <div class="form">
 				 
 				<form method="get" id="form-cot_admin" role="form">
 				    
-				    
+				    <!-- part I -->
 				    <label><span class="input-group-addon exergue"><span class="fa fa-user"></span> Observateur</span></label>
-
+				
 				    <div data-role="fieldcontain" class="ui-hide-label">
 				        <label for="observer_name">Observateur</label>	
 				    	<input type="text" name="observer_name" id="observer_name" value="" placeholder="Nom de l'observateur" required/>
@@ -112,6 +119,7 @@
 				    	<input type="email" name="observer_email" id="observer_email" value="" placeholder="Email de l'observateur" required/>
 				    </div>
 
+				    <!-- part II -->
 				    <label><span class="input-group-addon exergue"><span class="fa fa-calendar"></span> Date et lieu</span></label>	
 				    <div data-role="fieldcontain" class="ui-hide-label">
 					<label for="observation_date">Date</label>				    
@@ -141,7 +149,7 @@
 					<label for="observer_longitude">Longitude</label>				    		
 				    	<input type="text" name="observation_longitude" id="observation_longitude" value="" class="longitude form-control" placeholder="Longitude"/>
 				    </div>
-
+				    <!-- part III -->
 				    <label><span class="input-group-addon exergue"><span class="fa fa-eye"></span> Acanthasters</span></label>
 				    <div data-role="fieldcontain" class="ui-hide-label">
 					<label for="observation_number">Acanthasters observées</label>				    
@@ -151,7 +159,7 @@
 					<label for="observer_culled">Acanthasters Nettoyées</label>				    		
 				    	<input type="text" name="observation_culled" id="observation_culled" value="" placeholder="Nombre d'acanthasters nettoyées"/>
 				    </div>
-			    		
+			    	    <!-- part IV -->
 			    	    <label><span class="input-group-addon exergue"><span class="fa fa-binoculars"></span> Méthode d'observation</span></label>	
 				    <div data-role="fieldcontain" class="ui-hide-label">
 				        <fieldset data-role="controlgroup">
@@ -162,7 +170,7 @@
 					    <label for="observation_method1">Plongée bouteille</label>
 				        </fieldset>
 				    </div>
-
+				    <!-- part V -->
 				    <label><span class="input-group-addon exergue"><span class="fa fa-arrows-v"></span> Tranches de profondeur</span></label>	
 				    <div data-role="fieldcontain" class="ui-hide-label">
 				        <fieldset data-role="controlgroup">
@@ -175,7 +183,7 @@
 					    <label for="depth_range2">Plus de 10m</label>
 				        </fieldset>
 				    </div>
-				   
+				   <!-- part VI -->
 				    <label><span class="input-group-addon exergue"><span class="fa fa-cogs"></span> Méthode de comptage</span></label>
 				    <div data-role="fieldcontain" class="ui-hide-label">
 				        <fieldset data-role="controlgroup" data-type="horizontal">
@@ -203,13 +211,13 @@
 					<label for="counting_method_other" class="ui-hidden-accessible">Other</label>
 					<input type="text" name="counting_method_other" id="counting_method_other" value="" class="form-control" placeholder="Autre" readonly="readonly"></input>			
 				    </div>
-
+				    <!-- part VII -->
 				    <label><span class="input-group-addon exergue"><span class="fa fa-comment"></span> Remarques</span></label>
 				    <div data-role="fieldcontain" class="ui-hide-label">
 					<label for="remarks">Remarques</label>				    		
 				    	<textarea name="remarks" id="remarks" placeholder="Ex: couverture de corail vivant, coraux morts, blanchiment, présence d'algues…"></textarea>
 				    </div>
-
+				    <!-- part VIII -->
 				    <label><span class="input-group-addon exergue"><span class="fa fa-bolt"></span> Impact des acanthasters</span></label>
 				    <div data-role="fieldcontain" class="ui-hide-label">
 					<label for="observation_state" class="select">Impact des acanthasters</label>
@@ -218,20 +226,14 @@
 					    <option value="medium">Moyen</option>
 					    <option value="hight">Elevé</option>
 					</select> 
-				    </div>
-				   
-				   
-
-				
-				   
+				    </div>				   				   
 				</form>
 			    </div>
 			</div>
 		    </div>
 		</div>
             </div>
-	
-	<script language="javascript" type="text/javascript" src="cordova.js"></script>
+	<!-- <script language="javascript" type="text/javascript" src="cordova.js"></script> -->
         <script language="javascript" type="text/javascript" src="js/index.js"></script>
 	<script language="javascript" type="text/javascript" src="js/sql.js"></script>
         <script language="javascript" type="text/javascript" src="js/dbutils.js"></script>
