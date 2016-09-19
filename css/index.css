@@ -52,7 +52,7 @@ body {
 	color: white;
 	text-shadow: 0 1px 0 #AB5B11;
 }
-.ui-input-text input, .ui-input-search input {
+.ui-input-text input, .ui-input-search input, .ui-hide-label textarea {
 	font-size: 16px;
 }
 
@@ -111,6 +111,16 @@ body {
 
 .custom-navbar .nav.navbar-nav.navbar-right li {
 	float: right;
+}
+
+.custom-navbar .nav.navbar-nav.navbar-right li:first-child {
+    padding-top: 3px;
+}
+
+.custom-navbar .nav.navbar-nav.navbar-right li:nth-child(2) {
+    width: 28px;
+    height: 34px;
+    padding-top: 3px;
 }
 
 .cot_admin_edit{
@@ -255,9 +265,13 @@ body {
 
 #msg .alert {
 	.well;
-	.lead;
+	.lead;#form-cot_admin .exergue
 	font-weight: bold;
 	color: #EE9A4D;
+}
+
+.alert-message{
+    text-align:center;
 }
 
 #msg .alert-heading {
@@ -340,4 +354,134 @@ input:required:hover {
 
 input[type=checkbox], input[type=radio] {
 	display: none;
+}
+
+/*Formulaire sans deviceready */
+#devicereadyoff{
+    display: none;
+}
+
+/*send button*/
+#btn-send {
+    color: #555559 !important;
+    font-size: 20pt;
+    text-shadow: 3px 3px #EE9A4D;
+    padding: 10px 10px;
+}
+
+
+/* Offline &Online*/
+#offline p{
+    color: red;
+    margin: 0;
+}
+
+#online p{
+    color: green;
+    margin: 0;
+
+}
+
+@media (min-width: 424px) {
+#offline {
+    color: red;
+    padding-top: 12px;
+}
+
+#online {
+    color: green;
+    padding-top: 12px;
+}
+}
+
+@media (min-width: 768px) {
+#offline {
+    color: red;
+    padding-top: 18px;
+}
+
+#online {
+    color: green;
+    padding-top: 18px;
+}
+}
+
+/*button new form*/
+.btn_new_form{
+    background-color:#EE9A4D !important;
+    font-weight: bold !important;
+    font-size: 18px !important;
+    color:#555 !important;
+}
+
+/*list forms*/
+#contentlist {
+    margin-top: 70px;
+}
+
+.cot_list_forms{
+  margin-top: 30px;
+  width: 100%;
+  overflow: hidden;
+  color: #024457;
+  border-radius: 10px;
+}
+.cot_list_forms tr {
+  border: 1px solid #FFF;
+}
+.cot_list_forms tr:nth-child(odd) {
+  background-color: #E0E0E0;
+}
+.cot_list_forms th {
+  display: none;
+  border: 1px solid #FFF;
+  background-color: #EE9A4D;
+  color: #555;
+  padding: 1em;
+  text-align: center !important;
+}
+
+.cot_list_forms td {
+  display: block;
+  word-wrap: break-word;
+  padding-left: 5px;
+  border: none;
+}
+.cot_list_forms td:first-child {
+  padding-top: .5em;
+}
+.cot_list_forms td:last-child {
+  padding-bottom: .5em;
+}
+.cot_list_forms td:before {
+  content: attr(data-th) " : ";
+  font-weight: bold;
+  width: 9em;
+  display: inline-block;
+}
+
+@media (min-width: 480px) {
+  .cot_list_forms th, .cot_list_forms td {
+    display: table-cell;
+    padding: 1em;
+    text-align: center !important; 
+  }
+  .cot_list_forms th:first-child, .cot_list_forms td:first-child {
+    padding-left: 0;
+  }
+  .cot_list_forms th:last-child, .cot_list_forms td:last-child {
+    padding-right: 0;
+  }
+}
+
+@media (min-width: 480px) {
+  .cot_list_forms td:before {
+    display: none;
+  }
+
+  .cot_list_forms td {
+      border-right: 1px solid #FFF;
+  }
+}
+  
 }
