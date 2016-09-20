@@ -234,6 +234,10 @@ var app = {
     },
     // Turn app to offline mode
     turnOffline: function(){
+         //On affiche offline
+        document.getElementById("online").style.display = "none";
+        //On enleve les champs Select/Regi/Pays/Lat/Long
+        document.getElementById("offlineForm").style.display = "none";
     	app.updateMsg("L'application est actuellement hors ligne, certaines fonctionnalités ne seront pas disponibles et les données seront envoyées à la prochaine connexion.");
     },
     // Remove splascreen
@@ -250,10 +254,6 @@ var app = {
 	    	parentElement.style.visibility = "hidden";
 	    },false);
 	}
-        //On affiche offline
-        document.getElementById("online").style.display = "none";
-        //On enleve les champs Select/Regi/Pays/Lat/Long
-        document.getElementById("offlineForm").style.display = "none";
     },
    // Sending form wait splashscreen
     sending: function(){
