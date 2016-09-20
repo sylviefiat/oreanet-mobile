@@ -25,36 +25,41 @@ var app = {
     initialize: function() {    	
         this.bindEvents();
 
-        //Si on est sur la page index.html et on est online alors
-        if(app.getUrlVars()["id"] == null && navigator.onLine == true){
-            //On affiche online
-            document.getElementById("offline").style.display = "none";
+        app.isOnline(
+            // si on N'EST PAS connecté alors
+            function(){
+                //on est sur la page index.html et offline alors
+                //On affiche le splashscreen 1
+                document.getElementById("devicereadyoff").id = "deviceready";
+             },
+            // si on EST connecté
+            function(){
+                //Si on est sur la page index.html et on est online alors
+                if(app.getUrlVars()["id"] == null){
+                    //On affiche online
+                    document.getElementById("offline").style.display = "none";
 
-            //On affiche le splashscreen 1
-            document.getElementById("devicereadyoff").id = "deviceready";
-            //On verfie l'existance d'une liste
-            setTimeout(function(){ db.listCOTexist();},2000);
+                    //On affiche le splashscreen 1
+                    document.getElementById("devicereadyoff").id = "deviceready";
+                    //On verfie l'existance d'une liste
+                    setTimeout(function(){ db.listCOTexist();},2000);
 
-        }
-        //Sinon si on est sur la page index.html?id= alors
-        else if(app.getUrlVars()["id"] == ""){
-            //On affiche online
-            document.getElementById("offline").style.display = "none";
-            // supprime tout message afficher (si il y en a)
-            app.closeMsg();
-        }
-        //Sinon si on est sur la page index.html?id=X alors
-        else if(app.getUrlVars()["id"] != null && app.getUrlVars()["id"] != "" ){
-            //On affiche online
-            document.getElementById("offline").style.display = "none";
-            //On affiche bouton retour
-            document.getElementById("nav-bot").id = "nav-bot-on";
-        }
-        //sinon si on est sur la page index.html et offline alors
-        else{
-            //On affiche le splashscreen 1
-            document.getElementById("devicereadyoff").id = "deviceready";
-        }
+                }
+                //Sinon si on est sur la page index.html?id= alors
+                else if(app.getUrlVars()["id"] == ""){
+                    //On affiche online
+                    document.getElementById("offline").style.display = "none";
+                    // supprime tout message afficher (si il y en a)
+                    app.closeMsg();
+                }
+                //Sinon si on est sur la page index.html?id=X alors
+                else {
+                    //On affiche online
+                    document.getElementById("offline").style.display = "none";
+                    //On affiche bouton retour
+                    document.getElementById("nav-bot").id = "nav-bot-on";
+                }
+        });
 
         //dev mobile
 	    //setTimeout(function(){app.receivedEvent('deviceready');},0);
@@ -105,14 +110,13 @@ var app = {
             app.open();
             // supprime tout message afficher (si il y en a)
             app.closeMsg();
-            
             // passer en status hors ligne
             app.turnOffline();
-                
             // ajouter un listener sur le formulaire
             app.addSubmitForm();
             // ajouter un "validateur" de formulaire
             app.validForm();
+
             }, 2000);
 
         }
@@ -124,7 +128,6 @@ var app = {
 
             // démarrer le plugin addressPicker
             app.addressPicker();
-
             // ajouter un listener sur le formulaire
             app.addSubmitForm();
             // ajouter un "validateur" de formulaire
@@ -135,13 +138,14 @@ var app = {
         //sinon on modifie un formulaire existant
         else {
             setTimeout(function(){
-            console.log("<<<<<formulaire existant>>>>");
 
+            console.log("<<<<<formulaire existant>>>>");
+            //message pour le formulaire séléctionné
             app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
 
             // démarrer le plugin addressPicker
             app.addressPicker();
-
+            // remplir avec ces données le formulaire
             db.reditCOTForm(app.getUrlVars()["id"]);
             console.log("new index ==== "+ app.getUrlVars()["id"]);
 
