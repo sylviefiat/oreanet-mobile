@@ -497,4 +497,14 @@ input[type=checkbox], input[type=radio] {
   }
 }
   
+/*Cancal button*/
+#nav-bot {
+    display:none;
+}
+#nav-bot-on {
+    text-align: center;
+}
+#btn-cancel{
+}
+
 }

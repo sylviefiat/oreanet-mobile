@@ -33,20 +33,18 @@ var app = {
             //On affiche le splashscreen 1
             document.getElementById("devicereadyoff").id = "deviceready";
             //On verfie l'existance d'une liste
-            setTimeout(function(){ db.listCOTexist();},2000);
+            //setTimeout(function(){ db.listCOTexist();},2000);
 
         }
-        //Sinon on est sur la page index.html?id= alors
-        else if(app.getUrlVars()["id"] == ""){
-            console.log("alllo");
+        //Sinon si on est sur la page index.html?id= alors
+        else if(app.getUrlVars()["id"] == "" || app.getUrlVars()["id"] != null){
             //On affiche online
             document.getElementById("offline").style.display = "none";
-
             // supprime tout message afficher (si il y en a)
             app.closeMsg();
         }
         //sinon si on est sur la page index.html et offline alors
-        else if(navigator.onLine != true){
+        else{
             //On affiche offline
             document.getElementById("online").style.display = "none";
             //On affiche le splashscreen 1
@@ -54,7 +52,7 @@ var app = {
             //On enleve les champs Select/Regi/Pays/Lat/Long
             document.getElementById("offlineForm").style.display = "none";
         }
-	   // setTimeout(function(){app.receivedEvent('deviceready');},0);
+	   setTimeout(function(){app.receivedEvent('deviceready');},0);
 	
     },
 
@@ -135,7 +133,9 @@ var app = {
             setTimeout(function(){
             console.log("<<<<<formulaire existant>>>>");
 
-            app.updateMsg("Voici votre formulaire à finaliser");
+            document.getElementById("nav-bot").id = "nav-bot-on";
+
+            app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
 
             // démarrer le plugin addressPicker
             app.addressPicker();
@@ -497,6 +497,10 @@ var app = {
 
         datetime = jour + "/" + mois + "/" + date.getFullYear() + " à " + heure +":"+ minute;
         return datetime;
+    },
+
+    cancel: function(){
+        window.location.href="./list.html";
     }
 };
 

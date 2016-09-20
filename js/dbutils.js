@@ -184,7 +184,7 @@ var db = {
         transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
             console.log("Nombre de formulaire(s) existant "+ results.rows.length);
             if (results.rows.length != 0){
-            	window.location.href="./list.html";
+            	app.cancel();
             }
             else{
             	app.getFormID('');
