@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "nc.oreanet.mobile"
         versionCode = "1" 
-        version     = "0.0.2" >
+        version     = "0.0.3" >
 
     <!-- versionCode is optional and Android only -->
 

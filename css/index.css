@@ -65,6 +65,30 @@ body {
 	border-bottom:2px dotted #EE9A4D !important;
 }
 
+.custom-navbar .navbar-right {
+    float: right;
+    margin:0 !important;
+    padding-right: 5px !important;
+    width: 156px;
+}
+
+/*send button*/
+#btn-send {
+    color: #555559 !important;
+    font-size: 20pt;
+    text-shadow: 3px 3px #EE9A4D;
+    padding: 10px 10px;
+}
+/*reload button*/
+#btn-reload {
+        padding: 10px 10px;
+}
+
+@media (max-width:410px) {
+    .custom-navbar .navbar-right {
+        width: 80px;
+    }
+}
 
 @media (max-width:767px) {
 	.navbar-default .navbar-toggle {
@@ -76,17 +100,9 @@ body {
 		font-size: 2.6vw; 
 	}
 
-
 	.custom-navbar > li {
 	  float: none !important;
 	  display: inline-block !important;
-	}
-
-	.custom-navbar .navbar-right {
-	    float: right;
-	    /*padding-right: 5px;
-	    width: 100%;*/
-	    
 	}
 	
   	.custom-navbar .nav.navbar-nav.navbar-right li > a {
@@ -118,8 +134,8 @@ body {
 }
 
 .custom-navbar .nav.navbar-nav.navbar-right li:nth-child(2) {
-    width: 28px;
-    height: 34px;
+    width: 23px;
+    height: 32px;
     padding-top: 3px;
 }
 
@@ -361,51 +377,48 @@ input[type=checkbox], input[type=radio] {
     display: none;
 }
 
-/*send button*/
-#btn-send {
-    color: #555559 !important;
-    font-size: 20pt;
-    text-shadow: 3px 3px #EE9A4D;
-    padding: 10px 10px;
+/*Online list*/
+#onlinelist p{
+    color: green;
+    margin: 0;
+    padding-top: 12px;
 }
 
+@media (min-width: 768px) {
+#onlinelist {
+    padding-top: 5px;
+}
+}
 
-/* Offline &Online*/
+/* Offline */ 
 #offline p{
     color: red;
     margin: 0;
 }
+#offline{
+    padding-top: 13px; 
+}
+@media (max-width:410px) {
+    #offline{
+        padding-top: 0;
+        padding-right: 3px;
+    }
+}
+/*Online*/
 
 #online p{
     color: green;
     margin: 0;
-
 }
-
-@media (min-width: 424px) {
-#offline {
-    color: red;
-    padding-top: 12px;
+#online{
+    padding-top: 13px; 
 }
-
-#online {
-    color: green;
-    padding-top: 12px;
+@media (max-width:410px) {
+    #online{
+        padding-top: 0;
+        padding-right: 11px;
+    }
 }
-}
-
-@media (min-width: 768px) {
-#offline {
-    color: red;
-    padding-top: 18px;
-}
-
-#online {
-    color: green;
-    padding-top: 18px;
-}
-}
-
 /*button new form*/
 .btn_new_form{
     background-color:#EE9A4D !important;

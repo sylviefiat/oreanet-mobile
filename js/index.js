@@ -54,14 +54,15 @@ var app = {
             // supprime tout message afficher (si il y en a)
             app.closeMsg();
         }
-	    setTimeout(function(){app.receivedEvent('deviceready');},0);
+	   // setTimeout(function(){app.receivedEvent('deviceready');},0);
 	
     },
 
     //Initialisation list.html
     initializeList: function() {
         //On affiche online
-        document.getElementById("offline").style.display = "none";    
+        document.getElementById("offline").style.display = "none"; 
+        document.getElementById("online").id = "onlinelist"; 
         
         var parentElement = document.getElementById("contentlist");
         var listeningElement = parentElement.querySelector('.cot_admin_list');
