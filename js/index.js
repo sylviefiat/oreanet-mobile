@@ -33,7 +33,7 @@ var app = {
             //On affiche le splashscreen 1
             document.getElementById("devicereadyoff").id = "deviceready";
             //On verfie l'existance d'une liste
-            //setTimeout(function(){ db.listCOTexist();},2000);
+            setTimeout(function(){ db.listCOTexist();},2000);
 
         }
         //Sinon si on est sur la page index.html?id= alors
@@ -48,7 +48,9 @@ var app = {
             //On affiche le splashscreen 1
             document.getElementById("devicereadyoff").id = "deviceready";
         }
-	   setTimeout(function(){app.receivedEvent('deviceready');},0);
+
+        //dev mobile
+	    //setTimeout(function(){app.receivedEvent('deviceready');},0);
 	
     },
 
