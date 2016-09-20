@@ -45,12 +45,8 @@ var app = {
         }
         //sinon si on est sur la page index.html et offline alors
         else{
-            //On affiche offline
-            document.getElementById("online").style.display = "none";
             //On affiche le splashscreen 1
             document.getElementById("devicereadyoff").id = "deviceready";
-            //On enleve les champs Select/Regi/Pays/Lat/Long
-            document.getElementById("offlineForm").style.display = "none";
         }
 	   setTimeout(function(){app.receivedEvent('deviceready');},0);
 	
@@ -242,7 +238,7 @@ var app = {
     },
     // Remove splascreen
     open: function(){
-        
+
     	var parentElement = document.getElementById("deviceready");
         var listeningElement = parentElement.querySelector('.listening');
         console.log("Avant " + listeningElement.className);
@@ -254,6 +250,10 @@ var app = {
 	    	parentElement.style.visibility = "hidden";
 	    },false);
 	}
+        //On affiche offline
+        document.getElementById("online").style.display = "none";
+        //On enleve les champs Select/Regi/Pays/Lat/Long
+        document.getElementById("offlineForm").style.display = "none";
     },
    // Sending form wait splashscreen
     sending: function(){
