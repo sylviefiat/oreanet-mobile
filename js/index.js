@@ -37,11 +37,18 @@ var app = {
 
         }
         //Sinon si on est sur la page index.html?id= alors
-        else if(app.getUrlVars()["id"] == "" || app.getUrlVars()["id"] != null){
+        else if(app.getUrlVars()["id"] == ""){
             //On affiche online
             document.getElementById("offline").style.display = "none";
             // supprime tout message afficher (si il y en a)
             app.closeMsg();
+        }
+        //Sinon si on est sur la page index.html?id=X alors
+        else if(app.getUrlVars()["id"] != null && app.getUrlVars()["id"] != "" ){
+            //On affiche online
+            document.getElementById("offline").style.display = "none";
+            //On affiche bouton retour
+            document.getElementById("nav-bot").id = "nav-bot-on";
         }
         //sinon si on est sur la page index.html et offline alors
         else{
@@ -125,13 +132,10 @@ var app = {
 
             }, 0);
         }
-
         //sinon on modifie un formulaire existant
         else {
             setTimeout(function(){
             console.log("<<<<<formulaire existant>>>>");
-
-            document.getElementById("nav-bot").id = "nav-bot-on";
 
             app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
 
@@ -236,10 +240,6 @@ var app = {
     },
     // Turn app to offline mode
     turnOffline: function(){
-         //On affiche offline
-        document.getElementById("online").style.display = "none";
-        //On enleve les champs Select/Regi/Pays/Lat/Long
-        document.getElementById("offlineForm").style.display = "none";
     	app.updateMsg("L'application est actuellement hors ligne, certaines fonctionnalités ne seront pas disponibles et les données seront envoyées à la prochaine connexion.");
     },
     // Remove splascreen
@@ -248,14 +248,18 @@ var app = {
     	var parentElement = document.getElementById("deviceready");
         var listeningElement = parentElement.querySelector('.listening');
         console.log("Avant " + listeningElement.className);
-	if(listeningElement != null){
-            listeningElement.className='event connecting row vertical-align';
-    	    listeningElement.addEventListener("transitionend",  function(e) {
-	    	listeningElement.className='event ready';
-            console.log("Après " + listeningElement.className);
-	    	parentElement.style.visibility = "hidden";
-	    },false);
-	}
+    	if(listeningElement != null){
+                listeningElement.className='event connecting row vertical-align';
+        	    listeningElement.addEventListener("transitionend",  function(e) {
+    	    	listeningElement.className='event ready';
+                console.log("Après " + listeningElement.className);
+    	    	parentElement.style.visibility = "hidden";
+    	    },false);
+    	}
+        //On affiche offline
+        document.getElementById("online").style.display = "none";
+        //On enleve les champs Select/Regi/Pays/Lat/Long
+        document.getElementById("offlineForm").style.display = "none";
     },
    // Sending form wait splashscreen
     sending: function(){
