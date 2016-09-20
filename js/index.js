@@ -24,7 +24,7 @@ var app = {
     // Application Constructor
     initialize: function() {    	
         this.bindEvents();
-
+        //test online ou offline
         app.isOnline(
             // si on N'EST PAS connecté alors
             function(){
@@ -34,32 +34,17 @@ var app = {
              },
             // si on EST connecté
             function(){
+                //On affiche online
+                document.getElementById("offline").style.display = "none";
                 //Si on est sur la page index.html et on est online alors
                 if(app.getUrlVars()["id"] == null){
-                    //On affiche online
-                    document.getElementById("offline").style.display = "none";
-
                     //On affiche le splashscreen 1
                     document.getElementById("devicereadyoff").id = "deviceready";
-                    //On verfie l'existance d'une liste
+                    //On vérifie l’existence d'une liste
                     setTimeout(function(){ db.listCOTexist();},2000);
-
                 }
-                //Sinon si on est sur la page index.html?id= alors
-                else if(app.getUrlVars()["id"] == ""){
-                    //On affiche online
-                    document.getElementById("offline").style.display = "none";
-                    // supprime tout message afficher (si il y en a)
-                    app.closeMsg();
-                }
-                //Sinon si on est sur la page index.html?id=X alors
-                else {
-                    //On affiche online
-                    document.getElementById("offline").style.display = "none";
-                    //On affiche bouton retour
-                    document.getElementById("nav-bot").id = "nav-bot-on";
-                }
-        });
+            }
+        );
 
         //dev mobile
 	    //setTimeout(function(){app.receivedEvent('deviceready');},0);
@@ -75,7 +60,7 @@ var app = {
         var parentElement = document.getElementById("contentlist");
         var listeningElement = parentElement.querySelector('.cot_admin_list');
         
-        //afficher la list
+        //afficher la liste
         db.listCOT();
     
     },
@@ -106,7 +91,7 @@ var app = {
 
             console.log("<<<<<formulaire non existant>>>>");
 
-            // enleve le splashscreen et affiche le formulaire
+            // enlevé le splashscreen et affiche le formulaire
             app.open();
             // supprime tout message afficher (si il y en a)
             app.closeMsg();
@@ -120,12 +105,14 @@ var app = {
             }, 2000);
 
         }
-        //sinon si l'ID dans url est egal a "" alors c'est un nouveau formulaire dans index.html?id=
+        //sinon si l'ID dans url est égal a "" alors c'est un nouveau formulaire dans index.html?id=
         else if(app.getUrlVars()["id"] == "") {
             setTimeout(function(){
 
             console.log("<<<<<formulaire non existant>>>>");
 
+            // supprime tout message afficher (si il y en a)
+                    app.closeMsg();
             // démarrer le plugin addressPicker
             app.addressPicker();
             // ajouter un listener sur le formulaire
@@ -140,18 +127,18 @@ var app = {
             setTimeout(function(){
 
             console.log("<<<<<formulaire existant>>>>");
-            //message pour le formulaire séléctionné
-            app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
 
+            //On affiche bouton retour
+            document.getElementById("nav-bot").id = "nav-bot-on";
+            //message pour le formulaire sélectionné
+            app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
             // démarrer le plugin addressPicker
             app.addressPicker();
             // remplir avec ces données le formulaire
             db.reditCOTForm(app.getUrlVars()["id"]);
             console.log("new index ==== "+ app.getUrlVars()["id"]);
-
             // ajouter un listener sur le formulaire avec l'id de celui-ci
             app.addSubmitExistForm(app.getUrlVars()["id"]);
-
             // ajouter un "validateur" de formulaire
             app.validForm();
 
@@ -162,7 +149,7 @@ var app = {
 	
     },
 
-    //on recuper l'id du formulaire à ouvrir
+    //on récupére l'id du formulaire à ouvrir
     getFormID: function(id){
         window.location.href="./index.html?id="+id;
     },
@@ -268,33 +255,48 @@ var app = {
    // Sending form wait splashscreen
     sending: function(){
     	window.scrollTo(0, 0);
-        if(navigator.onLine == true) {
-            document.getElementById("devicereadyoff").id = "deviceready";
-        }
+        //test online ou offline
+        app.isOnline(
+            // si on N'EST PAS connecté alors
+            function(){},
+            // si on EST connecté
+            function(){
+                document.getElementById("devicereadyoff").id = "deviceready";
+            }
+        );
+
     	var parentElement = document.getElementById("deviceready");
 	       parentElement.style.visibility = "visible";
         var listeningElement = parentElement.querySelector('.onsend');
-	if(listeningElement != null){
-            listeningElement.className='event sending row vertical-align';    	    
-	}
+    	if(listeningElement != null){
+                listeningElement.className='event sending row vertical-align';    	    
+    	}
     },
     // ser closing screen
     close: function(){
     	window.scrollTo(0, 0);
-        if(navigator.onLine == true) {
-            document.getElementById("devicereadyoff").id = "deviceready";
-        }
-    	var parentElement = document.getElementById("deviceready");
-	var listeningElement = parentElement.querySelector('.sending');
-	if(listeningElement != null){
-            listeningElement.className='event sent row vertical-align';    	    
-	}
+        //test online ou offline
+        app.isOnline(
+            // si on N'EST PAS connecté alors
+            function(){},
+            // si on EST connecté
+            function(){
+                document.getElementById("devicereadyoff").id = "deviceready";
+            }
+        );
+
+        var parentElement = document.getElementById("deviceready");
+    	var listeningElement = parentElement.querySelector('.sending');
+    	if(listeningElement != null){
+                listeningElement.className='event sent row vertical-align';    	    
+    	}
         var listeningElement = parentElement.querySelector('.onclose');
         listeningElement.className='event closing row vertical-align';
     	listeningElement.addEventListener("transitionend",  function(e) {
 	    listeningElement.className='event closed row vertical-align';
-	},false);
+	    },false);
     },
+
     // Reload form
     reloadForm: function() {
         $("#form-cot_admin").trigger('reset');
@@ -325,43 +327,11 @@ var app = {
 
     //On mes des champs obligatoire a saisir
     validForm: function(){
-
-        //si on est online alors les champs son Name/Email/Date/Localisation/Lat/Long
-        if(navigator.onLine == true){
-        	$("#form-cot_admin").validate({
-                rules: {
-            	observer_name: {
-                        minlength: 2,
-                        required: true
-                    },
-                    observer_email: {
-                        required: true,
-                        email: true
-                    },
-                    observation_date: {
-                        required: true
-                    },
-    	        observation_localisation: {
-                        required: true
-                    },
-    	        observation_latitude: {
-                        required: true
-                    },
-    	        observation_longitude: {
-                        required: true
-                    }
-                },
-    	    highlight: function(element, errorClass, validClass) {
-    	        $(element).addClass(errorClass).removeClass(validClass);
-      	    },
-      	    unhighlight: function(element, errorClass, validClass) {
-        		$(element).removeClass(errorClass).addClass(validClass);
-      	    }
-            });
-        }
-        //Sinon on est offline et les champs sont Name/Email/Date/Location
-        else{
-            $("#form-cot_admin").validate({
+        //test online ou offline
+        app.isOnline(
+            // si on N'EST PAS connecté alors les champs sont Name/Email/Date/Location
+            function(){
+                $("#form-cot_admin").validate({
                 rules: {
                 observer_name: {
                         minlength: 2,
@@ -377,15 +347,49 @@ var app = {
                     observation_location: {
                         required: true
                     }
-                },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass(errorClass).removeClass(validClass);
+                    },
+                    highlight: function(element, errorClass, validClass) {
+                        $(element).addClass(errorClass).removeClass(validClass);
+                    },
+                    unhighlight: function(element, errorClass, validClass) {
+                        $(element).removeClass(errorClass).addClass(validClass);
+                    }
+                });
             },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass(errorClass).addClass(validClass);
+            // si on EST connecté alors les champs son Name/Email/Date/Localisation/Lat/Long
+            function(){
+                $("#form-cot_admin").validate({
+                    rules: {
+                    observer_name: {
+                            minlength: 2,
+                            required: true
+                        },
+                        observer_email: {
+                            required: true,
+                            email: true
+                        },
+                        observation_date: {
+                            required: true
+                        },
+                    observation_localisation: {
+                            required: true
+                        },
+                    observation_latitude: {
+                            required: true
+                        },
+                    observation_longitude: {
+                            required: true
+                        }
+                    },
+                    highlight: function(element, errorClass, validClass) {
+                        $(element).addClass(errorClass).removeClass(validClass);
+                    },
+                    unhighlight: function(element, errorClass, validClass) {
+                        $(element).removeClass(errorClass).addClass(validClass);
+                    }
+                });
             }
-            });
-        }
+        );
     },
 
     //On utilise la fonction sql pour enregistrer les données
@@ -431,9 +435,18 @@ var app = {
     	if($("#form-cot_admin" ).valid()){
     	    app.sending();
 	    $("#form-cot_admin" ).submit();
-        if(navigator.online != true){
-            window.setTimeout("app.close()", 800);
-        }
+        
+        //test online ou offline
+        app.isOnline(
+            // si on N'EST PAS connecté alors
+            function(){
+                window.setTimeout("app.close()", 800);
+            },
+            // si on EST connecté
+            function(){}
+        );
+
+            
         
 	} else {
 	    app.updateMsg("Votre formulaire contient "

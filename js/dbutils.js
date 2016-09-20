@@ -52,13 +52,18 @@ var db = {
 					remarks, date_enregistrement], 
 				function(transaction, results) {
 					
-					if(navigator.onLine == true){
-						var id = db.getidFormInsertCOT();
-						return db.synchronizeCOTs("from", id);
-					}
-					else{
-						app.updateMsg("Vous pourrez envoyer votre formulaire lors de votre prochaine connexion à internet");
-					}
+					//test online ou offline
+			        app.isOnline(
+			            // si on N'EST PAS connecté alors
+			            function(){
+			            	app.updateMsg("Vous pourrez envoyer votre formulaire lors de votre prochaine connexion à internet");
+			            },
+			            // si on EST connecté
+			            function(){
+			                var id = db.getidFormInsertCOT();
+							return db.synchronizeCOTs("from", id);
+			            }
+			        );
 
 				}, function(e) {
 		    			return 0;
@@ -67,7 +72,7 @@ var db = {
 	    });
 	},
 
-	//recupérer l'id du nouveau formulaire a envoyé
+	//récupère l'id du nouveau formulaire a envoyé
 	getidFormInsertCOT: function(observer_name, observer_tel, observer_email, observation_date, observation_location, 
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
@@ -176,7 +181,7 @@ var db = {
 	    });
 	},
 
-	//On verifie si des formulaires existe si oui on redirige ver le lien la list.html
+	//On vérifie si des formulaires existe si oui on redirige ver le lien la list.html
 	listCOTexist: function(){
 
 	var cotsDb = db.openDB();
@@ -260,7 +265,7 @@ var db = {
         });
     },
 
-    //On modifier un tuple déja existant grace a son id
+    //On modifier un tuple déjà existant grâce a son id
     updateFormCot: function(observer_name, observer_tel, observer_email, 
 			    			observation_date, observation_location, 
 							observation_localisation, observation_region, observation_country, 
