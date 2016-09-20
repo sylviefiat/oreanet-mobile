@@ -36,23 +36,23 @@ var app = {
             setTimeout(function(){ db.listCOTexist();},2000);
 
         }
+        //Sinon on est sur la page index.html?id= alors
+        else if(app.getUrlVars()["id"] == ""){
+            console.log("alllo");
+            //On affiche online
+            document.getElementById("offline").style.display = "none";
+
+            // supprime tout message afficher (si il y en a)
+            app.closeMsg();
+        }
         //sinon si on est sur la page index.html et offline alors
-        else if(app.getUrlVars()["id"] == null && navigator.onLine != true){
+        else if(navigator.onLine != true){
             //On affiche offline
             document.getElementById("online").style.display = "none";
             //On affiche le splashscreen 1
             document.getElementById("devicereadyoff").id = "deviceready";
             //On enleve les champs Select/Regi/Pays/Lat/Long
             document.getElementById("offlineForm").style.display = "none";
-        }
-        //Sinon on est sur la page index.html?id= alors
-        else{
-            console.log("azallooo");
-            //On affiche online
-            document.getElementById("offline").style.display = "none";
-
-            // supprime tout message afficher (si il y en a)
-            app.closeMsg();
         }
 	   // setTimeout(function(){app.receivedEvent('deviceready');},0);
 	
@@ -133,6 +133,7 @@ var app = {
         //sinon on modifie un formulaire existant
         else {
             setTimeout(function(){
+            console.log("<<<<<formulaire existant>>>>");
 
             app.updateMsg("Voici votre formulaire à finaliser");
 
