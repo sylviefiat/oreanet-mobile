@@ -24,24 +24,32 @@ var app = {
     // Application Constructor
     initialize: function() {    	
         this.bindEvents();
+        //On enlève offline
+        document.getElementById("offline").style.display = "none";
         //test online ou offline
         app.isOnline(
             // si on N'EST PAS connecté alors
             function(){
-                //on est sur la page index.html et offline alors
+                //on est sur la page index.html et offline
+                //On enlève online 
+                document.getElementById("online").style.display = "none";
+                //On affiche offline
+                document.getElementById("offline").style.display = "block";
                 //On affiche le splashscreen 1
                 document.getElementById("devicereadyoff").id = "deviceready";
+                //On affiche le formulaire
+                document.getElementById("contentoff").id = "content";
              },
             // si on EST connecté
             function(){
-                //On affiche online
-                document.getElementById("offline").style.display = "none";
                 //Si on est sur la page index.html et on est online alors
                 if(app.getUrlVars()["id"] == null){
                     //On affiche le splashscreen 1
                     document.getElementById("devicereadyoff").id = "deviceready";
                     //On vérifie l’existence d'une liste
-                    setTimeout(function(){ db.listCOTexist();},2000);
+                    setTimeout(function(){ db.listCOTexist();},1000);
+                    //On affiche le formulaire
+                    document.getElementById("contentoff").id = "content";
                 }
             }
         );
@@ -54,9 +62,12 @@ var app = {
     //Initialisation list.html
     initializeList: function() {
         //On affiche online
-        document.getElementById("offline").style.display = "none"; 
-        document.getElementById("online").id = "onlinelist"; 
-        
+        document.getElementById("offline").style.display = "none";
+        //On prend onlinelist css
+        document.getElementById("online").id = "onlinelist";
+        //on enlève le bouton send
+        document.getElementById("btn-send").style.display = "none";
+
         var parentElement = document.getElementById("contentlist");
         var listeningElement = parentElement.querySelector('.cot_admin_list');
         
@@ -108,11 +119,13 @@ var app = {
         //sinon si l'ID dans url est égal a "" alors c'est un nouveau formulaire dans index.html?id=
         else if(app.getUrlVars()["id"] == "") {
             setTimeout(function(){
-
+            //On affiche le formulaire
+            document.getElementById("contentoff").id = "content";
+            
             console.log("<<<<<formulaire non existant>>>>");
 
             // supprime tout message afficher (si il y en a)
-                    app.closeMsg();
+                app.closeMsg();
             // démarrer le plugin addressPicker
             app.addressPicker();
             // ajouter un listener sur le formulaire
@@ -125,6 +138,8 @@ var app = {
         //sinon on modifie un formulaire existant
         else {
             setTimeout(function(){
+            //On affiche le formulaire
+            document.getElementById("contentoff").id = "content";
 
             console.log("<<<<<formulaire existant>>>>");
 
@@ -231,7 +246,7 @@ var app = {
     },
     // Turn app to offline mode
     turnOffline: function(){
-    	app.updateMsg("L'application est actuellement hors ligne, certaines fonctionnalités ne seront pas disponibles et les données seront envoyées à la prochaine connexion.");
+    	app.updateMsg("L'application est actuellement hors ligne, certaines fonctionnalités ne seront pas disponibles et les données pourront être envoyées à la prochaine connexion.");
     },
     // Remove splascreen
     open: function(){
@@ -247,8 +262,6 @@ var app = {
     	    	parentElement.style.visibility = "hidden";
     	    },false);
     	}
-        //On affiche offline
-        document.getElementById("online").style.display = "none";
         //On enleve les champs Select/Regi/Pays/Lat/Long
         document.getElementById("offlineForm").style.display = "none";
     },
@@ -258,19 +271,27 @@ var app = {
         //test online ou offline
         app.isOnline(
             // si on N'EST PAS connecté alors
-            function(){},
+            function(){
+                var parentElement = document.getElementById("deviceready");
+                parentElement.style.visibility = "visible";
+                var listeningElement = parentElement.querySelector('.onsend');
+                if(listeningElement != null){
+                    listeningElement.className='event sending row vertical-align';          
+                }
+            },
             // si on EST connecté
             function(){
-                document.getElementById("devicereadyoff").id = "deviceready";
+                document.getElementById("devicereadyoff").id = 'deviceready';
+                document.getElementById("deviceready").style.visibility = 'hidden';
+                document.querySelector('.listening').className = 'event ready';
+                var parentElement = document.getElementById("deviceready");
+                parentElement.style.visibility = "visible";
+                var listeningElement = parentElement.querySelector('.onsend');
+                if(listeningElement != null){
+                    listeningElement.className='event sending row vertical-align';          
+                }
             }
         );
-
-    	var parentElement = document.getElementById("deviceready");
-	       parentElement.style.visibility = "visible";
-        var listeningElement = parentElement.querySelector('.onsend');
-    	if(listeningElement != null){
-                listeningElement.className='event sending row vertical-align';    	    
-    	}
     },
     // ser closing screen
     close: function(){
@@ -278,10 +299,13 @@ var app = {
         //test online ou offline
         app.isOnline(
             // si on N'EST PAS connecté alors
-            function(){},
+            function(){
+                document.getElementById("lie-site-web").id = "lie-site-web-off";
+                
+                document.getElementById("msg-fin-enregistre").innerHTML = "Votre formulaire à bien été enregistré et vous pourrez l'envoyer lors de votre prochaine connexion à internet.";
+            },
             // si on EST connecté
             function(){
-                document.getElementById("devicereadyoff").id = "deviceready";
             }
         );
 
@@ -300,8 +324,7 @@ var app = {
     // Reload form
     reloadForm: function() {
         $("#form-cot_admin").trigger('reset');
-	window.location.reload();
-	//app.open();
+	   window.location.href="./index.html";
     },
 
     updateMsg: function(msg) {

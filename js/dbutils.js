@@ -46,10 +46,11 @@ var db = {
 		cotsDb.transaction(function(transaction) {
 			transaction.executeSql(sql.INSERT, 
 				[observer_name, observer_tel, observer_email, observation_date, observation_location, 
-					observation_localisation, observation_region, observation_country, 
-					observation_latitude, observation_longitude, observation_number, observation_culled, 
-					counting_method_timed_swim, counting_method_distance_swim, counting_method_other, depth_range, observation_method, 
-					remarks, date_enregistrement], 
+				observation_localisation, observation_region, observation_country, 
+				observation_latitude, observation_longitude, observation_number, observation_culled, 
+				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
+				depth_range, observation_method, 
+				remarks, date_enregistrement], 
 				function(transaction, results) {
 					
 					//test online ou offline
@@ -60,8 +61,12 @@ var db = {
 			            },
 			            // si on EST connecté
 			            function(){
-			                var id = db.getidFormInsertCOT();
-							return db.synchronizeCOTs("from", id);
+			            	db.getidFormInsertCOT(observer_name, observer_tel, observer_email, observation_date, observation_location, 
+																observation_localisation, observation_region, observation_country, 
+																observation_latitude, observation_longitude, observation_number, observation_culled, 
+																counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
+																depth_range, observation_method, 
+																remarks, date_enregistrement);
 			            }
 			        );
 
@@ -77,27 +82,24 @@ var db = {
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
-				depth_range0, depth_range1, depth_range2, observation_method0, observation_method1, remarks, date_enregistrement) {
+				depth_range, observation_method, 
+				remarks, date_enregistrement) {
 		var cotsDb = db.openDB();
-		
-		var depth_range = ( depth_range0.length > 0 ? depth_range0 : "")
-					+((depth_range0.length > 0 && depth_range1.length > 0) ? ", " : ((depth_range0.length>0 && depth_range2.length > 0) ? ", " : ""))
-					+(depth_range1.length>0?depth_range1:"")
-					+(depth_range1.length>0 && depth_range2.length>0?", ":"")
-					+(depth_range2.length>0?depth_range2:"");
-		var observation_method = (observation_method0.length > 0 ? observation_method0 : "")
-					+((observation_method0.length>0 && observation_method1.length) > 0 ? ", " : "")
-					+(observation_method1.length>0?observation_method1:"");
 
 		cotsDb.transaction(function(transaction) {
 			transaction.executeSql(sql.SELECTidINSERT, [observer_name, observer_tel, observer_email, observation_date, observation_location, 
 					observation_localisation, observation_region, observation_country, 
 					observation_latitude, observation_longitude, observation_number, observation_culled, 
-					counting_method_timed_swim, counting_method_distance_swim, counting_method_other, depth_range, observation_method, 
-					remarks, date_enregistrement], function(transaction, results) {
-			for (i = 0; i < results.rows.length; i++){ 
-				return results.rows.item(i).id;
-			}
+					counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
+					depth_range, observation_method, 
+					remarks, date_enregistrement],
+			 function(transaction, results) {
+				for (i = 0; i < results.rows.length; i++){ 
+					
+					var idform = results.rows.item(i).id;
+					console.log("Id ======"+ idform);
+					return db.synchronizeCOTs("form", idform);
+				}
 			}, function(transaction, error) {		    
 		    console.log("some error updating data "+error.message);
 			});
@@ -112,6 +114,7 @@ var db = {
 	 },*/
 
 	synchronizeCOTs: function(from, id) {
+		console.log("C good id=="+id+" et from==="+from)
 	    var cotsDb = db.openDB();
 	    cotsDb.transaction(function(transaction) {
 		transaction.executeSql(sql.SELECT, [id], function(transaction, results) {
@@ -141,8 +144,7 @@ var db = {
 				db.updateCOT(id);
 				if(json.status)	{
 				    if(from == "form"){
-					app.updateMsg("Merci d'avoir signalé la présence d'acanthasters, les données seront traitées le plus rapidement possible."); 
-		    			app.close();
+					app.close();
 				    } 
 				} else {
 					app.updateMsg("Une erreur est survenue lors de l'envoi du formulaire, merci de bien vouloir réessayer.");
@@ -212,8 +214,6 @@ var db = {
         cotsDb.transaction(function(transaction) {
         transaction.executeSql(sql.SELECTCOTLIST, [], function(transaction, results) {
             console.log("Nombre de formulaire(s) a consulter "+ results.rows.length);
-
-            document.getElementById("btn-send").style.display = "none";
 
         	app.updateMsg("Il vous reste " + results.rows.length + " formulaire(s) à finaliser. Merci de nous aider à protéger les récifs de Nouvelle-Calédonie.");
 
@@ -297,7 +297,7 @@ var db = {
 					depth_range, observation_method, 
 					remarks, id], 
 				function(transaction, results) {
-					return db.synchronizeCOTs("from", id);	
+					return db.synchronizeCOTs("form", id);	
 				}, function(e) {
 		    			return 0;
 				}

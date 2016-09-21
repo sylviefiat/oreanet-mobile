@@ -39,11 +39,11 @@
 				</div>
 				<!-- Splashscreen de la fin -->
 				<div class="event onclose row vertical-align">
-				    <div class="thankyoupage col-md-4 col-md-offset-4">
+				    <div class="thankyoupage col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
 					<img src="img/logo_end.png" title="logo"/>
-					<p>Merci d'avoir rapporté la présence d'acanthaster en Nouvelle-Calédonie !</p>
+					<p id="msg-fin-enregistre">Merci d'avoir rapporté la présence d'acanthaster en Nouvelle-Calédonie</p>
 					<p><a href="#" onclick="return app.reloadForm()">Signaler d'autres acanthasters</a></p>
-					<p><a href="http://oreanet.ird.nc">Aller voir le site de suivi Oreanet</a></p>
+					<p><a id="lie-site-web" href="http://oreanet.ird.nc">Aller voir le site de suivi Oreanet</a></p>
 				    </div>
 				</div>
             </div>
@@ -59,7 +59,7 @@
 			</div>
 		    </div>
 		    <!-- page principale -->
-		    <div class="container contenu">	    	
+		    <div id="contentoff" class="container contenu">	    	
 			<div class="row">
 			<!--barre de navigation -->
 	 			<nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation">
@@ -235,8 +235,8 @@
 				    </div>
 				</div>
 		    	</div>
-		    		<nav role="navigation" id="nav-bot" class="navbar navbar-default">
-		    			<a href="#" onclick="return app.cancel()" id="btn-cancel">Retour</a>
+		    		<nav role="navigation" id="nav-bot">
+		    			<a href="#" onclick="return app.cancel()">Retour</a>
 		    		</nav>
 		    </div>
 		    </div>
