@@ -35,8 +35,6 @@ var app = {
                 document.getElementById("online").style.display = "none";
                 //On affiche offline
                 document.getElementById("offline").style.display = "block";
-                //On affiche le splashscreen 1
-                document.getElementById("devicereadyoff").id = "deviceready";
                 //On affiche le formulaire
                 document.getElementById("contentoff").id = "content";
                 //On enlève le lien site dans le menu
@@ -47,8 +45,6 @@ var app = {
                 //Si on est sur la page index.html et on est online alors
                 if(app.getUrlVars()["id"] == null){
 
-                    //On affiche le splashscreen 1
-                    document.getElementById("devicereadyoff").id = "deviceready";
                     //On vérifie l’existence d'une liste
                     setTimeout(function(){ db.listCOTexist();},1000);
                     //On affiche le formulaire
@@ -105,8 +101,13 @@ var app = {
 
             console.log("<<<<<formulaire non existant>>>>");
 
-            // enlevé le splashscreen et affiche le formulaire
-            app.open();
+            if(document.getElementById("deviceready") != null){
+                
+                //On enleve les champs Select/Regi/Pays/Lat/Long
+                document.getElementById("offlineForm").style.display = "none";
+                // enlevé le splashscreen et affiche le formulaire
+                app.open();
+            }
             // supprime tout message afficher (si il y en a)
             app.closeMsg();
             // passer en status hors ligne
@@ -122,6 +123,9 @@ var app = {
         //sinon si l'ID dans url est égal a "" alors c'est un nouveau formulaire dans index.html?id=
         else if(app.getUrlVars()["id"] == "") {
             setTimeout(function(){
+            // enlevé le splashscreen et affiche le formulaire
+            document.getElementById("deviceready").style.visibility = 'hidden';
+
             //On affiche le formulaire
             document.getElementById("contentoff").id = "content";
             
@@ -147,7 +151,7 @@ var app = {
                 } 
                 else {
                     //message pour le formulaire sélectionné
-                    app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir. <a>Retour à la liste<a/>");
+                    app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
                     if(document.getElementById("btn-send-valid") != null){
                         document.getElementById("btn-send-valid").id = "btn-send";
                     }
@@ -159,6 +163,8 @@ var app = {
         //sinon on modifie un formulaire existant
         else {
             setTimeout(function(){
+            // enlevé le splashscreen et affiche le formulaire
+            document.getElementById("deviceready").style.visibility = 'hidden';
             //On affiche le formulaire
             document.getElementById("contentoff").id = "content";
 
@@ -301,8 +307,6 @@ var app = {
     	    	parentElement.style.visibility = "hidden";
     	    },false);
     	}
-        //On enleve les champs Select/Regi/Pays/Lat/Long
-        document.getElementById("offlineForm").style.display = "none";
     },
    // Sending form wait splashscreen
     sending: function(){
@@ -320,7 +324,9 @@ var app = {
             },
             // si on EST connecté
             function(){
-                document.getElementById("devicereadyoff").id = 'deviceready';
+                if(document.getElementById("devicereadyoff") != null){
+                    document.getElementById("devicereadyoff").id = 'deviceready';
+                }
                 document.getElementById("deviceready").style.visibility = 'hidden';
                 document.querySelector('.listening').className = 'event ready';
                 var parentElement = document.getElementById("deviceready");
@@ -363,7 +369,7 @@ var app = {
     // Reload form
     reloadForm: function() {
         $("#form-cot_admin").trigger('reset');
-	   window.location.href="./index.html";
+	    window.location.href="./index.html";
     },
 
     updateMsg: function(msg) {
