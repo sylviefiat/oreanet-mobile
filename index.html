@@ -6,7 +6,7 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
-	<!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">-->
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">
 	
         <link rel="stylesheet" type="text/css" href="css/index.css" />
 	<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
@@ -92,7 +92,7 @@
 					    	    <div class="collapse navbar-collapse navbar-left col-md-4" id="navbar-collapse-1">
 					     		 <ul class="nav navbar-nav">
 							    <li><a href="#" onclick="return app.showInfoMsg()" data-toggle="collapse" data-target="#navbar-collapse-1.in">Info</a></li>
-							    <li><a href="http://oreanet.ird.nc" data-toggle="collapse" data-target="#navbar-collapse-1.in">Voir le site</a></li>
+							    <li id="lien-site-menu"><a href="http://oreanet.ird.nc" data-toggle="collapse" data-target="#navbar-collapse-1.in">Voir le site</a></li>
 					      		</ul>
 					    	    </div>
 					    	<!--/.nav-collapse -->
@@ -236,7 +236,7 @@
 				</div>
 		    	</div>
 		    		<nav role="navigation" id="nav-bot">
-		    			<a href="#" onclick="return app.cancel()">Retour</a>
+		    			<a href="#" onclick="return app.cancel()">Retour à la liste</a>
 		    		</nav>
 		    </div>
 		    </div>

@@ -79,6 +79,13 @@ body {
     text-shadow: 3px 3px #EE9A4D;
     padding: 10px 10px;
 }
+
+#btn-send-valid {
+    color: #555559 !important;
+    font-size: 20pt;
+    text-shadow: 3px 3px #70C641;
+    padding: 10px 10px;
+}
 /*reload button*/
 #btn-reload {
     padding: 10px 10px;
@@ -385,6 +392,11 @@ input[type=checkbox], input[type=radio] {
 
 /*pas de formulaire */
 #contentoff {
+    display: none;
+}
+
+/*Lien du site dans le menu*/
+#lien-site-menu-off{
     display: none;
 }
 

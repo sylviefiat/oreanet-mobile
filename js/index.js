@@ -39,11 +39,14 @@ var app = {
                 document.getElementById("devicereadyoff").id = "deviceready";
                 //On affiche le formulaire
                 document.getElementById("contentoff").id = "content";
+                //On enlève le lien site dans le menu
+                document.getElementById("lien-site-menu").id = "lien-site-menu-off";
              },
             // si on EST connecté
             function(){
                 //Si on est sur la page index.html et on est online alors
                 if(app.getUrlVars()["id"] == null){
+
                     //On affiche le splashscreen 1
                     document.getElementById("devicereadyoff").id = "deviceready";
                     //On vérifie l’existence d'une liste
@@ -125,13 +128,31 @@ var app = {
             console.log("<<<<<formulaire non existant>>>>");
 
             // supprime tout message afficher (si il y en a)
-                app.closeMsg();
+            app.closeMsg();
             // démarrer le plugin addressPicker
             app.addressPicker();
             // ajouter un listener sur le formulaire
             app.addSubmitForm();
             // ajouter un "validateur" de formulaire
             app.validForm();
+             //test les champs valid
+            var myVar = setInterval(function(){
+                console.log("validation");
+                if($("#form-cot_admin" ).valid()){
+                    //message pour le formulaire sélectionné
+                    app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
+                    if(document.getElementById("btn-send") != null){
+                        document.getElementById("btn-send").id = "btn-send-valid";
+                    }
+                } 
+                else {
+                    //message pour le formulaire sélectionné
+                    app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir. <a>Retour à la liste<a/>");
+                    if(document.getElementById("btn-send-valid") != null){
+                        document.getElementById("btn-send-valid").id = "btn-send";
+                    }
+                }
+            }, 1000);
 
             }, 0);
         }
@@ -145,8 +166,6 @@ var app = {
 
             //On affiche bouton retour
             document.getElementById("nav-bot").id = "nav-bot-on";
-            //message pour le formulaire sélectionné
-            app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
             // démarrer le plugin addressPicker
             app.addressPicker();
             // remplir avec ces données le formulaire
@@ -156,6 +175,26 @@ var app = {
             app.addSubmitExistForm(app.getUrlVars()["id"]);
             // ajouter un "validateur" de formulaire
             app.validForm();
+
+            //test les champs valid
+            var myVar = setInterval(function(){
+                console.log("validation");
+                if($("#form-cot_admin" ).valid()){
+                    //message pour le formulaire sélectionné
+                    app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir. <a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
+                    if(document.getElementById("btn-send") != null){
+                        document.getElementById("btn-send").id = "btn-send-valid";
+                    }
+                } 
+                else {
+                    //message pour le formulaire sélectionné
+                    app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir. <a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
+                    if(document.getElementById("btn-send-valid") != null){
+                        document.getElementById("btn-send-valid").id = "btn-send";
+                    }
+                }
+            }, 1000);
+
 
             }, 0);
 
@@ -403,13 +442,13 @@ var app = {
                     observation_longitude: {
                             required: true
                         }
-                    },
+                    }/*,
                     highlight: function(element, errorClass, validClass) {
                         $(element).addClass(errorClass).removeClass(validClass);
                     },
                     unhighlight: function(element, errorClass, validClass) {
                         $(element).removeClass(errorClass).addClass(validClass);
-                    }
+                    }*/
                 });
             }
         );
@@ -457,25 +496,23 @@ var app = {
     submitForm: function(){
     	if($("#form-cot_admin" ).valid()){
     	    app.sending();
-	    $("#form-cot_admin" ).submit();
+            $("#form-cot_admin" ).submit();
         
-        //test online ou offline
-        app.isOnline(
-            // si on N'EST PAS connecté alors
-            function(){
-                window.setTimeout("app.close()", 800);
-            },
-            // si on EST connecté
-            function(){}
-        );
+            //test online ou offline
+            app.isOnline(
+                // si on N'EST PAS connecté alors
+                function(){
+                    window.setTimeout("app.close()", 800);
+                },
+                // si on EST connecté
+                function(){}
+            );
 
-            
-        
-	} else {
-	    app.updateMsg("Votre formulaire contient "
-      		        + $("#form-cot_admin" ).validate().numberOfInvalids()
-      		        + "erreur(s), voir le détail ci-dessous.");
-	}
+    	} else {
+    	    app.updateMsg("Votre formulaire contient "
+          		        + $("#form-cot_admin" ).validate().numberOfInvalids()
+          		        + "erreur(s), voir le détail ci-dessous.");
+    	}
     },
 
     loadForm: function(){
