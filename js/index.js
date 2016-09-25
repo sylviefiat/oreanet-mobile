@@ -30,13 +30,14 @@ var app = {
         app.isOnline(
             // si on N'EST PAS connecté alors
             function(){
-                //on est sur la page index.html et offline
+                //On remet le splascreen
+                document.getElementById("devicereadyoff").id = "deviceready";
+                console.log("On remet le splascreen");
+                //On est sur la page index.html et offline
                 //On enlève online 
                 document.getElementById("online").style.display = "none";
                 //On affiche offline
                 document.getElementById("offline").style.display = "block";
-                //On affiche le formulaire
-                document.getElementById("contentoff").id = "content";
                 //On enlève le lien site dans le menu
                 document.getElementById("lien-site-menu").id = "lien-site-menu-off";
              },
@@ -44,11 +45,11 @@ var app = {
             function(){
                 //Si on est sur la page index.html et on est online alors
                 if(app.getUrlVars()["id"] == null){
-
+                    //on remet le splascreen
+                    document.getElementById("devicereadyoff").id = "deviceready";
+                    console.log("On remet le splascreen");
                     //On vérifie l’existence d'une liste
                     setTimeout(function(){ db.listCOTexist();},1000);
-                    //On affiche le formulaire
-                    document.getElementById("contentoff").id = "content";
                 }
             }
         );
@@ -99,6 +100,10 @@ var app = {
         if(app.getUrlVars()["id"] == null) {
             setTimeout(function(){
 
+            //On affiche le formulaire
+            document.getElementById("contentoff").id = "content";
+            console.log("On affiche le formulaire");
+
             console.log("<<<<<formulaire non existant>>>>");
 
             if(document.getElementById("deviceready") != null){
@@ -117,17 +122,35 @@ var app = {
             // ajouter un "validateur" de formulaire
             app.validForm();
 
+             //test les champs valid
+            var myVar = setInterval(function(){
+                console.log("validation");
+                if($("#form-cot_admin" ).valid()){
+                    //message pour le formulaire sélectionné
+                    app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
+                    if(document.getElementById("btn-send") != null){
+                        document.getElementById("btn-send").id = "btn-send-valid";
+                    }
+                } 
+                else {
+                    //message pour le formulaire sélectionné
+                    app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
+                    if(document.getElementById("btn-send-valid") != null){
+                        document.getElementById("btn-send-valid").id = "btn-send";
+                    }
+                }
+            }, 1000);
+
             }, 2000);
 
         }
         //sinon si l'ID dans url est égal a "" alors c'est un nouveau formulaire dans index.html?id=
         else if(app.getUrlVars()["id"] == "") {
             setTimeout(function(){
-            // enlevé le splashscreen et affiche le formulaire
-            document.getElementById("deviceready").style.visibility = 'hidden';
 
             //On affiche le formulaire
             document.getElementById("contentoff").id = "content";
+            console.log("On affiche le formulaire");
             
             console.log("<<<<<formulaire non existant>>>>");
 
@@ -163,10 +186,10 @@ var app = {
         //sinon on modifie un formulaire existant
         else {
             setTimeout(function(){
-            // enlevé le splashscreen et affiche le formulaire
-            document.getElementById("deviceready").style.visibility = 'hidden';
+
             //On affiche le formulaire
             document.getElementById("contentoff").id = "content";
+            console.log("On affiche le formulaire");
 
             console.log("<<<<<formulaire existant>>>>");
 
@@ -295,21 +318,21 @@ var app = {
     },
     // Remove splascreen
     open: function(){
+        console.log("OPEN");
 
     	var parentElement = document.getElementById("deviceready");
         var listeningElement = parentElement.querySelector('.listening');
-        console.log("Avant " + listeningElement.className);
     	if(listeningElement != null){
                 listeningElement.className='event connecting row vertical-align';
         	    listeningElement.addEventListener("transitionend",  function(e) {
     	    	listeningElement.className='event ready';
-                console.log("Après " + listeningElement.className);
     	    	parentElement.style.visibility = "hidden";
     	    },false);
     	}
     },
    // Sending form wait splashscreen
     sending: function(){
+        console.log("SENDING");
     	window.scrollTo(0, 0);
         //test online ou offline
         app.isOnline(
@@ -340,6 +363,8 @@ var app = {
     },
     // ser closing screen
     close: function(){
+        console.log("CLOSE");
+
     	window.scrollTo(0, 0);
         //test online ou offline
         app.isOnline(
