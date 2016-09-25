@@ -59,6 +59,9 @@ var app = {
                 }
             }
         );
+        //On affiche le formulaire
+        document.getElementById("contentoff").id = "content";
+        console.log("On affiche le formulaire");
 
         //dev mobile
 	    //setTimeout(function(){app.receivedEvent('deviceready');},0);
