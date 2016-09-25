@@ -524,11 +524,11 @@ input[type=checkbox], input[type=radio] {
   }
 }
   
-/*Cancal button*/
-#nav-bot {
+/*Cancel button*/
+#btn-cancel {
     display:none;
 }
-#nav-bot-on {
+#btn-cancel-on {
     text-align: center;
     height: 18px;
     background: #EEEEEE;
@@ -540,11 +540,11 @@ input[type=checkbox], input[type=radio] {
     border-bottom: 3px groove #DBD7D7;
 
 }
-#nav-bot-on a{
+#btn-cancel-on a{
     display: block;
     padding-top: 12px;
 }
-#nav-bot-on a:link 
+#btn-cancel-on a:link 
 { 
  text-decoration:none; 
 } 

@@ -192,7 +192,7 @@ var app = {
             console.log("<<<<<formulaire existant>>>>");
 
             //On affiche bouton retour
-            document.getElementById("nav-bot").id = "nav-bot-on";
+            document.getElementById("btn-cancel").id = "btn-cancel-on";
             // démarrer le plugin addressPicker
             app.addressPicker();
             // remplir avec ces données le formulaire
