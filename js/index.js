@@ -40,6 +40,9 @@ var app = {
                 document.getElementById("offline").style.display = "block";
                 //On enlève le lien site dans le menu
                 document.getElementById("lien-site-menu").id = "lien-site-menu-off";
+                //On affiche le formulaire
+                document.getElementById("contentoff").id = "content";
+                console.log("On affiche le formulaire");
              },
             // si on EST connecté
             function(){
@@ -48,6 +51,9 @@ var app = {
                     //on remet le splascreen
                     document.getElementById("devicereadyoff").id = "deviceready";
                     console.log("On remet le splascreen");
+                    //On affiche le formulaire
+                    document.getElementById("contentoff").id = "content";
+                    console.log("On affiche le formulaire");
                     //On vérifie l’existence d'une liste
                     setTimeout(function(){ db.listCOTexist();},1000);
                 }
@@ -100,10 +106,6 @@ var app = {
         if(app.getUrlVars()["id"] == null) {
             setTimeout(function(){
 
-            //On affiche le formulaire
-            document.getElementById("contentoff").id = "content";
-            console.log("On affiche le formulaire");
-
             console.log("<<<<<formulaire non existant>>>>");
 
             if(document.getElementById("deviceready") != null){
@@ -147,10 +149,6 @@ var app = {
         //sinon si l'ID dans url est égal a "" alors c'est un nouveau formulaire dans index.html?id=
         else if(app.getUrlVars()["id"] == "") {
             setTimeout(function(){
-
-            //On affiche le formulaire
-            document.getElementById("contentoff").id = "content";
-            console.log("On affiche le formulaire");
             
             console.log("<<<<<formulaire non existant>>>>");
 
@@ -186,10 +184,6 @@ var app = {
         //sinon on modifie un formulaire existant
         else {
             setTimeout(function(){
-
-            //On affiche le formulaire
-            document.getElementById("contentoff").id = "content";
-            console.log("On affiche le formulaire");
 
             console.log("<<<<<formulaire existant>>>>");
 
