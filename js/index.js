@@ -51,17 +51,18 @@ var app = {
                     //on remet le splascreen
                     document.getElementById("devicereadyoff").id = "deviceready";
                     console.log("On remet le splascreen");
+                    //On vérifie l’existence d'une liste
+                    setTimeout(function(){ db.listCOTexist();},1000);
                     //On affiche le formulaire
                     document.getElementById("contentoff").id = "content";
                     console.log("On affiche le formulaire");
-                    //On vérifie l’existence d'une liste
-                    setTimeout(function(){ db.listCOTexist();},1000);
+                }else {
+                    //On affiche le formulaire
+                    document.getElementById("contentoff").id = "content";
+                    console.log("On affiche le formulaire");
                 }
             }
         );
-        //On affiche le formulaire
-        document.getElementById("contentoff").id = "content";
-        console.log("On affiche le formulaire");
 
         //dev mobile
 	    //setTimeout(function(){app.receivedEvent('deviceready');},0);
