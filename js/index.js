@@ -145,7 +145,7 @@ var app = {
                         document.getElementById("btn-send-valid").id = "btn-send";
                     }
                 }
-            }, 1000);
+            }, 2000);
 
             }, 2000);
 
@@ -164,24 +164,9 @@ var app = {
             app.addSubmitForm();
             // ajouter un "validateur" de formulaire
             app.validForm();
-             //test les champs valid
-            var myVar = setInterval(function(){
-                console.log("validation");
-                if($("#form-cot_admin" ).valid()){
-                    //message pour le formulaire sélectionné
-                    app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
-                    if(document.getElementById("btn-send") != null){
-                        document.getElementById("btn-send").id = "btn-send-valid";
-                    }
-                } 
-                else {
-                    //message pour le formulaire sélectionné
-                    app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
-                    if(document.getElementById("btn-send-valid") != null){
-                        document.getElementById("btn-send-valid").id = "btn-send";
-                    }
-                }
-            }, 1000);
+
+            //teste liste exist
+            db.listExist();
 
             }, 0);
         }

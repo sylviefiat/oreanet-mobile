@@ -204,6 +204,64 @@ var db = {
     });
     },
 
+    //On vérifie si list existe
+    listExist: function(){
+
+	var cotsDb = db.openDB();
+        cotsDb.transaction(function(transaction) {
+        transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
+            console.log("Liste exist "+results.rows.length);
+            if(results.rows.length !=0){
+            	 //On affiche bouton retour
+                document.getElementById("btn-cancel").id = "btn-cancel-on";
+            
+                //test les champs valid
+                var myVar = setInterval(function(){
+                    console.log("validation");
+                    if($("#form-cot_admin" ).valid()){
+                        //message pour le formulaire sélectionné
+                        app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir. <a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
+                        if(document.getElementById("btn-send") != null){
+                            document.getElementById("btn-send").id = "btn-send-valid";
+                        }
+                    } 
+                    else {
+                        //message pour le formulaire sélectionné
+                        app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir. <a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
+                        if(document.getElementById("btn-send-valid") != null){
+                            document.getElementById("btn-send-valid").id = "btn-send";
+                        }
+                    }
+                }, 1000);
+            }
+            else {
+                //test les champs valid
+                var myVar = setInterval(function(){
+                    console.log("validation");
+                    if($("#form-cot_admin" ).valid()){
+                        //message pour le formulaire sélectionné
+                        app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
+                        if(document.getElementById("btn-send") != null){
+                            document.getElementById("btn-send").id = "btn-send-valid";
+                        }
+                    } 
+                    else {
+                        //message pour le formulaire sélectionné
+                        app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
+                        if(document.getElementById("btn-send-valid") != null){
+                            document.getElementById("btn-send-valid").id = "btn-send";
+                        }
+                    }
+                }, 1000);
+            }
+    
+        }, function(transaction,error) {		    
+		    console.log("some error updating data: "+error.message);
+		    return 0;
+		});
+    });
+    },
+
     //Affichage de la liste
 	listCOT: function(){
 
