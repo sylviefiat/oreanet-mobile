@@ -162,7 +162,7 @@ if(!bg){
                 },
 				makerType: false, /* labeled, styled */
 				distanceWidget: true,
-				distanceWidgetRadius: 30,  /* meters */
+				distanceWidgetRadius: 300,  /* meters */
                 appendToAddressString: '',
                 geocoderOptions: {
 					language: "fr"
