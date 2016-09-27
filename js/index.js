@@ -93,6 +93,7 @@ var app = {
     },
     // deviceready Event Handler
     onDeviceReady: function() {
+        navigator.splashscreen.hide();
         app.receivedEvent('deviceready');
     },
     // online Event Handler
