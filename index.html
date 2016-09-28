@@ -42,8 +42,9 @@
 				    <div class="thankyoupage col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
 					<img src="img/logo_end.png" title="logo"/>
 					<p id="msg-fin-enregistre">Merci d'avoir rapporté la présence d'acanthaster en Nouvelle-Calédonie</p>
-					<p><a href="#" onclick="return app.reloadForm()">Signaler d'autres acanthasters</a></p>
-					<p><a id="lie-site-web" href="http://oreanet.ird.nc">Aller voir le site de suivi Oreanet</a></p>
+					<p><a id="lien-reload" href="#" onclick="return app.reloadForm()">Signaler d'autres acanthasters</a></p>
+					<p><a id="lien-site-web" href="http://oreanet.ird.nc">Aller voir le site de suivi Oreanet</a></p>
+					<p><a href="#" onclick="return app.exitapp()">Quitter</a></p>
 				    </div>
 				</div>
             </div>
@@ -129,7 +130,9 @@
 					    <label><span class="input-group-addon exergue"><span class="fa fa-calendar"></span> Date et lieu</span></label>	
 					    <div data-role="fieldcontain" class="ui-hide-label">
 						<label for="observation_date">Date</label>				    
-					    	<input type="text" name="observation_date" id="observation_date" value="" placeholder="Date de l'observation" required/>
+					    	<input type="number" name="observation_day" id="observation_day" value="" placeholder="Jour"/>
+					    	<input type="number" name="observation_month" id="observation_month" value="" placeholder="Mois"/>
+					    	<input type="number" name="observation_year" id="observation_year" value="" placeholder="Année" required/>
 					    </div>
 					    <div data-role="fieldcontain" class="ui-hide-label">
 						<label for="observer_location">Contexte</label>				    		

@@ -27,13 +27,13 @@ var db = {
 		return 0;
 	},
 
-	insertCOT: function(observer_name, observer_tel, observer_email, observation_date, observation_location, 
+	insertCOT: function(observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
 				depth_range0, depth_range1, depth_range2, observation_method0, observation_method1, remarks, date_enregistrement) {
 		var cotsDb = db.openDB();
-		
+
 		var depth_range = ( depth_range0.length > 0 ? depth_range0 : "")
 					+((depth_range0.length > 0 && depth_range1.length > 0) ? ", " : ((depth_range0.length>0 && depth_range2.length > 0) ? ", " : ""))
 					+(depth_range1.length>0?depth_range1:"")
@@ -45,23 +45,23 @@ var db = {
 
 		cotsDb.transaction(function(transaction) {
 			transaction.executeSql(sql.INSERT, 
-				[observer_name, observer_tel, observer_email, observation_date, observation_location, 
+				[observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
 				depth_range, observation_method, 
 				remarks, date_enregistrement], 
 				function(transaction, results) {
-					
 					//test online ou offline
 			        app.isOnline(
 			            // si on N'EST PAS connecté alors
 			            function(){
+			            	console.log("aaaloo111");
 			            	app.updateMsg("Vous pourrez envoyer votre formulaire lors de votre prochaine connexion à internet");
 			            },
 			            // si on EST connecté
 			            function(){
-			            	db.getidFormInsertCOT(observer_name, observer_tel, observer_email, observation_date, observation_location, 
+			            	db.getidFormInsertCOT(observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
 																observation_localisation, observation_region, observation_country, 
 																observation_latitude, observation_longitude, observation_number, observation_culled, 
 																counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -78,7 +78,7 @@ var db = {
 	},
 
 	//récupère l'id du nouveau formulaire a envoyé
-	getidFormInsertCOT: function(observer_name, observer_tel, observer_email, observation_date, observation_location, 
+	getidFormInsertCOT: function(observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -87,7 +87,7 @@ var db = {
 		var cotsDb = db.openDB();
 
 		cotsDb.transaction(function(transaction) {
-			transaction.executeSql(sql.SELECTidINSERT, [observer_name, observer_tel, observer_email, observation_date, observation_location, 
+			transaction.executeSql(sql.SELECTidINSERT, [observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
 					observation_localisation, observation_region, observation_country, 
 					observation_latitude, observation_longitude, observation_number, observation_culled, 
 					counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -212,48 +212,14 @@ var db = {
         transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
             console.log("Liste exist "+results.rows.length);
             if(results.rows.length !=0){
-            	 //On affiche bouton retour
+            	//On affiche bouton retour
                 document.getElementById("btn-cancel").id = "btn-cancel-on";
+
+                //retour a la liste a la fin de finaliser ou nouveau
+                document.getElementById("lien-reload").innerHTML = "Retour a la liste";
+
+            }
             
-                //test les champs valid
-                var myVar = setInterval(function(){
-                    console.log("validation");
-                    if($("#form-cot_admin" ).valid()){
-                        //message pour le formulaire sélectionné
-                        app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir. <a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
-                        if(document.getElementById("btn-send") != null){
-                            document.getElementById("btn-send").id = "btn-send-valid";
-                        }
-                    } 
-                    else {
-                        //message pour le formulaire sélectionné
-                        app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir. <a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
-                        if(document.getElementById("btn-send-valid") != null){
-                            document.getElementById("btn-send-valid").id = "btn-send";
-                        }
-                    }
-                }, 1000);
-            }
-            else {
-                //test les champs valid
-                var myVar = setInterval(function(){
-                    console.log("validation");
-                    if($("#form-cot_admin" ).valid()){
-                        //message pour le formulaire sélectionné
-                        app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
-                        if(document.getElementById("btn-send") != null){
-                            document.getElementById("btn-send").id = "btn-send-valid";
-                        }
-                    } 
-                    else {
-                        //message pour le formulaire sélectionné
-                        app.updateMsg("Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir.");
-                        if(document.getElementById("btn-send-valid") != null){
-                            document.getElementById("btn-send-valid").id = "btn-send";
-                        }
-                    }
-                }, 1000);
-            }
     
         }, function(transaction,error) {		    
 		    console.log("some error updating data: "+error.message);
@@ -277,7 +243,7 @@ var db = {
 
             for (i = 0; i < results.rows.length; i++){ 
           		//on remplit le tableau
-                  listbdd = "<tr><td data-th='Créé le'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date'>" + results.rows.item(i).observation_date + "</td><td data-th='Nbr acanthasters'>" + results.rows.item(i).observation_number + "</td><td data-th='Lieu'>" + results.rows.item(i).observation_location + "</td><td data-th='Supprimer'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finaliser'><button type=button href=# onclick='return app.getFormID("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finaliser</button></td>" + "</tr>";
+                  listbdd = "<tr><td data-th='Créé le'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date'>" + results.rows.item(i).observation_day + "/" + results.rows.item(i).observation_month + "/" + results.rows.item(i).observation_year + "</td><td data-th='Nbr acanthasters'>" + results.rows.item(i).observation_number + "</td><td data-th='Lieu'>" + results.rows.item(i).observation_location + "</td><td data-th='Supprimer'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finaliser'><button type=button href=# onclick='return app.getFormID("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finaliser</button></td>" + "</tr>";
                     parentElement.querySelector('.cot_list_forms').innerHTML +=  listbdd;
                     
                }
@@ -303,7 +269,9 @@ var db = {
                     results.rows.item(i).observer_name,
                     results.rows.item(i).observer_tel,
                     results.rows.item(i).observer_email,
-                    results.rows.item(i).observation_date,
+                    results.rows.item(i).observation_day,
+                    results.rows.item(i).observation_month,
+                    results.rows.item(i).observation_year,
                     results.rows.item(i).observation_location,
                     results.rows.item(i).observation_localisation,
                     results.rows.item(i).observation_region,
@@ -325,7 +293,7 @@ var db = {
 
     //On modifier un tuple déjà existant grâce a son id
     updateFormCot: function(observer_name, observer_tel, observer_email, 
-			    			observation_date, observation_location, 
+			    			observation_day, observation_month, observation_year, observation_location, 
 							observation_localisation, observation_region, observation_country, 
 							observation_latitude, observation_longitude, 
 							observation_number, observation_culled, 
@@ -347,7 +315,7 @@ var db = {
 		cotsDb.transaction(function(transaction) {
 			transaction.executeSql(sql.UPDATEFORM, 
 				[	observer_name, observer_tel, observer_email, 
-					observation_date, observation_location, 
+					observation_day, observation_month, observation_year, observation_location, 
 					observation_localisation, observation_region, observation_country, 
 					observation_latitude, observation_longitude, 
 					observation_number, observation_culled, 
