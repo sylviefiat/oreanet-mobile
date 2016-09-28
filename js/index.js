@@ -609,14 +609,8 @@ var app = {
 
     cancel: function(){
         window.location.href="./list.html";
-    },
-
-    exitapp: function(){
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        this.startActivity(intent); 
     }
+
 };
 
 
