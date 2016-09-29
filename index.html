@@ -27,78 +27,82 @@
 				<!-- Splashscreen du debut -->	
 		        <div class="event listening row vertical-align">		    
 				    <div class="splashscreen col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
-					<img src="img/logo.png" title="logo"/>
-					<p class="blink">Connecting</p>
+						<img src="img/logo.png" title="logo"/>
+						<p class="blink">Connecting</p>
 				    </div>
 				</div>
 				<!-- Splashscreen en cours d'envoi -->
 				<div class="event onsend row vertical-align">
 				    <div class="splashscreen col-xs-12 col-sm-12 col-md-6 col-md-offset-3">			
-					<p class="blink">Sending report</p>
+						<p class="blink">Sending report</p>
 				    </div>
 				</div>
 				<!-- Splashscreen de la fin -->
 				<div class="event onclose row vertical-align">
 				    <div class="thankyoupage col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
-					<img src="img/logo_end.png" title="logo"/>
-					<p id="msg-fin-enregistre">Merci d'avoir rapporté la présence d'acanthaster en Nouvelle-Calédonie</p>
-					<p><a id="lien-reload" href="#" onclick="return app.reloadForm()">Signaler d'autres acanthasters</a></p>
-					<p><a id="lien-site-web" href="http://oreanet.ird.nc">Aller voir le site de suivi Oreanet</a></p>
-					<p><a href="#" onclick="navigator.app.exitApp();">Quitter</a></p>
+						<img src="img/logo_end.png" title="logo"/>
+						<p id="msg-fin-enregistre">Merci d'avoir rapporté la présence d'acanthaster en Nouvelle-Calédonie</p>
+						<p><a id="lien-reload" href="#" onclick="return app.reloadForm()">Signaler d'autres acanthasters</a></p>
+						<p><a id="lien-site-web" href="http://oreanet.ird.nc">Aller voir le site de suivi Oreanet</a></p>
+						<p><a href="#" onclick="navigator.app.exitApp();">Quitter</a></p>
 				    </div>
 				</div>
             </div>
 		    <!-- module d'affichage des messages (erreur ou info) -->
 		    <div id="system-message-container">
-			<div id="system-message">
-			    <div class="alert fade in" id="message">
-				<a class="close" onclick="return app.closeMsg()">×</a>
-				<p id="msg" class="alert-message">
-				    
-				</p>
-			    </div>
-			</div>
+				<div id="system-message">
+				    <div class="alert fade in" id="message">
+					<a class="close" onclick="return app.closeMsg()">×</a>
+					<p id="msg" class="alert-message">
+					    
+					</p>
+				    </div>
+				</div>
 		    </div>
 		    <!-- page principale -->
 		    <div id="contentoff" class="container contenu">	    	
 			<div class="row">
-			<!--barre de navigation -->
+				<!--barre de navigation -->
 	 			<nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation">
-					        <div>
-					    	    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
-					      		<span class="sr-only">Toggle navigation</span>
-					      		<span class="icon-bar"></span>
-					      		<span class="icon-bar"></span>
-					      		<span class="icon-bar"></span>
-					    	    </button>
-					    	    <div class="navbar-header col-xs-4 col-sm-4 col-md-5">
-					      	    	<a class="navbar-brand" rel="home" href="#" title="Home"> Signaler des Acantasthers</a>
-					    	    </div>
-					    	    <!-- Non-collapsing right-side icons -->
-					    	    <ul class="nav navbar-nav navbar-right col-xs-4 col-sm-3 col-md-2">
-					      		<li>
-							    <a href="#" onclick="return app.submitForm()" id="btn-send" class="fa fa-paper-plane col-xs-3"></a>
-					      		</li>
-					      		<li>
-							    <a href="#" onclick="return app.reloadForm()" id="btn-reload" class="fa fa-refresh col-xs-3"></a>
-					      		</li>
-					      		<li id="online">
-					      			<p> En ligne </p>
-					      		</li>
-					      		<li id="offline">
-					      			<p> Hors ligne </p>
-					      		</li>
-					    	    </ul>
-					    	    <!-- the collapsing menu -->
-					    	    <div class="collapse navbar-collapse navbar-left col-md-4" id="navbar-collapse-1">
-					     		 <ul class="nav navbar-nav">
-							    <li><a href="#" onclick="return app.showInfoMsg()" data-toggle="collapse" data-target="#navbar-collapse-1.in">Info</a></li>
-							    <li id="lien-site-menu"><a href="http://oreanet.ird.nc" data-toggle="collapse" data-target="#navbar-collapse-1.in">Voir le site</a></li>
-					      		</ul>
-					    	    </div>
-					    	<!--/.nav-collapse -->
-					  	</div>
-					      <!--/.container -->
+					<div>
+			    	    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+				      		<span class="sr-only">Toggle navigation</span>
+				      		<span class="icon-bar"></span>
+				      		<span class="icon-bar"></span>
+				      		<span class="icon-bar"></span>
+			    	    </button>
+			    	    <div class="navbar-header col-xs-4 col-sm-4 col-md-5">
+			      	    	<a class="navbar-brand" rel="home" href="#" title="Home"> Signaler des Acantasthers</a>
+			    	    </div>
+			    	    <!-- Non-collapsing right-side icons -->
+			    	    <ul class="nav navbar-nav navbar-right col-xs-4 col-sm-3 col-md-2">
+				      		<li>
+						    	<a href="#" onclick="return app.submitForm()" id="btn-send" class="fa fa-paper-plane col-xs-3"></a>
+				      		</li>
+				      		<li>
+						    	<a href="#" onclick="return app.reloadForm()" id="btn-reload" class="fa fa-refresh col-xs-3"></a>
+				      		</li>
+				      		<li id="online">
+				      			<p> En ligne </p>
+				      		</li>
+				      		<li id="offline">
+				      			<p> Hors ligne </p>
+				      		</li>
+			    	    </ul>
+			    	    <!-- the collapsing menu -->
+			    	    <div class="collapse navbar-collapse navbar-left col-md-4" id="navbar-collapse-1">
+				     		 <ul class="nav navbar-nav">
+							    <li>
+							    	<a href="#" onclick="return app.showInfoMsg()" data-toggle="collapse" data-target="#navbar-collapse-1.in">Info</a>
+							    </li>
+							    <li id="lien-site-menu">
+							    	<a href="http://oreanet.ird.nc" data-toggle="collapse" data-target="#navbar-collapse-1.in">Voir le site</a>
+							    </li>
+				      		</ul>
+			    	    </div>
+					   	<!--/.nav-collapse -->
+					</div>
+					<!--/.container -->
 				</nav>   
 			     <!-- formulaire -->
 			    <div class="col-lg-12">
@@ -174,8 +178,9 @@
 						<label for="observer_culled">Acanthasters Nettoyées</label>				    		
 					    	<input type="text" name="observation_culled" id="observation_culled" value="" placeholder="Nombre d'acanthasters nettoyées"/>
 					    </div>
-				    	    <!-- part IV -->
-				    	    <label><span class="input-group-addon exergue"><span class="fa fa-binoculars"></span> Méthode d'observation</span></label>	
+
+				    	<!-- part IV -->
+				    	<label><span class="input-group-addon exergue"><span class="fa fa-binoculars"></span> Méthode d'observation</span></label>	
 					    <div data-role="fieldcontain" class="ui-hide-label">
 					        <fieldset data-role="controlgroup">
 						    <legend>Méthode d'observation</legend>
@@ -235,7 +240,8 @@
 					    <!-- part VIII -->
 					    <div id="btn-cancel">
 		    				<a href="#" onclick="return app.cancel()">Retour à la liste</a>
-		    			</div>		   				   
+		    			</div>	
+
 					</form>
 				    </div>
 				</div>

@@ -56,7 +56,6 @@ var db = {
 			        app.isOnline(
 			            // si on N'EST PAS connecté alors
 			            function(){
-			            	console.log("aaaloo111");
 			            	app.updateMsg("Vous pourrez envoyer votre formulaire lors de votre prochaine connexion à internet");
 			            },
 			            // si on EST connecté
@@ -242,8 +241,17 @@ var db = {
         	app.updateMsg("Il vous reste " + results.rows.length + " formulaire(s) à finaliser. Merci de nous aider à protéger les récifs de Nouvelle-Calédonie.");
 
             for (i = 0; i < results.rows.length; i++){ 
+            	var mois_month = results.rows.item(i).observation_month;
+            	var jour_day = results.rows.item(i).observation_day;
+            	if (mois_month < 10){
+            		mois_month = ("0" + mois_month).substr(mois_month.length-1,2);
+            	}
+            	if(jour_day < 10){
+            		jour_day = ("0" + jour_day).substr(jour_day.length-1,2);
+            	}
+            	
           		//on remplit le tableau
-                  listbdd = "<tr><td data-th='Créé le'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date'>" + results.rows.item(i).observation_day + "/" + results.rows.item(i).observation_month + "/" + results.rows.item(i).observation_year + "</td><td data-th='Nbr acanthasters'>" + results.rows.item(i).observation_number + "</td><td data-th='Lieu'>" + results.rows.item(i).observation_location + "</td><td data-th='Supprimer'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finaliser'><button type=button href=# onclick='return app.getFormID("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finaliser</button></td>" + "</tr>";
+                  listbdd = "<tr><td data-th='Créé le'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date'>" + jour_day + "/" + mois_month + "/" + results.rows.item(i).observation_year + "</td><td data-th='Nbr acanthasters'>" + results.rows.item(i).observation_number + "</td><td data-th='Lieu'>" + results.rows.item(i).observation_location + "</td><td data-th='Supprimer'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finaliser'><button type=button href=# onclick='return app.getFormID("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finaliser</button></td>" + "</tr>";
                     parentElement.querySelector('.cot_list_forms').innerHTML +=  listbdd;
                     
                }

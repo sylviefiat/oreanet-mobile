@@ -294,7 +294,7 @@ body {
 
 #msg .alert {
 	.well;
-	.lead;#form-cot_admin .exergue
+	.lead;
 	font-weight: bold;
 	color: #EE9A4D;
 }
@@ -552,5 +552,4 @@ input[type=checkbox], input[type=radio] {
 /*lien site web*/
 #lien-site-web-off{
     display: none;
-}
 }
