@@ -232,6 +232,7 @@ var db = {
             if(results.rows.length !=0){
             	//retour a la liste a la fin de finaliser ou nouveau
                 document.getElementById("lien-reload").innerHTML = "Retour a la liste";
+                document.getElementById("lien-reload").onclick = app.cancel;
             }
     
         }, function(transaction,error) {		    
