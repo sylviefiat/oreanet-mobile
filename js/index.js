@@ -203,7 +203,7 @@ var app = {
                 console.log("validation");
                 if($("#form-cot_admin" ).valid()){
                     //message pour le formulaire sélectionné
-                    app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir. <a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
+                    app.updateMsg("<a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
                     if(document.getElementById("btn-send") != null){
                         document.getElementById("btn-send").id = "btn-send-valid";
                     }
