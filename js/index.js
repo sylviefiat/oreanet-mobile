@@ -74,8 +74,6 @@ var app = {
         document.getElementById("offline").style.display = "none";
         //On prend onlinelist css
         document.getElementById("online").id = "onlinelist";
-        //on enlève le bouton send
-        document.getElementById("btn-send").style.display = "none";
 
         var parentElement = document.getElementById("contentlist");
         var listeningElement = parentElement.querySelector('.cot_admin_list');
@@ -601,7 +599,7 @@ var app = {
         var heure   = ('0'+date.getHours()  ).slice(-2);
         var minute  = ('0'+date.getMinutes()).slice(-2);
 
-        datetime = jour + "/" + mois + "/" + date.getFullYear() + " à " + heure +":"+ minute;
+        datetime = jour + "/" + mois + "/" + date.getFullYear() + "  " + heure +":"+ minute;
         return datetime;
     },
 
