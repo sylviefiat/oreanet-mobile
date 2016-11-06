@@ -19,46 +19,58 @@
 
 /* gloabl app management */
 var app = {
-
+    switchOnline: function(isOnline){
+        if(isOnline){
+            online=document.getElementById("onlinelist");
+            online.innerText = " En ligne";
+            online.className = "ui-btn ui-btn-icon-right fa fa-signal online";
+            online.removeAttribute("disabled");
+        } else {
+            online=document.getElementById("onlinelist");
+            online.innerText = " Hors ligne";
+            online.className = "ui-btn ui-btn-icon-right fa fa-signal";
+            online.setAttribute("disabled","disabled");
+        }
+    },
     // Application Constructor
     initialize: function() {    	
         this.bindEvents();
         //On enlève offline
-        document.getElementById("offline").style.display = "none";
+        app.switchOnline(1);
         //test online ou offline
         app.isOnline(
             // si on N'EST PAS connecté alors
             function(){
                 //On remet le splascreen
                 document.getElementById("devicereadyoff").id = "deviceready";
-                console.log("On remet le splascreen");
+                //console.log("On remet le splascreen");
                 //On est sur la page index.html et offline
-                //On enlève online 
-                document.getElementById("online").style.display = "none";
-                //On affiche offline
-                document.getElementById("offline").style.display = "block";
+                app.switchOnline(0);
                 //On enlève le lien site dans le menu
                 document.getElementById("lien-site-menu").id = "lien-site-menu-off";
                 //On affiche le formulaire
                 document.getElementById("contentoff").id = "content";
-                console.log("On affiche le formulaire");
+                //console.log("On affiche le formulaire");
              },
             // si on EST connecté
             function(){
+                if($('#btn-save').length){  
+                    $('#btn-save').show();
+                }
                 //Si on est sur la page index.html et on est online alors
                 if(app.getUrlVars()["id"] == null){
                     //on remet le splascreen
                     document.getElementById("devicereadyoff").id = "deviceready";
-                    console.log("On remet le splascreen");
+                    //console.log("On remet le splascreen");
                     //On vérifie l’existence d'une liste
                     setTimeout(function(){ db.listCOTexist();},1000);
                     //On affiche le formulaire
                     document.getElementById("contentoff").id = "content";
-                    console.log("On affiche le formulaire");
+                    //console.log("On affiche le formulaire");
                 }else {
                     //On affiche le formulaire
                     document.getElementById("contentoff").id = "content";
-                    console.log("On affiche le formulaire");
+                    //console.log("On affiche le formulaire");
                 }
             }
         );
@@ -71,16 +83,13 @@ var app = {
     //Initialisation list.html
     initializeList: function() {
         //On affiche online
-        document.getElementById("offline").style.display = "none";
-        //On prend onlinelist css
-        document.getElementById("online").id = "onlinelist";
+        app.switchOnline(1);
 
         var parentElement = document.getElementById("contentlist");
         var listeningElement = parentElement.querySelector('.cot_admin_list');
         
         //afficher la liste
         db.listCOT();
-    
     },
     // Bind Event Listeners
     bindEvents: function() {
@@ -100,6 +109,26 @@ var app = {
     onOffline: function() {
         app.turnOffline();
     },
+    // direct validation of the form 
+    checkStatus: function(e){
+        var idform = app.getUrlVars()["id"],
+        elems = $('form').find('input:required'),
+        invalid = $.grep(elems, function(n){
+            return(!n.attributes['disabled'] && !n.validity.valid);
+        }),
+        bool = $(invalid).size() == 0;
+        document.getElementById("btn-send").className = "fa fa-paper-plane ui-btn ui-last-child "+(bool?"valid":"invalid");
+        // si c'est un formulaire existant qu'on reprend alors on affiche les champs a completer        
+        if(bool){
+            app.closeMsg();
+            $(elems).removeClass("error");
+        } else {
+            if(idform!="" && idform!=null){
+                app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $(invalid).size() +" champ(s) à remplir." +  " <a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
+            }
+            $(invalid).addClass("error");
+        }
+    },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 	    
@@ -107,12 +136,14 @@ var app = {
         if(app.getUrlVars()["id"] == null) {
             setTimeout(function(){
 
-                console.log("<<<<<formulaire non existant offline>>>>");
+                //console.log("<<<<<formulaire non existant offline>>>>");
 
                 if(document.getElementById("deviceready") != null){
                     
                     //On enleve les champs Select/Regi/Pays/Lat/Long
                     document.getElementById("offlineForm").style.display = "none";
+                    // on met les input cachés en disabled
+                    $('#offlineForm').find('input').attr("disabled", true);
                     // enlevé le splashscreen et affiche le formulaire
                     app.open();
                 }
@@ -125,20 +156,7 @@ var app = {
                 // ajouter un "validateur" de formulaire
                 app.validForm();
 
-                //test les champs valid
-                var myVar = setInterval(function(){
-                    console.log("validation");
-                    if($("#form-cot_admin" ).valid()){
-                        if(document.getElementById("btn-send") != null){
-                            document.getElementById("btn-send").id = "btn-send-valid";
-                        }
-                    } 
-                    else {
-                        if(document.getElementById("btn-send-valid") != null){
-                            document.getElementById("btn-send-valid").id = "btn-send";
-                        }
-                    }
-                }, 2000);
+                $('input:required').change(app.checkStatus);
 
             }, 2000);
 
@@ -146,8 +164,8 @@ var app = {
         //sinon si l'ID dans url est égal a "" alors c'est un nouveau formulaire dans index.html?id=
         else if(app.getUrlVars()["id"] == "") {
             setTimeout(function(){
-            
-            console.log("<<<<<formulaire non existant online>>>>");
+            var id = app.getUrlVars()["id"];
+            //console.log("<<<<<formulaire non existant online>>>>");
 
             // supprime tout message afficher (si il y en a)
             app.closeMsg();
@@ -158,20 +176,7 @@ var app = {
             // ajouter un "validateur" de formulaire
             app.validForm();
 
-            //test les champs valid
-            var myVar = setInterval(function(){
-                console.log("validation");
-                if($("#form-cot_admin" ).valid()){
-                    if(document.getElementById("btn-send") != null){
-                        document.getElementById("btn-send").id = "btn-send-valid";
-                    }
-                } 
-                else {
-                    if(document.getElementById("btn-send-valid") != null){
-                        document.getElementById("btn-send-valid").id = "btn-send";
-                    }
-                }
-            }, 1000);
+            $('input:required').change(app.checkStatus);
 
             //teste liste exist ajout du retour a la liste
             db.listExistNewForm();
@@ -181,40 +186,21 @@ var app = {
         //sinon on modifie un formulaire existant
         else {
             setTimeout(function(){
-
-            console.log("<<<<<formulaire existant>>>>");
-
-            //On affiche bouton retour
-            document.getElementById("btn-cancel").id = "btn-cancel-on";
+            var id = app.getUrlVars()["id"];
+            //console.log("<<<<<formulaire existant>>>>");
             // démarrer le plugin addressPicker
             app.addressPicker();
             // remplir avec ces données le formulaire
-            db.reditCOTForm(app.getUrlVars()["id"]);
-            console.log("new index ==== "+ app.getUrlVars()["id"]);
+            db.reditCOTForm(id);
             // ajouter un listener sur le formulaire avec l'id de celui-ci
-            app.addSubmitExistForm(app.getUrlVars()["id"]);
+            app.addSubmitExistForm(id);
             // ajouter un "validateur" de formulaire
             app.validForm();
 
-            //test les champs valid
-            var myVar = setInterval(function(){
-                console.log("validation");
-                if($("#form-cot_admin" ).valid()){
-                    //message pour le formulaire sélectionné
-                    app.updateMsg("<a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
-                    if(document.getElementById("btn-send") != null){
-                        document.getElementById("btn-send").id = "btn-send-valid";
-                    }
-                } 
-                else {
-                    //message pour le formulaire sélectionné
-                    app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" champ(s) à remplir. <a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
-                    if(document.getElementById("btn-send-valid") != null){
-                        document.getElementById("btn-send-valid").id = "btn-send";
-                    }
-                }
-            }, 1000);
-
+            $('input:required').change(app.checkStatus);
+                
+            //teste liste exist ajout du retour a la liste
+            db.listExistNewForm();
             }, 0);
         }
     },
@@ -224,104 +210,116 @@ var app = {
         window.location.href="./index.html?id="+id;
     },
 
+    //on retourne l'id du formulaire encours
+    getID: function(){
+        return app.getUrlVars()["id"];
+    },
+
     //on remplit le formulaire chargé avec ces données
     reditForm: function(name,tel,email,day,month,year,location,localisation,region,country,latitude,longitude,number,culled,timed_swim,distance_swim,other_chbx,range,method,remarks){
 
-                    document.getElementById('observer_name').value = name;
-                    document.getElementById('observer_tel').value = tel;
-                    document.getElementById('observer_email').value = email;
-                    document.getElementById('observation_day').value = day;
-                    document.getElementById('observation_month').value = month;
-                    document.getElementById('observation_year').value = year;
-                    document.getElementById('observation_location').value = location;
-                    document.getElementById('observation_localisation').value = localisation;
-                    document.getElementById('observation_region').value = region;
-                    document.getElementById('observation_pays').value = country;
-                    document.getElementById('observation_latitude').value = latitude;
-                    document.getElementById('observation_longitude').value = longitude;
-                    document.getElementById('observation_number').value = number;
-                    document.getElementById('observation_culled').value = culled;
-                    document.getElementById('counting_method_timed_swim').value = timed_swim;
-                    document.getElementById('counting_method_distance_swim').value = distance_swim;
-                    document.getElementById('counting_method_other').value = other_chbx;
-                    if(range.includes("shallow") == true){
-                        console.log("shallow");
-                        document.getElementById("depth_range0").checked = true;
-                        document.getElementById("label_depth_range0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
-                    } 
+        document.getElementById('observer_name').value = name;
+        document.getElementById('observer_tel').value = tel;
+        document.getElementById('observer_email').value = email;
+        document.getElementById('observation_day').value = day;
+        document.getElementById('observation_month').value = month;
+        document.getElementById('observation_year').value = year;
+        document.getElementById('observation_location').value = location;
+        document.getElementById('observation_localisation').value = localisation;
+        document.getElementById('observation_region').value = region;
+        document.getElementById('observation_pays').value = country;
+        document.getElementById('observation_latitude').value = latitude;
+        document.getElementById('observation_longitude').value = longitude;
+        document.getElementById('observation_number').value = number;
+        document.getElementById('observation_culled').value = culled;
+        document.getElementById('counting_method_timed_swim').value = timed_swim;
+        document.getElementById('counting_method_distance_swim').value = distance_swim;
+        document.getElementById('counting_method_other').value = other_chbx;
+        if(range.includes("shallow") == true){
+            //console.log("shallow");
+            document.getElementById("depth_range0").checked = true;
+            document.getElementById("label_depth_range0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+        } 
 
-                    if(range.includes("medium") == true){
-                        console.log("medium");
-                        document.getElementById("depth_range1").checked = true;
-                        document.getElementById("label_depth_range1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
-                    }
+        if(range.includes("medium") == true){
+            //console.log("medium");
+            document.getElementById("depth_range1").checked = true;
+            document.getElementById("label_depth_range1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+        }
 
-                    if(range.includes("deep") == true){
-                        console.log("deep");
-                        document.getElementById("depth_range2").checked = true;
-                        document.getElementById("label_depth_range2").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
-                    }
+        if(range.includes("deep") == true){
+            //console.log("deep");
+            document.getElementById("depth_range2").checked = true;
+            document.getElementById("label_depth_range2").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+        }
 
-                    if(method.includes("snorkelling") == true){
-                        console.log("snorkelling");
-                       document.getElementById("observation_method0").checked = true;
-                       document.getElementById("label_observation_method0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
-                    }
+        if(method.includes("snorkelling") == true){
+            //console.log("snorkelling");
+            document.getElementById("observation_method0").checked = true;
+            document.getElementById("label_observation_method0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+        }
 
-                    if (method.includes("scuba diving") == true){
-                        console.log("scuba diving");
-                        document.getElementById("observation_method1").checked = true;
-                        document.getElementById("label_observation_method1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
-                    }
+        if (method.includes("scuba diving") == true){
+            //console.log("scuba diving");
+            document.getElementById("observation_method1").checked = true;
+            document.getElementById("label_observation_method1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+        }
 
-                    document.getElementById('remarks').value = remarks;
+        document.getElementById('remarks').value = remarks;
+
+        // validate le formulaire pour afficher les champs non remplis
+        app.checkStatus();
     },
 
     //supprime un formulaire avec son id
     supprForm: function(id){
         if (confirm("Voulez-vous supprimer ce formulaire ?")) {
            db.updateCOT(id);
-           console.log("element supprimer id="+id);
+           //console.log("element supprimer id="+id);
            window.setTimeout("window.location.reload()", 500);
        }
-        
     },
 
     //permet de recupérer l'id dans l'url
     getUrlVars: function () {
         var vars = {};
         var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
+            vars[key] = value;
         });
         return vars;
     },
 
     // Turn app to online mode
     turnOnline: function(){
-    	app.addressPicker();
-	   app.reloadForm();
+        app.addressPicker();
+	    app.reloadForm();
+        online=document.getElementById("onlinelist");
+        app.switchOnline(1);
+        online.addClass = "online";
+        app.reloadForm();
     },
     // Turn app to offline mode
     turnOffline: function(){
     	app.updateMsg("L'application est actuellement hors ligne, certaines fonctionnalités ne seront pas disponibles et les données pourront être envoyées à la prochaine connexion.");
+        app.switchOnline(0);
     },
     // Remove splascreen
     open: function(){
-        console.log("OPEN");
+        //console.log("OPEN");
 
     	var parentElement = document.getElementById("deviceready");
         var listeningElement = parentElement.querySelector('.listening');
     	if(listeningElement != null){
-                listeningElement.className='event connecting row vertical-align';
-        	    listeningElement.addEventListener("transitionend",  function(e) {
+            listeningElement.className='event connecting row vertical-align';
+    	    listeningElement.addEventListener("transitionend",  function(e) {
     	    	listeningElement.className='event ready';
     	    	parentElement.style.visibility = "hidden";
     	    },false);
     	}
     },
-   // Sending form wait splashscreen
+    // Sending form wait splashscreen
     sending: function(){
-        console.log("SENDING");
+        //console.log("SENDING");
     	window.scrollTo(0, 0);
         //test online ou offline
         app.isOnline(
@@ -352,7 +350,7 @@ var app = {
     },
     // ser closing screen
     close: function(){
-        console.log("CLOSE");
+        //console.log("CLOSE");
 
     	window.scrollTo(0, 0);
         //test online ou offline
@@ -373,39 +371,51 @@ var app = {
         var parentElement = document.getElementById("deviceready");
     	var listeningElement = parentElement.querySelector('.sending');
     	if(listeningElement != null){
-                listeningElement.className='event sent row vertical-align';    	    
+            listeningElement.className='event sent row vertical-align';    	    
     	}
         var listeningElement = parentElement.querySelector('.onclose');
         listeningElement.className='event closing row vertical-align';
     	listeningElement.addEventListener("transitionend",  function(e) {
-	    listeningElement.className='event closed row vertical-align';
+	       listeningElement.className='event closed row vertical-align';
 	    },false);
     },
 
     // Reload form
     reloadForm: function() {
-        $("#form-cot_admin").trigger('reset');
-	    window.location.href="./index.html";
+
+        app.isOnline(
+            // si on N'EST PAS connecté alors
+            function(){
+                $("#form-cot_admin").trigger('reset');
+                window.location.href="./index.html";
+            },
+            // si on EST connecté
+            function(){
+                app.getFormID("");
+            }
+        );
+        
     },
 
     updateMsg: function(msg) {
         document.getElementById("msg").innerHTML = msg;
-	   document.getElementById("system-message-container").style.display = "block";
+	    document.getElementById("system-message-container").style.display = "block";
     },    
 
     showInfoMsg: function() {
         msg = "L'analyse de la présence des acanthasters nous permet de comprendre pour mieux agir. En nous signalant les acanthasters que vous rencontrez, vous nous aidez à protéger les récifs de Nouvelle-Calédonie.";
-	app.updateMsg(msg);
+	    app.updateMsg(msg);
+        $("#navbar").collapsible('collapse');
     }, 
 
     closeMsg: function() {
-	document.getElementById("system-message-container").style.display = "none";
+	   document.getElementById("system-message-container").style.display = "none";
     }, 
 
     addressPicker: function(){	
-	$("#observation_localisation" ).addressPickerByGiro(
+    	$("#observation_localisation" ).addressPickerByGiro(
 	    {
-		distanceWidget: true
+		  distanceWidget: true
 	    });	
     },
 
@@ -416,21 +426,21 @@ var app = {
             // si on N'EST PAS connecté alors les champs sont Name/Email/Date/Location
             function(){
                 $("#form-cot_admin").validate({
-                rules: {
-                observer_name: {
-                        minlength: 2,
-                        required: true
-                    },
-                    observer_email: {
-                        required: true,
-                        email: true
-                    },
-                    observation_year: {
-                        required: true
-                    },
-                    observation_location: {
-                        required: true
-                    }
+                    rules: {
+                        observer_name: {
+                            minlength: 2,
+                            required: true
+                        },
+                        observer_email: {
+                            required: true,
+                            email: true
+                        },
+                        observation_year: {
+                            required: true
+                        },
+                        observation_location: {
+                            required: true
+                        }
                     },
                     highlight: function(element, errorClass, validClass) {
                         $(element).addClass(errorClass).removeClass(validClass);
@@ -444,7 +454,7 @@ var app = {
             function(){
                 $("#form-cot_admin").validate({
                     rules: {
-                    observer_name: {
+                        observer_name: {
                             minlength: 2,
                             required: true
                         },
@@ -455,13 +465,13 @@ var app = {
                         observation_year: {
                             required: true
                         },
-                    observation_localisation: {
+                        observation_localisation: {
                             required: true
                         },
-                    observation_latitude: {
+                        observation_latitude: {
                             required: true
                         },
-                    observation_longitude: {
+                        observation_longitude: {
                             required: true
                         }
                     },
@@ -478,46 +488,82 @@ var app = {
 
     //On utilise la fonction sql pour enregistrer les données
     addSubmitForm: function(){
+        var save = "false";
     	$('#form-cot_admin').submit(function() {
-		console.log("form submit");
-		db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
-			$('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
-			$('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
-			$('#observation_number').val(),$('#observation_culled').val(),
-            $('#counting_method_timed_swim').val(), $('#counting_method_distance_swim').val(),$('#counting_method_other').val(),
-			$('#depth_range0').prop('checked')?$('#depth_range0').val():"",
-			$('#depth_range1').prop('checked')?$('#depth_range1').val():"",
-			$('#depth_range2').prop('checked')?$('#depth_range2').val():"",
-			$('#observation_method0').prop('checked')?$('#observation_method0').val():"",
-			$('#observation_method1').prop('checked')?$('#observation_method1').val():"",
-			$('#remarks').val(), app.getDateTime());			
-		return false;
+    		//console.log("form submit");
+    		db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
+    			$('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
+    			$('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
+    			$('#observation_number').val(),$('#observation_culled').val(),
+                $('#counting_method_timed_swim').val(), $('#counting_method_distance_swim').val(),$('#counting_method_other').val(),
+    			$('#depth_range0').prop('checked')?$('#depth_range0').val():"",
+    			$('#depth_range1').prop('checked')?$('#depth_range1').val():"",
+    			$('#depth_range2').prop('checked')?$('#depth_range2').val():"",
+    			$('#observation_method0').prop('checked')?$('#observation_method0').val():"",
+    			$('#observation_method1').prop('checked')?$('#observation_method1').val():"",
+    			$('#remarks').val(), app.getDateTime(), save);			
+    		return false;
 	});	
     },
 
     //on utilise la fonction sql pour modifier les données
     addSubmitExistForm: function(id){
+        var save = "false";
         $('#form-cot_admin').submit(function() {
-        console.log("form submit");
-        db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
-            $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
-            $('#observation_pays').val(), $('#observation_latitude').val(), $('#observation_longitude').val(),
-            $('#observation_number').val(), $('#observation_culled').val(), 
-            $('#counting_method_timed_swim').val(), $('#counting_method_distance_swim').val(), $('#counting_method_other').val(),
-            $('#depth_range0').prop('checked')?$('#depth_range0').val():"",
-            $('#depth_range1').prop('checked')?$('#depth_range1').val():"",
-            $('#depth_range2').prop('checked')?$('#depth_range2').val():"",
-            $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
-            $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
-            $('#remarks').val(), id);          
-        return false;
+            //console.log("form submit");
+            db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
+                $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
+                $('#observation_pays').val(), $('#observation_latitude').val(), $('#observation_longitude').val(),
+                $('#observation_number').val(), $('#observation_culled').val(), 
+                $('#counting_method_timed_swim').val(), $('#counting_method_distance_swim').val(), $('#counting_method_other').val(),
+                $('#depth_range0').prop('checked')?$('#depth_range0').val():"",
+                $('#depth_range1').prop('checked')?$('#depth_range1').val():"",
+                $('#depth_range2').prop('checked')?$('#depth_range2').val():"",
+                $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
+                $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
+                $('#remarks').val(), id, save);          
+            return false;
     }); 
     },
 
+    saveForm: function(){
+        var save = "true";
+        event.preventDefault();
+        if(app.getID()==""){
+            console.log("allo insert id");
+            db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
+                $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
+                $('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
+                $('#observation_number').val(),$('#observation_culled').val(),
+                $('#counting_method_timed_swim').val(), $('#counting_method_distance_swim').val(),$('#counting_method_other').val(),
+                $('#depth_range0').prop('checked')?$('#depth_range0').val():"",
+                $('#depth_range1').prop('checked')?$('#depth_range1').val():"",
+                $('#depth_range2').prop('checked')?$('#depth_range2').val():"",
+                $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
+                $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
+                $('#remarks').val(), app.getDateTime(), save);  
+        }
+        else {
+            console.log("allo save finaliz");
+            db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
+                $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
+                $('#observation_pays').val(), $('#observation_latitude').val(), $('#observation_longitude').val(),
+                $('#observation_number').val(), $('#observation_culled').val(), 
+                $('#counting_method_timed_swim').val(), $('#counting_method_distance_swim').val(), $('#counting_method_other').val(),
+                $('#depth_range0').prop('checked')?$('#depth_range0').val():"",
+                $('#depth_range1').prop('checked')?$('#depth_range1').val():"",
+                $('#depth_range2').prop('checked')?$('#depth_range2').val():"",
+                $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
+                $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
+                $('#remarks').val(), app.getID(), save);  
+        }
+        setTimeout(function(){app.cancel();},1000);
+    },
+
     submitForm: function(){
-    	if($("#form-cot_admin" ).valid()){
+    	if($("#form-cot_admin").valid()){
     	    app.sending();
-            $("#form-cot_admin" ).submit();
+            $("#form-cot_admin").submit();
         
             //test online ou offline
             app.isOnline(
@@ -531,8 +577,8 @@ var app = {
 
     	} else {
     	    app.updateMsg("Votre formulaire contient "
-          		        + $("#form-cot_admin" ).validate().numberOfInvalids()
-          		        + "erreur(s), voir le détail ci-dessous.");
+  		        + $("#form-cot_admin" ).validate().numberOfInvalids()
+  		        + "erreur(s), voir le détail ci-dessous.");
     	}
     },
 
@@ -548,28 +594,28 @@ var app = {
 
     enable_timed_swim: function(status) {
         if(!status){
-                document.getElementById("counting_method_timed_swim").value = "";
-                document.getElementById("counting_method_timed_swim").setAttribute('readonly','readonly');
+            document.getElementById("counting_method_timed_swim").value = "";
+            document.getElementById("counting_method_timed_swim").setAttribute('readonly','readonly');
         } else {
-                document.getElementById("counting_method_timed_swim").removeAttribute('readonly');
+            document.getElementById("counting_method_timed_swim").removeAttribute('readonly');
         }
     },
 
     enable_distance_swim: function(status) {
         if(!status){
-                document.getElementById("counting_method_distance_swim").value = "";
-                document.getElementById("counting_method_distance_swim").setAttribute('readonly','readonly');
+            document.getElementById("counting_method_distance_swim").value = "";
+            document.getElementById("counting_method_distance_swim").setAttribute('readonly','readonly');
         } else {
-                document.getElementById("counting_method_distance_swim").removeAttribute('readonly');
+            document.getElementById("counting_method_distance_swim").removeAttribute('readonly');
         }
     },
 
     enable_other: function(status) {
         if(!status){
-                document.getElementById("counting_method_other").value = "";
-                document.getElementById("counting_method_other").setAttribute('readonly','readonly');
+            document.getElementById("counting_method_other").value = "";
+            document.getElementById("counting_method_other").setAttribute('readonly','readonly');
         } else {
-                document.getElementById("counting_method_other").removeAttribute('readonly');
+            document.getElementById("counting_method_other").removeAttribute('readonly');
         }
     },
 
@@ -585,7 +631,7 @@ var app = {
             	no();
             }
     	}
-	xhr.open("GET","http://rest-oreanet.ird.nc/restcotnc/cot.php",true);
+	   xhr.open("GET","http://rest-oreanet.ird.nc/restcotnc/cot.php",true);
     	xhr.send();
     },
     

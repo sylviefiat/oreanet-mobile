@@ -70,21 +70,46 @@ body {
     margin:0 !important;
     padding-right: 0px !important;
     width: 156px;
+    height:60px !important;
+}
+
+.custom-navbar .ui-title {
+    line-height:20px;
+}
+
+.custom-navbar .ui-btn-right button {
+    min-height:16px;
 }
 
 /*send button*/
-#btn-send {
+#btn-send.invalid {
     color: #555559 !important;
-    font-size: 20pt;
+    /*font-size: 20pt;
     text-shadow: 3px 3px #EE9A4D;
-    padding: 10px 10px;
+    padding: 10px 10px;*/
+    background-color: red;
+
 }
 
-#btn-send-valid {
-    color: #555559 !important;
-    font-size: 20pt;
+#btn-send.valid {
+    color: #332222 !important;
+    /*font-size: 20pt;
     text-shadow: 3px 3px #70C641;
-    padding: 10px 10px;
+    padding: 10px 10px;*/
+    -webkit-animation: grow 2s;
+    background-color: lightgreen;
+}
+
+@-webkit-keyframes grow {
+    0% {
+        -webkit-transform: scale( 1 );-moz-transform: scale( 1 );-o-transform: scale( 1 );-ms-transform: scale( 1 );transform: scale( 1 );
+    }
+    50% {
+        -webkit-transform: scale( 1.3 );-moz-transform: scale( 1.3 );-o-transform: scale( 1.3 );-ms-transform: scale( 1.3 );transform: scale( 1.3 );
+    }
+    100% {
+        -webkit-transform: scale( 1 );-moz-transform: scale( 1 );-o-transform: scale( 1 );-ms-transform: scale( 1 );transform: scale( 1 );
+    }
 }
 /*reload button*/
 #btn-reload {
@@ -341,10 +366,10 @@ input:required {
  * style input elements that have a required
  * attribute and a focus state
  */
-input:required:focus {
+/*input:required:focus {
   border: 1px solid red;
   outline: none;
-}
+}*/
 
 /**
  * style input elements that have a required
@@ -404,24 +429,15 @@ input[type=checkbox], input[type=radio] {
 #onlinelist p{
     color: green;
     margin: 0;
-}
-@media (min-width: 410px) {
-#onlinelist {
-    padding-top: 12px;
-}
-}
-
-@media (min-width: 768px) {
-#onlinelist {
-    padding-top: 17px;
     padding-right: 11px;
-}
+    padding-top: 15px;
 }
 
 /* Offline */ 
-#offline p{
+#onlinelist {
     color: red;
     margin: 0;
+    padding-right: 13px;
 }
 #offline{
     padding-top: 13px; 
@@ -434,7 +450,7 @@ input[type=checkbox], input[type=radio] {
 }
 /*Online*/
 
-#online p{
+#onlinelist.online{
     color: green;
     margin: 0;
 }
@@ -526,12 +542,9 @@ input[type=checkbox], input[type=radio] {
 }
   
 /*Cancel button*/
-#btn-cancel {
-    display:none;
-}
-#btn-cancel-on {
+#btns-cancel-save {
     text-align: center;
-    height: 18px;
+    height: 6%;
     background: #EEEEEE;
     font-weight: bold;
     font-size: 18px;
@@ -541,14 +554,15 @@ input[type=checkbox], input[type=radio] {
     border-bottom: 3px groove #DBD7D7;
 
 }
-#btn-cancel-on a{
-    display: block;
-    padding-top: 12px;
+
+#btn-cancel {
+  display: inline;
+  width: 40%;
 }
-#btn-cancel-on a:link 
-{ 
- text-decoration:none; 
-} 
+#btn-save {
+  display: inline;
+  width: 40%;
+}
 
 /*lien site web*/
 #lien-site-web-off{

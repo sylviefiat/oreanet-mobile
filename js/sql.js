@@ -1,26 +1,26 @@
 var sql = {
 	CREATE : "CREATE TABLE IF NOT EXISTS cot_admin ("+
 			"id integer primary key autoincrement,"+
-			"observer_name VARCHAR(100)  NOT NULL ,"+
-			"observer_tel VARCHAR(100)  NOT NULL ,"+
-			"observer_email VARCHAR(100)  NOT NULL ,"+
+			"observer_name VARCHAR(100),"+
+			"observer_tel VARCHAR(100),"+
+			"observer_email VARCHAR(100),"+
 			"observation_day INT(2),"+
 			"observation_month INT(2),"+
-			"observation_year INT(4) NOT NULL,"+
-			"observation_location TEXT NOT NULL ,"+
-			"observation_localisation VARCHAR(100) NOT NULL ,"+
-			"observation_region VARCHAR(100) NOT NULL ,"+
-			"observation_country VARCHAR(100) NOT NULL ,"+
-			"observation_latitude VARCHAR(100) NOT NULL ,"+
-			"observation_longitude VARCHAR(100) NOT NULL ,"+
-			"observation_number VARCHAR(100)  NOT NULL ,"+
-			"observation_culled INT(11)  NOT NULL ,"+
-			"counting_method_timed_swim VARCHAR(100)  NOT NULL,"+
-			"counting_method_distance_swim VARCHAR(100)  NOT NULL,"+
-			"counting_method_other VARCHAR(100)  NOT NULL,"+
-			"depth_range VARCHAR(100)  NOT NULL,"+
-			"observation_method VARCHAR(100)  NOT NULL,"+
-			"remarks TEXT NOT NULL,"+
+			"observation_year INT(4),"+
+			"observation_location TEXT,"+
+			"observation_localisation VARCHAR(100),"+
+			"observation_region VARCHAR(100),"+
+			"observation_country VARCHAR(100) ,"+
+			"observation_latitude VARCHAR(100),"+
+			"observation_longitude VARCHAR(100),"+
+			"observation_number VARCHAR(100),"+
+			"observation_culled INT(11),"+
+			"counting_method_timed_swim VARCHAR(100),"+
+			"counting_method_distance_swim VARCHAR(100),"+
+			"counting_method_other VARCHAR(100)L,"+
+			"depth_range VARCHAR(100),"+
+			"observation_method VARCHAR(100),"+
+			"remarks TEXT,"+
 			"admin_validation BOOLEAN NOT NULL default 0,"+
 			"status VARCHAR(100),"+
 			"date_enregistrement TEXT NOT NULL"+
