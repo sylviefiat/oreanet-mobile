@@ -165,7 +165,6 @@ var app = {
         //sinon si l'ID dans url est égal a "" alors c'est un nouveau formulaire dans index.html?id=
         else if(app.getUrlVars()["id"] == "") {
             setTimeout(function(){
-            var id = app.getUrlVars()["id"];
             //console.log("<<<<<formulaire non existant online>>>>");
 
             // supprime tout message afficher (si il y en a)
@@ -293,7 +292,6 @@ var app = {
     // Turn app to online mode
     turnOnline: function(){
         app.addressPicker();
-	    app.reloadForm();
         online=document.getElementById("onlinelist");
         app.switchOnline(1);
         online.addClass = "online";
