@@ -59,6 +59,7 @@ var app = {
                 }
                 //Si on est sur la page index.html et on est online alors
                 if(app.getUrlVars()["id"] == null){
+                    app.switchOnline(1);
                     //on remet le splascreen
                     document.getElementById("devicereadyoff").id = "deviceready";
                     //console.log("On remet le splascreen");
