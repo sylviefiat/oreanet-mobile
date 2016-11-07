@@ -5,10 +5,10 @@ var db = {
 		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
 		cotsDb.transaction(function(transaction) {
 		    transaction.executeSql(sql.CREATE, [], function(transaction, results) {
-			//console.log("checked cots database creation");
+			console.log("checked cots database creation");
 			
 		    }, function(transaction, error) {
-		    	    //console.log("erro creating db: "+error.message);
+		    	    console.log("erro creating db: "+error.message);
 		    });
 		});
 		return cotsDb;
