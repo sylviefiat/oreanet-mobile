@@ -71,7 +71,7 @@ var app = {
                     //console.log("On remet le splascreen");
                     //On vérifie l’existence d'une liste
                     console.log("debut");
-                    setTimeout(function(){ db.listCOTexist();},1000);
+                    setTimeout(function(){ db.listCOTexist();},500);
                     console.log("fin");
                     //On affiche le formulaire
                     document.getElementById("contentoff").id = "content";
