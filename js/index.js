@@ -37,10 +37,13 @@ var app = {
         this.bindEvents();
         //On enlève offline
         app.switchOnline(1);
+        // supprime tout message afficher (si il y en a)
+        app.closeMsg();
         //test online ou offline
         app.isOnline(
             // si on N'EST PAS connecté alors
             function(){
+                console.log("on N'EST PAS connecté");
                 //On remet le splascreen
                 document.getElementById("devicereadyoff").id = "deviceready";
                 //console.log("On remet le splascreen");
@@ -54,6 +57,7 @@ var app = {
              },
             // si on EST connecté
             function(){
+                console.log("on EST connecté");
                 if($('#btn-save').length){  
                     $('#btn-save').show();
                 }
