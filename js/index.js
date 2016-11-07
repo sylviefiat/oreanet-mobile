@@ -63,18 +63,24 @@ var app = {
                 if($('#btn-save').length){  
                     $('#btn-save').show();
                 }
+                console.log("1111");
                 //Si on est sur la page index.html et on est online alors
                 if(app.getUrlVars()["id"] == null){
+                    console.log("22222");
                     app.switchOnline(1);
+                    console.log("33333");
                     //on remet le splascreen
                     document.getElementById("devicereadyoff").id = "deviceready";
                     //console.log("On remet le splascreen");
                     //On vérifie l’existence d'une liste
+                    console.log("44444444");
                     setTimeout(function(){ db.listCOTexist();},1000);
                     //On affiche le formulaire
+                    console.log("5555555");
                     document.getElementById("contentoff").id = "content";
                     //console.log("On affiche le formulaire");
                 }else {
+                    console.log("22 biss");
                     //On affiche le formulaire
                     document.getElementById("contentoff").id = "content";
                     //console.log("On affiche le formulaire");
