@@ -21,11 +21,13 @@
 var app = {
     switchOnline: function(isOnline){
         if(isOnline){
+            console.log("on affiche online");
             online=document.getElementById("onlinelist");
             online.innerText = " En ligne";
             online.className = "ui-btn ui-btn-icon-right fa fa-signal online";
             online.removeAttribute("disabled");
         } else {
+            console.log("on affiche offline");
             online=document.getElementById("onlinelist");
             online.innerText = " Hors ligne";
             online.className = "ui-btn ui-btn-icon-right fa fa-signal";
