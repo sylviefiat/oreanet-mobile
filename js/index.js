@@ -21,13 +21,11 @@
 var app = {
     switchOnline: function(isOnline){
         if(isOnline){
-            console.log("on affiche online");
             online=document.getElementById("onlinelist");
             online.innerText = " En ligne";
             online.className = "ui-btn ui-btn-icon-right fa fa-signal online";
             online.removeAttribute("disabled");
         } else {
-            console.log("on affiche offline");
             online=document.getElementById("onlinelist");
             online.innerText = " Hors ligne";
             online.className = "ui-btn ui-btn-icon-right fa fa-signal";
@@ -45,7 +43,6 @@ var app = {
         app.isOnline(
             // si on N'EST PAS connecté alors
             function(){
-                console.log("on N'EST PAS connecté");
                 //On remet le splascreen
                 document.getElementById("devicereadyoff").id = "deviceready";
                 //console.log("On remet le splascreen");
@@ -59,7 +56,6 @@ var app = {
              },
             // si on EST connecté
             function(){
-                console.log("on EST connecté");
                 if($('#btn-save').length){  
                     $('#btn-save').show();
                 }
@@ -70,9 +66,7 @@ var app = {
                     document.getElementById("devicereadyoff").id = "deviceready";
                     //console.log("On remet le splascreen");
                     //On vérifie l’existence d'une liste
-                    console.log("debut");
                     setTimeout(function(){ db.listCOTexist();},500);
-                    console.log("fin");
                     //On affiche le formulaire
                     document.getElementById("contentoff").id = "content";
                     //console.log("On affiche le formulaire");
@@ -535,6 +529,7 @@ var app = {
 
     saveForm: function(){
         var save = "true";
+        app.validForm();
         event.preventDefault();
         if(app.getID()==""){
             console.log("allo insert id");

@@ -5,10 +5,10 @@ var db = {
 		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
 		cotsDb.transaction(function(transaction) {
 		    transaction.executeSql(sql.CREATE, [], function(transaction, results) {
-			console.log("checked cots database creation");
+			//console.log("checked cots database creation");
 			
 		    }, function(transaction, error) {
-		    	    console.log("erro creating db: "+error.message);
+		    	    //console.log("erro creating db: "+error.message);
 		    });
 		});
 		return cotsDb;
@@ -190,18 +190,18 @@ var db = {
 		var cotsDb = db.openDB();
 	        cotsDb.transaction(function(transaction) {
 	        transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
-	            console.log("Nombre de formulaire(s) existant "+ results.rows.length);
+	            //console.log("Nombre de formulaire(s) existant "+ results.rows.length);
 	            if (results.rows.length != 0){
 	            	console.log("cancel");
 	            	app.cancel();
 	            }
 	            else{
-	            	console.log("getFormID");
+	            	//console.log("getFormID");
 	            	app.getFormID('');
 	            }
 	    
 	        }, function(transaction,error) {		    
-			    console.log("some error updating data: list exist "+error.message);
+			    //console.log("some error updating data: list exist "+error.message);
 			    return 0;
 			});
 	    });
