@@ -32,7 +32,7 @@ var db = {
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
 				depth_range0, depth_range1, depth_range2, observation_method0, observation_method1, remarks, date_enregistrement, save) {
-		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+		var cotsDb = db.openDB();
 
 		var depth_range = ( depth_range0.length > 0 ? depth_range0 : "")
 					+((depth_range0.length > 0 && depth_range1.length > 0) ? ", " : ((depth_range0.length>0 && depth_range2.length > 0) ? ", " : ""))
@@ -82,7 +82,7 @@ var db = {
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
 				depth_range, observation_method, 
 				remarks, date_enregistrement, save) {
-		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+		var cotsDb = db.openDB();
 
 		cotsDb.transaction(function(transaction) {
 			transaction.executeSql(sql.SELECTidINSERT, [observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
