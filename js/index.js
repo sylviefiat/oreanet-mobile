@@ -54,9 +54,9 @@ var app = {
              },
             // si on EST connecté
             function(){
-               /* if($('#btn-save').length){  
+                if($('#btn-save').length){  
                     $('#btn-save').show();
-                }*/
+                }
                 //Si on est sur la page index.html et on est online alors
                 if(app.getUrlVars()["id"] == null){
                     app.switchOnline(1);
