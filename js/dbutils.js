@@ -185,26 +185,28 @@ var db = {
 	    });
 	},
 
-	//On vérifie si des formulaires existe si oui on redirige ver le lien list.html
+	//On vérifie si des formulaires existe si oui on redirige ver le lien la list.html
 	listCOTexist: function(){
-
-	var cotsDb = db.openDB();
-    cotsDb.transaction(function(transaction) {
-        transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
-            //console.log("Nombre de formulaire(s) existant "+ results.rows.length);
-            if (results.rows.length != 0){
-            	app.cancel();
-            }
-            else{
-            	app.getFormID('');
-            }
-    
-        }, function(transaction,error) {		    
-		    //console.log("some error updating data: "+error.message);
-		    return 0;
-		});
-    });
+		var cotsDb = db.openDB();
+	        cotsDb.transaction(function(transaction) {
+	        transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
+	            console.log("Nombre de formulaire(s) existant "+ results.rows.length);
+	            if (results.rows.length != 0){
+	            	console.log("cancel");
+	            	app.cancel();
+	            }
+	            else{
+	            	console.log("getFormID");
+	            	app.getFormID('');
+	            }
+	    
+	        }, function(transaction,error) {		    
+			    console.log("some error updating data: list exist "+error.message);
+			    return 0;
+			});
+	    });
     },
+
 
     //On vérifie si list existe pour l'action new form
     listExistNewForm: function(){
