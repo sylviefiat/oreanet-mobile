@@ -602,7 +602,6 @@ var app = {
         } else {
             document.getElementById("counting_method_timed_swim").focus();
             document.getElementById("counting_method_timed_swim").click(); 
-            document.getElementById("counting_method_timed_swim").trigger();
             document.getElementById("counting_method_timed_swim").removeAttribute('readonly');
         }
     },
@@ -614,7 +613,6 @@ var app = {
         } else {
             document.getElementById("counting_method_distance_swim").focus();
             document.getElementById("counting_method_distance_swim").click(); 
-            document.getElementById("counting_method_distance_swim").trigger();
             document.getElementById("counting_method_distance_swim").removeAttribute('readonly');
         }
     },
@@ -626,7 +624,6 @@ var app = {
         } else {
             document.getElementById("counting_method_other").focus();
             document.getElementById("counting_method_other").click(); 
-            document.getElementById("counting_method_other").trigger();
             document.getElementById("counting_method_other").removeAttribute('readonly');
         }
     },
