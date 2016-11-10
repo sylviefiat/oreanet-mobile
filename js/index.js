@@ -600,8 +600,8 @@ var app = {
             document.getElementById("counting_method_timed_swim").value = "";
             document.getElementById("counting_method_timed_swim").setAttribute('readonly','readonly');
         } else {
-            document.getElementById("counting_method_timed_swim").focus();
-            $('#counting_method_timed_swim').click();
+            //document.getElementById("counting_method_timed_swim").focus();
+            $('#counting_method_timed_swim').focus();
             $('#counting_method_timed_swim_chbx').click(function(e) {
                 $('#counting_method_timed_swim').trigger('click');
             });
@@ -614,8 +614,8 @@ var app = {
             document.getElementById("counting_method_distance_swim").value = "";
             document.getElementById("counting_method_distance_swim").setAttribute('readonly','readonly');
         } else {
-            document.getElementById("counting_method_distance_swim").focus();
-            $('#counting_method_distance_swim').click();
+            //document.getElementById("counting_method_distance_swim").focus();
+            $('#counting_method_distance_swim').focus();
             $('#counting_method_distance_swim_chbx').click(function(e) {
                 $('#counting_method_distance_swim').trigger('click');
             });
@@ -628,8 +628,8 @@ var app = {
             document.getElementById("counting_method_other").value = "";
             document.getElementById("counting_method_other").setAttribute('readonly','readonly');
         } else {
-            document.getElementById("counting_method_other").focus();
-            $('#counting_method_other').click();
+            //document.getElementById("counting_method_other").focus();
+            $('#counting_method_other').focus();
             $('#counting_method_other_chbx').click(function(e) {
                 $('#counting_method_other').trigger('click');
             });
