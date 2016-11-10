@@ -237,37 +237,38 @@ var app = {
         document.getElementById('counting_method_timed_swim').value = timed_swim;
         document.getElementById('counting_method_distance_swim').value = distance_swim;
         document.getElementById('counting_method_other').value = other_chbx;
-        if(range.includes("shallow") == true){
+        if(range.indexOf("shallow") != -1){
             //console.log("shallow");
             document.getElementById("depth_range0").checked = true;
             document.getElementById("label_depth_range0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
         } 
 
-        if(range.includes("medium") == true){
+        if(range.indexOf("medium") != -1){
             //console.log("medium");
             document.getElementById("depth_range1").checked = true;
             document.getElementById("label_depth_range1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
         }
 
-        if(range.includes("deep") == true){
+        if(range.indexOf("deep") != -1){
             //console.log("deep");
             document.getElementById("depth_range2").checked = true;
             document.getElementById("label_depth_range2").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
         }
 
-        if(method.includes("snorkelling") == true){
+        if(method.indexOf("snorkelling") != -1){
             //console.log("snorkelling");
             document.getElementById("observation_method0").checked = true;
             document.getElementById("label_observation_method0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
         }
 
-        if (method.includes("scuba diving") == true){
+        if (method.indexOf("scuba diving") != -1){
             //console.log("scuba diving");
             document.getElementById("observation_method1").checked = true;
             document.getElementById("label_observation_method1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
         }
 
         document.getElementById('remarks').value = remarks;
+
 
         // validate le formulaire pour afficher les champs non remplis
         app.checkStatus();
@@ -599,6 +600,7 @@ var app = {
             document.getElementById("counting_method_timed_swim").value = "";
             document.getElementById("counting_method_timed_swim").setAttribute('readonly','readonly');
         } else {
+            document.getElementById("counting_method_timed_swim").focus();
             document.getElementById("counting_method_timed_swim").removeAttribute('readonly');
         }
     },
@@ -608,6 +610,7 @@ var app = {
             document.getElementById("counting_method_distance_swim").value = "";
             document.getElementById("counting_method_distance_swim").setAttribute('readonly','readonly');
         } else {
+            document.getElementById("counting_method_distance_swim").focus();
             document.getElementById("counting_method_distance_swim").removeAttribute('readonly');
         }
     },
@@ -617,6 +620,7 @@ var app = {
             document.getElementById("counting_method_other").value = "";
             document.getElementById("counting_method_other").setAttribute('readonly','readonly');
         } else {
+            document.getElementById("counting_method_other").focus();
             document.getElementById("counting_method_other").removeAttribute('readonly');
         }
     },
