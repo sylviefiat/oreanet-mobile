@@ -601,6 +601,7 @@ var app = {
             document.getElementById("counting_method_timed_swim").setAttribute('readonly','readonly');
         } else {
             $('#counting_method_timed_swim').trigger('focus');
+            $('#counting_method_other').click();
             document.getElementById("counting_method_timed_swim").removeAttribute('readonly');
         }
     },
@@ -611,6 +612,7 @@ var app = {
             document.getElementById("counting_method_distance_swim").setAttribute('readonly','readonly');
         } else {
             $('#counting_method_distance_swim').trigger('focus');
+            $('#counting_method_distance_swim').click();
             document.getElementById("counting_method_distance_swim").removeAttribute('readonly');
         }
     },
@@ -621,6 +623,7 @@ var app = {
             document.getElementById("counting_method_other").setAttribute('readonly','readonly');
         } else {
             $('#counting_method_other').trigger('focus');
+            $('#counting_method_other').click();
             document.getElementById("counting_method_other").removeAttribute('readonly');
         }
     },
