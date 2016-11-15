@@ -602,10 +602,11 @@ var app = {
         } else {
             
             document.getElementById("counting_method_timed_swim").focus();
-            $('#counting_method_timed_swim').click();
-            $('#counting_method_timed_swim').focus(function(e) {
-                $('#counting_method_timed_swim').trigger('click');
-            });
+            //$('#counting_method_timed_swim').click();
+            //$('#counting_method_timed_swim_chbx').click(function(e) {
+                console.log("allo");
+                $('#counting_method_timed_swim').trigger('select');
+            //});
             document.getElementById("counting_method_timed_swim").removeAttribute('readonly');
         }
     },
@@ -616,10 +617,10 @@ var app = {
             document.getElementById("counting_method_distance_swim").setAttribute('readonly','readonly');
         } else {
             document.getElementById("counting_method_distance_swim").focus();
-            $('#counting_method_distance_swim').click();
-            $('#counting_method_distance_swim').focus(function(e) {
-                $('#counting_method_distance_swim').trigger('click');
-            });
+            //$('#counting_method_distance_swim').click();
+            //$('#counting_method_distance_swim_chbx').click(function(e) {
+                $('#counting_method_distance_swim').trigger('select');
+            //});
             document.getElementById("counting_method_distance_swim").removeAttribute('readonly');
         }
     },
@@ -630,10 +631,9 @@ var app = {
             document.getElementById("counting_method_other").setAttribute('readonly','readonly');
         } else {
             document.getElementById("counting_method_other").focus();
-            $('#counting_method_other').click();
-            $('#counting_method_other').focus(function(e) {
-                $('#counting_method_other').trigger('click');
-            });
+            //$('#counting_method_other_chbx').click(function(e) {
+                $('#counting_method_other').trigger('select');
+            //});
             document.getElementById("counting_method_other").removeAttribute('readonly');
         }
     },
