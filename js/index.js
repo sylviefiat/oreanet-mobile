@@ -604,6 +604,7 @@ var app = {
             document.getElementById("counting_method_timed_swim").focus();
             //$('#counting_method_timed_swim').click(function(e){ $(this).focus(); });
             $('#counting_method_timed_swim').focus(function(e) {
+                $('#counting_method_timed_swim').click();
                 $('#counting_method_timed_swim').trigger('click');
             });
             document.getElementById("counting_method_timed_swim").removeAttribute('readonly');
@@ -618,6 +619,7 @@ var app = {
             document.getElementById("counting_method_distance_swim").focus();
             //$('#counting_method_distance_swim').click(function(e){ $(this).focus(); });
             $('#counting_method_distance_swim').focus(function(e) {
+                $('#counting_method_distance_swim').click();
                 $('#counting_method_distance_swim').trigger('click');
             });
             document.getElementById("counting_method_distance_swim").removeAttribute('readonly');
@@ -632,6 +634,7 @@ var app = {
             document.getElementById("counting_method_other").focus();
             //$('#counting_method_other').click(function(e){ $(this).focus(); });
             $('#counting_method_other').focus(function(e) {
+                $('#counting_method_other').click();
                 $('#counting_method_other').trigger('click');
             });
             document.getElementById("counting_method_other").removeAttribute('readonly');
