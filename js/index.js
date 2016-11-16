@@ -190,10 +190,17 @@ var app = {
             setTimeout(function(){
             var id = app.getUrlVars()["id"];
             //console.log("<<<<<formulaire existant>>>>");
-            // démarrer le plugin addressPicker
-            app.addressPicker();
             // remplir avec ces données le formulaire
             db.reditCOTForm(id);
+            // démarrer le plugin addressPicker
+            if(app.getUrlVars()["lat"] !="" && app.getUrlVars()["lng"] !=""){
+                var lat = app.getUrlVars()["lat"];
+                var lng = app.getUrlVars()["lng"];
+                app.addressPickerRedit(lat, lng);
+            }
+            else {
+                app.addressPicker();
+            }
             // ajouter un listener sur le formulaire avec l'id de celui-ci
             app.addSubmitExistForm(id);
             // ajouter un "validateur" de formulaire
@@ -210,6 +217,11 @@ var app = {
     //on récupére l'id du formulaire à ouvrir
     getFormID: function(id){
         window.location.href="./index.html?id="+id;
+    },
+
+    //on récupére l'id du formulaire à ouvrir
+    getFormLatLng: function(id){
+        db.recupLatLng(id);
     },
 
     //on retourne l'id du formulaire encours
@@ -268,7 +280,6 @@ var app = {
         }
 
         document.getElementById('remarks').value = remarks;
-
 
         // validate le formulaire pour afficher les champs non remplis
         app.checkStatus();
@@ -421,6 +432,31 @@ var app = {
 	    });	
     },
 
+    addressPickerRedit: function(lat, long){  
+        $("#observation_localisation" ).addressPickerByGiro(
+        {
+            mapOptions: {
+                zoom: 16,
+                center: [lat, long],
+                scrollwheel: true,
+                zoomGesturesEnabled: true,
+                scrollGesturesEnabled: true,
+                mapTypeId: "hybrid"
+            },
+            distanceWidget: true,
+            distanceWidgetRadius: 300,  /* meters */
+            appendToAddressString: '',
+            geocoderOptions: {
+                language: "fr"
+            },
+            markerOptions: {
+            
+            draggable: true,
+            visible: true,
+            }
+        });
+    },
+
     //On mes des champs obligatoire a saisir
     validForm: function(){
         //test online ou offline
@@ -530,10 +566,9 @@ var app = {
 
     saveForm: function(){
         var save = "true";
-        app.validForm();
         event.preventDefault();
         if(app.getID()==""){
-            console.log("allo insert id");
+            //console.log("allo insert id");
             db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
                 $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
                 $('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
@@ -547,7 +582,7 @@ var app = {
                 $('#remarks').val(), app.getDateTime(), save);  
         }
         else {
-            console.log("allo save finaliz");
+            //console.log("allo save finaliz");
             db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
                 $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
                 $('#observation_pays').val(), $('#observation_latitude').val(), $('#observation_longitude').val(),
@@ -602,11 +637,10 @@ var app = {
         } else {
             
             document.getElementById("counting_method_timed_swim").focus();
-            //$('#counting_method_timed_swim').click();
-            //$('#counting_method_timed_swim_chbx').click(function(e) {
-                console.log("allo");
-                $('#counting_method_timed_swim').trigger('select');
-            //});
+            /*$('#counting_method_timed_swim').click( function(e) { $(this).focus(); });
+            $('#counting_method_timed_swim_chbx').click(function(e) {
+                $('#counting_method_timed_swim').trigger('click');
+            });*/
             document.getElementById("counting_method_timed_swim").removeAttribute('readonly');
         }
     },
@@ -617,10 +651,10 @@ var app = {
             document.getElementById("counting_method_distance_swim").setAttribute('readonly','readonly');
         } else {
             document.getElementById("counting_method_distance_swim").focus();
-            //$('#counting_method_distance_swim').click();
-            //$('#counting_method_distance_swim_chbx').click(function(e) {
-                $('#counting_method_distance_swim').trigger('select');
-            //});
+            /*$('#counting_method_distance_swim').click( function(e) { $(this).focus(); });
+            $('#counting_method_distance_swim_chbx').click(function(e) {
+                $('#counting_method_distance_swim').trigger('click');
+            });*/
             document.getElementById("counting_method_distance_swim").removeAttribute('readonly');
         }
     },
@@ -631,9 +665,10 @@ var app = {
             document.getElementById("counting_method_other").setAttribute('readonly','readonly');
         } else {
             document.getElementById("counting_method_other").focus();
-            //$('#counting_method_other_chbx').click(function(e) {
-                $('#counting_method_other').trigger('select');
-            //});
+            /*$('#counting_method_other').click( function(e) { $(this).focus(); });
+            $('#counting_method_other_chbx').click(function(e) {
+                $('#counting_method_other').trigger('click');
+            });*/
             document.getElementById("counting_method_other").removeAttribute('readonly');
         }
     },

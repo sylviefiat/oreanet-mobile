@@ -1,4 +1,3 @@
-
 var db = {
 	
 	openDB: function() {
@@ -274,7 +273,7 @@ var db = {
             	}
             	
           		//on remplit le tableau
-                  listbdd = "<tr><td data-th='Créé le'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date'>" + jour_day + "/" + mois_month + "/" + results.rows.item(i).observation_year + "</td><td data-th='Nbr acanthasters'>" + results.rows.item(i).observation_number + "</td><td data-th='Lieu'>" + results.rows.item(i).observation_location + "</td><td data-th='Supprimer'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finaliser'><button type=button href=# onclick='return app.getFormID("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finaliser</button></td>" + "</tr>";
+                  listbdd = "<tr><td data-th='Créé le'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date'>" + jour_day + "/" + mois_month + "/" + results.rows.item(i).observation_year + "</td><td data-th='Nbr acanthasters'>" + results.rows.item(i).observation_number + "</td><td data-th='Lieu'>" + results.rows.item(i).observation_location + "</td><td data-th='Supprimer'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finaliser'><button type=button href=# onclick='return app.getFormLatLng("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finaliser</button></td>" + "</tr>";
                     parentElement.querySelector('.cot_list_forms').innerHTML +=  listbdd;
                     
                }
@@ -318,6 +317,21 @@ var db = {
                     results.rows.item(i).observation_method,
                     results.rows.item(i).remarks);
                 }
+        }, null);
+        });
+    },
+
+    //On récupère la latitude et la longitude
+    recupLatLng: function(id){
+
+        var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+        return cotsDb.transaction(function(transaction) {
+        transaction.executeSql(sql.SELECTreditCOTForm, [id], function(transaction, results) {
+    		for (i = 0; i < results.rows.length; i++){
+        		window.location.href="./index.html?id="+ id +
+        		"&?lat=" + results.rows.item(i).observation_latitude +
+        		"&?lng=" + results.rows.item(i).observation_longitude;
+    		}
         }, null);
         });
     },
