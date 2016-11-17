@@ -555,15 +555,16 @@ input[type=checkbox], input[type=radio] {
 
 }
 
-#btn-cancel {
-  display: inline;
-  width: 40%;
+@media (min-width: 480px) {
+  #btn-cancel {
+    display: inline;
+    width: 40%;
+  }
+  #btn-save {
+    display: inline;
+    width: 40%;
+  }
 }
-#btn-save {
-  display: inline;
-  width: 40%;
-}
-
 /*lien site web*/
 #lien-site-web-off{
     display: none;
