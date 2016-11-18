@@ -685,7 +685,7 @@ var app = {
             	no();
             }
     	}
-	    xhr.open("GET","http://rest-oreanet.ird.nc/restcotnc/cot.php",true);
+	    xhr.open("GET","http://oreanet.ird.nc/index.php?option=com_api&app=restcot&resource=restcot&format=raw&key=6e717bcf8005458e0f4f3b7351e3d2ee",true);
     	xhr.send();
     },
     
