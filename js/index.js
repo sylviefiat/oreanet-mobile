@@ -436,7 +436,7 @@ var app = {
         $("#observation_localisation" ).addressPickerByGiro(
         {
             mapOptions: {
-                zoom: 16,
+                zoom: 15,
                 center: [lat, long],
                 scrollwheel: true,
                 zoomGesturesEnabled: true,
