@@ -136,7 +136,7 @@ var db = {
 	sendRemote: function(json,id,from){
 		xhr = new XMLHttpRequest();
 		//var url = "http://oreanet-rest.ird.nc/restcotnc/cot.php";
-		var url = " http://oreanet.ird.nc/index.php?option=com_api&app=restcot&resource=restcot&format=json&key=6e717bcf8005458e0f4f3b7351e3d2ee";
+		var url = " http://oreanet.ird.nc/index.php?option=com_api&app=restcot&resource=restcot&format=json&key=ADD_YOUR_KEY";
 		xhr.open("POST", url, true);
 		//xhr.setRequestHeader("Content-type", "application/json");
 		xhr.onreadystatechange = function () { 
