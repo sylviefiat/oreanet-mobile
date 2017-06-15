@@ -21,6 +21,7 @@ if(!bg){
 ;(function ($) {
     "use strict";
     var methods;
+    var defaultCenter = [-21.5, 165.5];
 
 	var timer = {};
 	function delay (callback, ms, type){
@@ -87,6 +88,7 @@ if(!bg){
 		} else {
 			// default marker
 			that.gmarker = new google.maps.Marker(markerOptions);
+			that.gmarker.setPosition(mapOptions.center);
 		}				
 		
 		// event triggered when marker is dragged and dropped
@@ -97,9 +99,9 @@ if(!bg){
 		google.maps.event.addListener(that.gmap, "click", function (event) {
 			that.gmarker.setPosition(event.latLng);
 			that.geocodeLookup(event.latLng, false, "latLng", true);
-		});		
-		
-		this.gmarker.setVisible(false);
+		});	
+		var isDefault = (defaultCenter[0] == mapOptions.center.lat()) && (defaultCenter[1] == mapOptions.center.lng());
+		this.gmarker.setVisible(!isDefault);
 	}
 	
 	function createCircle(){		
@@ -131,7 +133,8 @@ if(!bg){
 		};
 				
 		that.gcircle = circle;
-		that.gcircle.setVisible(false);	
+		var isDefault = (defaultCenter[0] == mapOptions.center.lat()) && (defaultCenter[1] == mapOptions.center.lng());
+		that.gcircle.setVisible(!isDefault);	
 		
 		google.maps.event.addListener(that.gcircle, 'radius_changed', function(){
 			that.updater();
@@ -154,15 +157,15 @@ if(!bg){
 				mapHeight: '300px',
                 mapOptions: {
                     zoom: 7,
-                    center: [-21.5, 165.5],
+                    center: defaultCenter,
                     scrollwheel: true,
-		    zoomGesturesEnabled: true,
-		    scrollGesturesEnabled: true,
+		    		zoomGesturesEnabled: true,
+		    		scrollGesturesEnabled: true,
                     mapTypeId: "hybrid"
                 },
 				makerType: false, /* labeled, styled */
 				distanceWidget: true,
-				distanceWidgetRadius: 30,  /* meters */
+				distanceWidgetRadius: 300,  /* meters */
                 appendToAddressString: '',
                 geocoderOptions: {
 					language: "fr"
@@ -410,7 +413,7 @@ if(!bg){
 		    	i=0;
 		    }
 		    var address = geocoderResults[i].formatted_address;
-		    that.$element.val(address);
+		    that.$element.val(address).change();
 		    that.addressMapping[address] = geocoderResults[i];
 		    that.updater(address,query);
 		}
@@ -454,7 +457,7 @@ if(!bg){
             if (typeof method === 'string' && addressPickerByGiro[method]) {
                 return addressPickerByGiro[method].apply(addressPickerByGiro, Array.prototype.slice.call(arguments, 1));
             }
-            return console.log('Method ' +  method + ' does not exist on jQuery.addressPickerByGiro');
+            return //console.log('Method ' +  method + ' does not exist on jQuery.addressPickerByGiro');
         } else {
             if (!method || typeof method === 'object') {
 				
@@ -468,7 +471,7 @@ if(!bg){
 
 				return this;
             }
-            return console.log('jQuery.addressPickerByGiro is not instantiated. Please call $("selector").addressPickerByGiro({options})');
+            return //console.log('jQuery.addressPickerByGiro is not instantiated. Please call $("selector").addressPickerByGiro({options})');
         }
     };
 

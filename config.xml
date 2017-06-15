@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "nc.oreanet.mobile"
         versionCode = "1" 
-        version     = "0.0.2" >
+        version     = "0.0.3" >
 
     <!-- versionCode is optional and Android only -->
 
@@ -27,5 +27,9 @@
     
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
     <gap:allow-navigation href="http://rest-oreanet.ird.nc" />
+    <gap:allow-navigation href="./index.html" />
+    <gap:allow-navigation href="./list.html" />
+    <gap:allow-navigation href="./index.html?id=" />
+
 
 </widget>
