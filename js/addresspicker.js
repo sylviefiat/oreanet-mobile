@@ -368,11 +368,12 @@ if(!bg){
 				cleanData.radius = Math.round(that.gcircle.getRadius()) / 1000;
 			}
 
-			if(that.gcircle){				
+			// Remove zoom when clicking on the map
+			/*if(that.gcircle){				
 				that.gmap.fitBounds(that.gcircle.getBounds());
 			} else {
 				that.gmap.fitBounds(data.geometry.viewport);
-			}
+			}*/
 
 			data.cleanData = cleanData;
 			updateElements.call(that,data);
