@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "nc.oreanet.mobile"
         versionCode = "1" 
-        version     = "0.0.3" >
+        version     = "0.0.4" >
 
     <!-- versionCode is optional and Android only -->
 
@@ -13,7 +13,7 @@
         Oreanet NC Mobile app. 
     </description>
    
-    <icon src="pin4-oreanet.png" />
+    <icon src="poreanet_nc_app.png" />
 
     <author href="https://umr-entropie.ird.nc" email="sylvie.fiat@ird.fr">
         Sylvie Fiat
