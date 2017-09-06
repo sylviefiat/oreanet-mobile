@@ -7,7 +7,7 @@ var db = {
 			//console.log("checked cots database creation");
 			
 		    }, function(transaction, error) {
-		    	    //console.log("erro creating db: "+error.message);
+		    	    //console.log("error creating db: "+error.message);
 		    });
 		});
 		return cotsDb;
@@ -98,7 +98,7 @@ var db = {
 					return db.synchronizeCOTs("form", idform, save);
 				}
 			}, function(transaction, error) {		    
-		    //console.log("some error updating data "+error.message);
+		    	//console.log("some error updating data "+error.message);
 			});
 	    });
 	},
@@ -136,7 +136,7 @@ var db = {
 	sendRemote: function(json,id,from){
 		xhr = new XMLHttpRequest();
 		//var url = "http://oreanet-rest.ird.nc/restcotnc/cot.php";
-		var url = " http://oreanet.ird.nc/index.php?option=com_api&app=restcot&resource=restcot&format=json&key=ADD_YOUR_KEY";
+		var url = " http://oreanet.ird.nc/index.php?option=com_api&app=restcot&resource=restcot&format=json&key=6e717bcf8005458e0f4f3b7351e3d2ee";
 		xhr.open("POST", url, true);
 		//xhr.setRequestHeader("Content-type", "application/json");
 		xhr.onreadystatechange = function () { 
@@ -191,7 +191,7 @@ var db = {
 	        transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
 	            //console.log("Nombre de formulaire(s) existant "+ results.rows.length);
 	            if (results.rows.length != 0){
-	            	console.log("cancel");
+	            	//console.log("cancel");
 	            	app.cancel();
 	            }
 	            else{
@@ -273,8 +273,19 @@ var db = {
             	}
             	
           		//on remplit le tableau
-                  listbdd = "<tr><td data-th='Créé le'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date'>" + jour_day + "/" + mois_month + "/" + results.rows.item(i).observation_year + "</td><td data-th='Nbr acanthasters'>" + results.rows.item(i).observation_number + "</td><td data-th='Lieu'>" + results.rows.item(i).observation_location + "</td><td data-th='Supprimer'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finaliser'><button type=button href=# onclick='return app.getFormLatLng("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finaliser</button></td>" + "</tr>";
-                    parentElement.querySelector('.cot_list_forms').innerHTML +=  listbdd;
+                listbdd = "<tr>"+
+                	"<td data-th='Créé le'>" + results.rows.item(i).date_enregistrement + "</td>"+
+                	"<td data-th='Date'>" + jour_day + "/" + mois_month + "/" + results.rows.item(i).observation_year + "</td>"+
+                	"<td data-th='Nbr acanthasters'>" + results.rows.item(i).observation_number + "</td>"+
+                	"<td data-th='Lieu'>" + results.rows.item(i).observation_location + "</td>"+
+                	"<td data-th='Supprimer'>"+
+                		"<button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button>"+
+                	"</td>" + 
+                	"<td data-th='Finaliser'>"+
+                		"<button type=button href=# onclick='return app.getFormLatLng("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finaliser</button>"+
+                	"</td>" + 
+                "</tr>";
+                parentElement.querySelector('.cot_list_forms').innerHTML +=  listbdd;
                     
                }
     

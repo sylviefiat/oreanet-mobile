@@ -9,22 +9,22 @@
 	<!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">-->
 	
         <link rel="stylesheet" type="text/css" href="css/index.css" />
-		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/addresspicker.css" />
-		<script src="http://maps.google.com/maps/api/js"></script>
-		<script language="javascript" type="text/javascript" src="js/jquery-1.11.3.min.js"></script>	
-		<script language="javascript" type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
-		<script language="javascript" type="text/javascript" src="js/jquery.validate.js"></script>
-		<script language="javascript" type="text/javascript" src="js/additional-methods.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/addresspicker.css" />
+	<script src="http://maps.google.com/maps/api/js"></script>
+	<script language="javascript" type="text/javascript" src="js/jquery-1.11.3.min.js"></script>	
+	<script language="javascript" type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+	<script language="javascript" type="text/javascript" src="js/jquery.validate.js"></script>
+	<script language="javascript" type="text/javascript" src="js/additional-methods.js"></script>
         <title>Oreanet NC</title>
     </head>
     <body>
         <div class="app">            
-            <div id="devicereadyoff">	
-				<!-- Splashscreen du debut -->	
-		        <div class="event listening row vertical-align">		    
+            <div id="devicereadyoff">
+            	<!-- Splashscreen du debut -->	
+                <div class="event listening row vertical-align">
 				    <div class="splashscreen col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
 						<img src="img/logo.png" title="logo"/>
 						<p class="blink">Connecting</p>
@@ -39,15 +39,15 @@
 				<!-- Splashscreen de la fin -->
 				<div class="event onclose row vertical-align">
 				    <div class="thankyoupage col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
-						<img src="img/logo_end.png" title="logo"/>
+						<img src="img/logo.png" title="logo"/>
 						<p id="msg-fin-enregistre">Merci d'avoir rapporté la présence d'acanthaster en Nouvelle-Calédonie</p>
 						<p><a id="lien-reload" href="#" onclick="return app.reloadForm()">Signaler d'autres acanthasters</a></p>
 						<p><a id="lien-site-web" href="http://oreanet.ird.nc">Aller voir le site de suivi Oreanet</a></p>
 						<p><a href="#" onclick="navigator.app.exitApp(); return app.reloadForm();">Quitter</a></p>
 				    </div>
 				</div>
-            </div>
-		    <!-- module d'affichage des messages (erreur ou info) -->
+        </div>
+	    <!-- module d'affichage des messages (erreur ou info) -->
 		    <div id="system-message-container">
 				<div id="system-message">
 				    <div class="alert fade in" id="message">
@@ -114,9 +114,9 @@
 					    </label>	
 					    <div data-role="fieldcontain" class="ui-hide-label">
 							<label for="observation_date">Date</label>				    
-					    	<input type='number'" name="observation_day" id="observation_day" value="" placeholder="Jour"/>
-					    	<input type='number'" name="observation_month" id="observation_month" value="" placeholder="Mois"/>
-					    	<input type='number'" name="observation_year" id="observation_year" value="" placeholder="Année" required/>
+					    	<input type="number" name="observation_day" id="observation_day" value="" placeholder="Jour"/>
+					    	<input type="number" name="observation_month" id="observation_month" value="" placeholder="Mois"/>
+					    	<input type="number" name="observation_year" id="observation_year" value="" placeholder="Année" required/>
 					    </div>
 					    <div data-role="fieldcontain" class="ui-hide-label">
 							<label for="observer_location">Contexte</label>				    		
@@ -206,25 +206,25 @@
 					    </div>
 
 					    <div data-role="fieldcontain" class="ui-hide-label">
-							<label for="counting_method_timed_swim">Temps</label>
-							<input type="text" name="counting_method_timed_swim" id="counting_method_timed_swim" value="" class="form-control" placeholder="Temps de nage" readonly="readonly">
+						<label for="counting_method_timed_swim">Temps</label>
+						<input type="text" name="counting_method_timed_swim" id="counting_method_timed_swim" value="" class="form-control" placeholder="Temps de nage" readonly="readonly">
 					    </div>
 					   
 					    <div data-role="fieldcontain" class="ui-hide-label">
-							<label for="counting_method_distance_swim" class="ui-hidden-accessible">Distance</label>
-							<input type="text" name="counting_method_distance_swim" id="counting_method_distance_swim" value="" class="form-control" placeholder="Distance parcourue" readonly="readonly"></input>
+						<label for="counting_method_distance_swim" class="ui-hidden-accessible">Distance</label>
+						<input type="text" name="counting_method_distance_swim" id="counting_method_distance_swim" value="" class="form-control" placeholder="Distance parcourue" readonly="readonly"></input>
 					    </div>
 					    
 					    <div data-role="fieldcontain" class="ui-hide-label">
-							<label for="counting_method_other" class="ui-hidden-accessible">Other</label>
-							<input type="text" name="counting_method_other" id="counting_method_other" value="" class="form-control" placeholder="Autre" readonly="readonly"></input>			
+						<label for="counting_method_other" class="ui-hidden-accessible">Other</label>
+						<input type="text" name="counting_method_other" id="counting_method_other" value="" class="form-control" placeholder="Autre" readonly="readonly"></input>			
 					    </div>
 					    <!-- part VII -->
 					    <label>
 					    	<span class="input-group-addon exergue"><span class="fa fa-comment"></span> Remarques</span>
 					    </label>
 					    <div data-role="fieldcontain" class="ui-hide-label">
-							<label for="remarks">Remarques</label>				    		
+						<label for="remarks">Remarques</label>				    		
 					    	<textarea name="remarks" id="remarks" placeholder="Ex: couverture de corail vivant, coraux morts, blanchiment, présence d'algues…"></textarea>
 					    </div>
 					    <!-- part VIII -->
@@ -238,13 +238,13 @@
 				</div>
 		    	</div>
 		    </div>
-		    </div>
-   		</div>
-		<script language="javascript" type="text/javascript" src="cordova.js"></script>
+		</div>
+   	</div>
+	<script language="javascript" type="text/javascript" src="cordova.js"></script>
         <script language="javascript" type="text/javascript" src="js/index.js"></script>
-		<script language="javascript" type="text/javascript" src="js/sql.js"></script>
+	<script language="javascript" type="text/javascript" src="js/sql.js"></script>
         <script language="javascript" type="text/javascript" src="js/dbutils.js"></script>
-		<script language="javascript" type="text/javascript" src="js/addresspicker.js"></script>
+	<script language="javascript" type="text/javascript" src="js/addresspicker.js"></script>
         <script language="javascript" type="text/javascript">
         	app.initialize();
         </script>
