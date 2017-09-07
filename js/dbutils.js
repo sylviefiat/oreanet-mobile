@@ -26,7 +26,7 @@ var db = {
 		return 0;
 	},
 
-	insertCOT: function(observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
+	insertCOT: function(observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -44,7 +44,7 @@ var db = {
 
 		cotsDb.transaction(function(transaction) {
 			transaction.executeSql(sql.INSERT, 
-				[observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
+				[observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -59,7 +59,7 @@ var db = {
 			            },
 			            // si on EST connecté
 			            function(){
-			            	return db.getidFormInsertCOT(observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
+			            	return db.getidFormInsertCOT(observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 																observation_localisation, observation_region, observation_country, 
 																observation_latitude, observation_longitude, observation_number, observation_culled, 
 																counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -68,14 +68,14 @@ var db = {
 			            }
 			        );
 				}, function(e) {
-		    			return 0;
+		    			console.log("insert error"+e.message);
 				}
 			);
 	    });
 	},
 
 	//récupère l'id du nouveau formulaire a envoyé
-	getidFormInsertCOT: function(observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
+	getidFormInsertCOT: function(observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -84,7 +84,7 @@ var db = {
 		var cotsDb = db.openDB();
 
 		cotsDb.transaction(function(transaction) {
-			transaction.executeSql(sql.SELECTidINSERT, [observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
+			transaction.executeSql(sql.SELECTidINSERT, [observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 					observation_localisation, observation_region, observation_country, 
 					observation_latitude, observation_longitude, observation_number, observation_culled, 
 					counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -135,13 +135,14 @@ var db = {
 
 	sendRemote: function(json,id,from){
 		xhr = new XMLHttpRequest();
-		//var url = "http://oreanet-rest.ird.nc/restcotnc/cot.php";
-		var url = " http://oreanet.ird.nc/index.php?option=com_api&app=restcot&resource=restcot&format=json&key=6e717bcf8005458e0f4f3b7351e3d2ee";
+		// l'url du service rest est dans le fichier conf.js
+		var url = url_oreanet;
 		xhr.open("POST", url, true);
 		//xhr.setRequestHeader("Content-type", "application/json");
 		xhr.onreadystatechange = function () { 
 		    	if (xhr.readyState == 4 && xhr.status == 200) {
 				var json = JSON.parse(xhr.responseText);
+				console.log(json);
 				// update results status as "synchronized"
 				db.updateCOT(id);
 				if(json.status)	{
@@ -263,19 +264,12 @@ var db = {
         	app.updateMsg("Il vous reste " + results.rows.length + " formulaire(s) à finaliser. Merci de nous aider à protéger les récifs de Nouvelle-Calédonie.");
 
             for (i = 0; i < results.rows.length; i++){ 
-            	var mois_month = results.rows.item(i).observation_month;
-            	var jour_day = results.rows.item(i).observation_day;
-            	if (mois_month < 10){
-            		mois_month = ("0" + mois_month).substr(mois_month.length-1,2);
-            	}
-            	if(jour_day < 10){
-            		jour_day = ("0" + jour_day).substr(jour_day.length-1,2);
-            	}
+            	
             	
           		//on remplit le tableau
                 listbdd = "<tr>"+
                 	"<td data-th='Créé le'>" + results.rows.item(i).date_enregistrement + "</td>"+
-                	"<td data-th='Date'>" + jour_day + "/" + mois_month + "/" + results.rows.item(i).observation_year + "</td>"+
+                	"<td data-th='Date'>" + results.rows.item(i).observation_datetime + "</td>"+
                 	"<td data-th='Nbr acanthasters'>" + results.rows.item(i).observation_number + "</td>"+
                 	"<td data-th='Lieu'>" + results.rows.item(i).observation_location + "</td>"+
                 	"<td data-th='Supprimer'>"+
@@ -310,9 +304,7 @@ var db = {
                     results.rows.item(i).observer_name,
                     results.rows.item(i).observer_tel,
                     results.rows.item(i).observer_email,
-                    results.rows.item(i).observation_day,
-                    results.rows.item(i).observation_month,
-                    results.rows.item(i).observation_year,
+                    results.rows.item(i).observation_datetime,
                     results.rows.item(i).observation_location,
                     results.rows.item(i).observation_localisation,
                     results.rows.item(i).observation_region,
@@ -349,7 +341,7 @@ var db = {
 
     //On modifier un tuple déjà existant grâce a son id
     updateFormCot: function(observer_name, observer_tel, observer_email, 
-			    			observation_day, observation_month, observation_year, observation_location, 
+			    			observation_datetime, observation_location, 
 							observation_localisation, observation_region, observation_country, 
 							observation_latitude, observation_longitude, 
 							observation_number, observation_culled, 
@@ -371,7 +363,7 @@ var db = {
 		cotsDb.transaction(function(transaction) {
 			transaction.executeSql(sql.UPDATEFORM, 
 				[	observer_name, observer_tel, observer_email, 
-					observation_day, observation_month, observation_year, observation_location, 
+					observation_datetime, observation_location, 
 					observation_localisation, observation_region, observation_country, 
 					observation_latitude, observation_longitude, 
 					observation_number, observation_culled, 

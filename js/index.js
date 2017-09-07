@@ -32,9 +32,16 @@ var app = {
             online.setAttribute("disabled","disabled");
         }
     },
+    datepickerDefaut: function(){
+        $.datepicker.setDefaults({
+            dateFormat: 'yy-mm-dd'
+        });
+    },
     // Application Constructor
     initialize: function() {    	
         this.bindEvents();
+        // set default dateformat
+        app.datepickerDefaut();
         //On enlève offline
         app.switchOnline(1);
         // supprime tout message afficher (si il y en a)
@@ -79,7 +86,7 @@ var app = {
         );
 
         //dev mobile
-	    //setTimeout(function(){app.receivedEvent('deviceready');},0);
+	    setTimeout(function(){app.receivedEvent('deviceready');},0);
 	
     },
 
@@ -231,14 +238,12 @@ var app = {
     },
 
     //on remplit le formulaire chargé avec ces données
-    reditForm: function(name,tel,email,day,month,year,location,localisation,region,country,latitude,longitude,number,culled,timed_swim,distance_swim,other_chbx,range,method,remarks){
+    reditForm: function(name,tel,email,datetime,location,localisation,region,country,latitude,longitude,number,culled,timed_swim,distance_swim,other_chbx,range,method,remarks){
 
         document.getElementById('observer_name').value = name;
         document.getElementById('observer_tel').value = tel;
         document.getElementById('observer_email').value = email;
-        document.getElementById('observation_day').value = day;
-        document.getElementById('observation_month').value = month;
-        document.getElementById('observation_year').value = year;
+        document.getElementById('observation_datetime').value = datetime;
         document.getElementById('observation_location').value = location;
         document.getElementById('observation_localisation').value = localisation;
         document.getElementById('observation_region').value = region;
@@ -474,7 +479,7 @@ var app = {
                             required: true,
                             email: true
                         },
-                        observation_year: {
+                        observation_datetime: {
                             required: true
                         },
                         observation_location: {
@@ -501,7 +506,7 @@ var app = {
                             required: true,
                             email: true
                         },
-                        observation_year: {
+                        observation_datetime: {
                             required: true
                         },
                         observation_localisation: {
@@ -529,8 +534,8 @@ var app = {
     addSubmitForm: function(){
         var save = "false";
     	$('#form-cot_admin').submit(function() {
-    		//console.log("form submit");
-    		db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
+    		console.log($('#observation_datetime').val());
+    		db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
     			$('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
     			$('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
     			$('#observation_number').val(),$('#observation_culled').val(),
@@ -550,7 +555,7 @@ var app = {
         var save = "false";
         $('#form-cot_admin').submit(function() {
             //console.log("form submit");
-            db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
+            db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
                 $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
                 $('#observation_pays').val(), $('#observation_latitude').val(), $('#observation_longitude').val(),
                 $('#observation_number').val(), $('#observation_culled').val(), 
@@ -570,7 +575,7 @@ var app = {
         event.preventDefault();
         if(app.getID()==""){
             //console.log("allo insert id");
-            db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
+            db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
                 $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
                 $('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
                 $('#observation_number').val(),$('#observation_culled').val(),
@@ -584,7 +589,7 @@ var app = {
         }
         else {
             //console.log("allo save finaliz");
-            db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
+            db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
                 $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
                 $('#observation_pays').val(), $('#observation_latitude').val(), $('#observation_longitude').val(),
                 $('#observation_number').val(), $('#observation_culled').val(), 
@@ -673,7 +678,8 @@ var app = {
             	no();
             }
     	}
-	    xhr.open("GET","http://oreanet.ird.nc/index.php?option=com_api&app=restcot&resource=restcot&format=raw&key=6e717bcf8005458e0f4f3b7351e3d2ee",true);
+        // l'url du service rest est dans le fichier conf.js
+	    xhr.open("GET",url_oreanet,true);
     	xhr.send();
     },
     
