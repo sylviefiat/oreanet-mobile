@@ -86,7 +86,7 @@ var app = {
         );
 
         //dev mobile
-	    setTimeout(function(){app.receivedEvent('deviceready');},0);
+	    //setTimeout(function(){app.receivedEvent('deviceready');},0);
 	
     },
 
