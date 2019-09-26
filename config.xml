@@ -12,6 +12,9 @@
     <description>
         Signalement participatif d'acanthasters en Nouvelle-Calédonie pour aider la recherche à comprendre le phénomène.
     </description>
+    
+    <preference name="phonegap-version" value="cli-9.0.0" />
+    <preference name="android-targetSdkVersion" value="28" />
    
     <icon src="oreanet_nc_app.png" />
 
