@@ -432,14 +432,14 @@ var app = {
     }, 
 
     addressPicker: function(){	
-    	$("#observation_localisation" ).addressPickerByGiro(
+    	$("#observation_localisation" ).addressPickerWithOL(
 	    {
 		  distanceWidget: true
 	    });	
     },
 
     addressPickerRedit: function(lat, long){  
-        $("#observation_localisation" ).addressPickerByGiro(
+        $("#observation_localisation" ).addressPickerWithOL(
         {
             mapOptions: {
                 zoom: 15,
