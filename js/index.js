@@ -86,7 +86,7 @@ var app = {
         );
 
         //dev mobile
-	    //setTimeout(function(){app.receivedEvent('deviceready');},0);
+	    //setTimeout(function(){app.onDeviceReady();},500);
 	
     },
 
@@ -203,7 +203,7 @@ var app = {
             if(app.getUrlVars()["lat"] !="" && app.getUrlVars()["lng"] !=""){
                 var lat = app.getUrlVars()["lat"];
                 var lng = app.getUrlVars()["lng"];
-                console.log(lat);
+                //console.log(lat);
                 app.addressPickerRedit(lat, lng);
             }
             else {
@@ -431,35 +431,27 @@ var app = {
 	   document.getElementById("system-message-container").style.display = "none";
     }, 
 
-    addressPicker: function(){	
+    addressPicker: function(){
     	$("#observation_localisation" ).addressPickerWithOL(
 	    {
-		  distanceWidget: true
 	    });	
     },
 
     addressPickerRedit: function(lat, long){  
+        mapLat=parseFloat(lat) ? parseFloat(lat):default_latitude;
+        mapLong=parseFloat(long) ? parseFloat(long):default_longitude;
         $("#observation_localisation" ).addressPickerWithOL(
         {
             mapOptions: {
-                zoom: 15,
-                center: [lat, long],
+                zoom: 7,
+                center: [mapLat, mapLong],
                 scrollwheel: true,
-                zoomGesturesEnabled: true,
-                scrollGesturesEnabled: true,
-                mapTypeId: "hybrid"
+                mapTypeId: "Bing"
             },
-            distanceWidget: true,
-            distanceWidgetRadius: 300,  /* meters */
-            appendToAddressString: '',
             geocoderOptions: {
                 language: "fr"
             },
-            markerOptions: {
-            
-            draggable: true,
-            visible: true,
-            }
+            marker: [mapLat, mapLong]
         });
     },
 

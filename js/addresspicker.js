@@ -28,7 +28,7 @@ if(!bg){
     }
 
     function updateElements(data,query){
-        var that = this;
+        var that = this;        
         if(!data) {return;}
         for ( var i in this.settings.boundElements) {
             if(!$(i)) return true;
@@ -38,13 +38,15 @@ if(!bg){
             var newValue = "";
             if(typeof dataProp == "function"){
                 newValue = dataProp.call(that,data);
-            } else if(typeof dataProp == "string") {
+            } else if((typeof dataProp == "string") && (typeof data == "object")) {
                 newValue = dataProp.split(".").reduce(function(a,v)
-                    { return a[v] }
+                { return a[v]; }
                 , data);
-                if(!newValue){
+                if(!newValue){                    
                     newValue=query[dataProp];
                 }
+            } else if((typeof dataProp == "string") && (typeof data == "string")) {
+
             }
 
             var listCount = $sel.length;
@@ -95,7 +97,7 @@ if(!bg){
                 mapHeight: "500px",
                 mapOptions: {
                     zoom: 7,
-                    center: [-21.5, 165.5],
+                    center: [default_latitude, default_longitude],
                     scrollwheel: true,
                     mapTypeId: "Bing"
                 },
@@ -136,10 +138,10 @@ if(!bg){
             $lat = $(".latitude");
             $lng = $(".longitude");
             if($lat != null && $lat.val() !== "" && $lng != null && $lng.val() !== ""){
-               that.geocodeLookup($lat.val()+","+$lng.val(), false, "latLng", true);
-            } else {
+                that.geocodeLookup($lat.val()+","+$lng.val(), false, "latLng", true);
+            } /*else {
                 that.geocodeLookup(that.$element.val(), false, '', true);
-            }
+            }*/
             that.initMap.apply(that);
         },
         initMap: function () {
@@ -187,18 +189,17 @@ if(!bg){
             });
             that.map.addLayer(that.dynamicPinLayer);
             that.map.on('click', function(e) {                
-                that.map.getView().setCenter(e.coordinate);
+                that.map.getView().setCenter(e.coordinate);                
                 createMarker.call(that, e.coordinate);
                 var coord = ol.proj.toLonLat(e.coordinate).map(function(val) {
                     return val.toFixed(6);
                 });
               that.geocodeLookup(coord[1]+","+coord[0], false, 'latLng', true);
             });
-
-            var $lat = $(".latitude");
-            var $lng = $(".longitude");
-            if($lat != null && $lat.val() !== '' && $lng != null && $lng.val() !== ''){
-                var coord = ol.proj.fromLonLat([Number($lng.val()),Number($lat.val())]).map(function(value) {
+            var $lat = that.settings.marker && that.settings.marker[0] || $(".latitude") && $(".latitude").val();
+            var $lng = that.settings.marker && that.settings.marker[1] || $(".longitude") && $(".longitude").val();
+            if($lat != null && $lng != null){
+                var coord = ol.proj.fromLonLat([Number($lng),Number($lat)]).map(function(value) {
                     return value;
                 });
                 createMarker.call(that, coord);
@@ -212,7 +213,7 @@ if(!bg){
             var sourceFunction = function(resolve, reject){             
                 delay(function(){
                     return that.geocodeLookup(query, function (geocoderResults){
-                        that.addressMapping = {geocoderResults};
+                        that.addressMapping = geocoderResults;
                         labels = [geocoderResults.city];                       
 
                         if(typeof resolve == 'function') resolve(labels);
@@ -255,7 +256,7 @@ if(!bg){
             fetch('https://api.opencagedata.com/geocode/v1/json?q=' + query[0] + '+,' + query[1] + '&key=10cc98da95554cf59db6f0a7cce95e99').then(function(response) {
                 return response.json();
             }).then(function(json) {
-        json = json.results[0];
+                json = json.results[0];
                 if (typeof callback == 'function') {
                     callback.call(that, json);
                 }
@@ -266,9 +267,10 @@ if(!bg){
         }       
     };
 
-    var main = function (method) {
+    var main = function (method) {        
         var addressPickerWithOL = this.data('addressPickerWithOL');
-        if (addressPickerWithOL) {
+
+        if (addressPickerWithOL) {            
             if (typeof method === 'string' && addressPickerWithOL[method]) {
                 return addressPickerWithOL[method].apply(addressPickerWithOL, Array.prototype.slice.call(arguments, 1));
             }
