@@ -196,7 +196,7 @@ if(!bg){
             var $lat = $(".latitude");
             var $lng = $(".longitude");
             if($lat != null && $lat.val() !== '' && $lng != null && $lng.val() !== ''){
-                var coord = ol.proj.fromLonLat([Number($lng.val()),Number($lat.val())]).map(value => {
+                var coord = ol.proj.fromLonLat([Number($lng.val()),Number($lat.val())]).map(function(value) {
                     return value;
                 });
                 createMarker.call(that, coord);
