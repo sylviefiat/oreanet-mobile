@@ -253,7 +253,9 @@ if(!bg){
             } else {
                 request.address = query + that.settings.appendToAddressString;
             }
-            fetch('https://api.opencagedata.com/geocode/v1/json?q=' + query[0] + '+,' + query[1] + '&key=10cc98da95554cf59db6f0a7cce95e99').then(function(response) {
+            // FETCH NEEDS A PLUGIN IN PHONEGAP AND XMLHTTPREQUEST DOESNT
+            /*fetch('https://api.opencagedata.com/geocode/v1/json?q=' + query[0] + '+,' + query[1] + '&key=10cc98da95554cf59db6f0a7cce95e99')
+            .then(function(response) {
                 return response.json();
             }).then(function(json) {
                 json = json.results[0];
@@ -263,7 +265,28 @@ if(!bg){
                 if(updateUi){
                     that.updater(json,query);
                 }
-            })
+            })*/
+            var xhr = new XMLHttpRequest();
+            var url = 'https://api.opencagedata.com/geocode/v1/json?q=' + query[0] + '+,' + query[1] + '&key=10cc98da95554cf59db6f0a7cce95e99';
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function () { 
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var json = JSON.parse(xhr.responseText);
+                    json = json.results[0];
+                    if (typeof callback == 'function') {
+                        callback.call(that, json);
+                    }
+                    if(updateUi){
+                        that.updater(json,query);
+                    }
+                }
+            }
+            try {
+                xhr.send(null);
+            } catch(z) {
+                alert("Network failure");
+                return;
+            }     
         }       
     };
 
