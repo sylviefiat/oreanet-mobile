@@ -23,16 +23,15 @@
     </author>
     
     <!--
-      This allows your app to load assets from all *.oreanet.ird.nc domains    
+      This allows your app to load assets from all *.oreanet.ird.nc domains    -->
     <gap:access origin="http://oreanet.ird.nc" subdomains="true" />
-    <gap:access origin="*" />
-    -->   
+    <gap:access origin="*" />  
     
-    <!--gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.3.4" />
+    <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.3.4" />
     <gap:allow-navigation href="http://rest-oreanet.ird.nc" />
     <gap:allow-navigation href="./index.html" />
     <gap:allow-navigation href="./list.html" />
-    <gap:allow-navigation href="./index.html?id=" /-->
+    <gap:allow-navigation href="./index.html?id=" />
 
 
 </widget>
