@@ -40,11 +40,11 @@ if(!bg){
             if(typeof dataProp == 'function'){
                 newValue = dataProp.call(that,data);
             } else if(typeof dataProp == 'string') {
-                newValue = dataProp.split('.').reduce((a,v) => a[v], data);
-        if(!newValue){
-            newValue=query[dataProp];
-        }
-        } 
+                newValue = dataProp.split('.').reduce(function(a,v){ return a[v] }, data);
+                if(!newValue){
+                    newValue=query[dataProp];
+                }
+            } 
             
             var listCount = $sel.length;
             for ( var i = 0; i < listCount; i ++){
