@@ -34,7 +34,7 @@ if(!bg){
         for ( var i in this.settings.boundElements) {
             if(!$(i)) return true;
             var dataProp = this.settings.boundElements[i];
-            let $sel = $(i);
+            var $sel = $(i);
             
             var newValue = '';
             if(typeof dataProp == 'function'){
