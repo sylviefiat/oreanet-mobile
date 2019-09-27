@@ -10,7 +10,7 @@
     <name>Oreanet NC</name>
 
     <description>
-        Signalement participatif d'acanthasters en Nouvelle-Calédonie pour aider la recherche à comprendre le phénomène.
+        Signalement participatif d'acanthasters en Nouvelle-Calédonie.
     </description>
 
     <preference name="phonegap-version" value="cli-9.0.0" />
