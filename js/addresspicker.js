@@ -5,60 +5,61 @@
  * Licensed under the MIT license.
  *
  */
-
- 
 // compatibility for jQuery / jqLite
 var bg = bg || false;
 if(!bg){
-    if(typeof jQuery != 'undefined'){
+    if(typeof jQuery != "undefined"){
         bg = jQuery;
-    } else if(typeof angular != 'undefined'){
+    } else if(typeof angular != "undefined"){
         bg = angular.element;
         bg.extend = angular.extend;
     }
 }
 
-;(function ($) {
+(function ($) {
     "use strict";
-    var methods, map, vectorSource, iconStyle, pointInteraction,dynamicPinLayer, exist = false;
+    var methods; var map; var vectorSource; var iconStyle;
+    var pointInteraction; var dynamicPinLayer; var exist = false;
 
     var timer = {};
     function delay (callback, ms, type){
         clearTimeout (timer[type]);
         timer[type] = setTimeout(callback, ms);
     }
-    
-    function updateElements(data,query){   
+
+    function updateElements(data,query){
         var that = this;
-        if(!data) return;
+        if(!data) {return;}
         for ( var i in this.settings.boundElements) {
             if(!$(i)) return true;
             var dataProp = this.settings.boundElements[i];
             var $sel = $(i);
-            
-            var newValue = '';
-            if(typeof dataProp == 'function'){
+
+            var newValue = "";
+            if(typeof dataProp == "function"){
                 newValue = dataProp.call(that,data);
-            } else if(typeof dataProp == 'string') {
-                newValue = dataProp.split('.').reduce(function(a,v){ return a[v] }, data);
+            } else if(typeof dataProp == "string") {
+                newValue = dataProp.split(".").reduce(function(a,v)
+                    { return a[v] }
+                , data);
                 if(!newValue){
                     newValue=query[dataProp];
                 }
-            } 
-            
+            }
+
             var listCount = $sel.length;
             for ( var i = 0; i < listCount; i ++){
-                var method = 'val',
+                var method = "val",
                 it = $sel.eq(i);
-                if(!it.is('input, select, textarea')){
-                    method = 'text';                    
+                if(!it.is("input, select, textarea")){
+                    method = "text";
                 };
-                it[method](newValue);               
-            }           
+                it[method](newValue);
+            }
         }
 
-        that.$element.triggerHandler('selected.addressPickerWithOL', data);
-    } 
+        that.$element.triggerHandler("selected.addressPickerWithOL", data);
+    }
     function createMarker(coordinate){
             var that = this;
             if(that.vectorSource.getFeatures().length >= 1){
@@ -73,15 +74,16 @@ if(!bg){
             that.pointInteraction = new ol.interaction.Modify({
               features: new ol.Collection([feature])
             });
-            feature.on('change',function(){
-              var coord = ol.proj.toLonLat(this.getGeometry().getCoordinates()).map(function(val) {
-                return val.toFixed(6);
-              });
-              that.geocodeLookup(coord[1]+","+coord[0], false, 'latLng', true);
+            feature.on("change",function(){
+              var coord = ol.proj.toLonLat(this.getGeometry().getCoordinates())
+                  .map(function(val) {
+                    return val.toFixed(6);
+                  });
+              that.geocodeLookup(coord[1]+","+coord[0], false, "latLng", true);
             },feature);
-            that.map.addInteraction(that.pointInteraction);    
-    }      
-    
+            that.map.addInteraction(that.pointInteraction);
+    }
+
     methods = {
         init: function ($element, options) {
             var that = this, $lat, $lng;
@@ -89,8 +91,8 @@ if(!bg){
             that.settings = $.extend({}, {
                 map: false,
                 mapId: false,
-                mapWidth: '100%',
-                mapHeight: '500px',
+                mapWidth: "100%",
+                mapHeight: "500px",
                 mapOptions: {
                     zoom: 7,
                     center: [-21.5, 165.5],
@@ -98,7 +100,7 @@ if(!bg){
                     mapTypeId: "Bing"
                 },
                 makerType: false, /* labeled, styled */
-                appendToAddressString: '',
+                appendToAddressString: "",
                 geocoderOptions: {
                     language: "fr"
                 },
@@ -108,33 +110,33 @@ if(!bg){
                     matcher: function(){return true;}
                 },
                 boundElements: {
-                    '.country': 'components.state',
-                    '.region': 'components.county',
-                    '.latitude': '0',
-                    '.longitude': '1',
-                    '.formatted_address': 'formatted'
+                    ".country": "components.state",
+                    ".region": "components.county",
+                    ".latitude": "0",
+                    ".longitude": "1",
+                    ".formatted_address": "formatted"
                 },
-                
+
                 // internationalization
                 text: {
                     you_are_here: "You are here",
                 },
                 map_rendered: false,
             }, options);
-            
+
             for(var key in that.settings.typeaheadOptions){
                 var method = that.settings.typeaheadOptions[key];
-                if (typeof method == 'function') {
+                if (typeof method == "function") {
                     that.settings.typeaheadOptions[key] = method.bind(that);
-                }               
+                }
             }
             // hash to store geocoder results keyed by address
             that.addressMapping = {};
-            that.currentItem = ''; 
+            that.currentItem = "";
             $lat = $(".latitude");
             $lng = $(".longitude");
-            if($lat != null && $lat.val() !== '' && $lng != null && $lng.val() !== ''){
-               that.geocodeLookup($lat.val()+","+$lng.val(), false, 'latLng', true);
+            if($lat != null && $lat.val() !== "" && $lng != null && $lng.val() !== ""){
+               that.geocodeLookup($lat.val()+","+$lng.val(), false, "latLng", true);
             } else {
                 that.geocodeLookup(that.$element.val(), false, '', true);
             }
@@ -209,7 +211,7 @@ if(!bg){
             
             var sourceFunction = function(resolve, reject){             
                 delay(function(){
-                    that.geocodeLookup(query, function (geocoderResults){
+                    return that.geocodeLookup(query, function (geocoderResults){
                         that.addressMapping = {geocoderResults};
                         labels = [geocoderResults.city];                       
 
