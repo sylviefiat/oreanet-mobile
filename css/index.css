@@ -81,6 +81,13 @@ body {
     min-height:16px;
 }
 
+#head {
+  display:flex;
+  justify-content: space-between;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
 /*send button*/
 #btn-send.invalid {
     color: #555559 !important;

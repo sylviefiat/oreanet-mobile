@@ -6,78 +6,79 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
-		<!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">-->
-		
-	    <link rel="stylesheet" type="text/css" href="css/index.css" />
-	    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/addresspicker.css" />
-		<script language="javascript" type="text/javascript" src="js/jquery-1.11.3.min.js"></script>	
-		<script language="javascript" type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+        <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">-->
+        
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.5.0-rc1.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/addresspicker.css" />
+        <script language="javascript" type="text/javascript" src="js/jquery-3.4.1.min.js"></script> 
+        <script language="javascript" type="text/javascript" src="js/jquery.mobile-1.5.0-rc1.min.js"></script>
         <title>Oreanet NC</title>
     </head>
     <body>
         <div class="app"> 
-		    <!-- module d'affichage des messages (erreur ou info) -->
-		    <div id="system-message-container">
-			<div id="system-message">
-			    <div class="alert fade in" id="message">
-				<a class="close" onclick="return app.closeMsg()">×</a>
-				<p id="msg" class="alert-message">
-				    
-				</p>
-			    </div>
-			</div>
-		    </div>
-		    <!-- page principale -->
-		    <div id="contentlist" class="container contenu">	    	
-			<div class="row">
-				<!-- navbar -->
-				<nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation">
-					<div data-role="header">
-						<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
-							<button class="ui-btn ui-btn-icon-right fa fa-signal" id="onlinelist"></button>
-						</div>
-						<div id="navbar" data-role="collapsible" data-collapsed-icon="bars" data-expanded-icon="delete" class="ui-btn-left ui-mini">
-							<h6>Signaler des Acanthasters</h6>
-							<ul data-role="listview">
-								<li><a href="#" onclick="return app.showInfoMsg()">Info</a></li>
-								<li id="lien-site-menu"><a href="http://oreanet.ird.nc">Voir le site</a></li>
-							</ul>
-						</div>
-					</div>
-				</nav>
-				<!-- /navbar -->
-			
-			    <!-- liste -->
-			    <div class="col-lg-12">
-				<div class="cot_admin_list front-end-edit">
-					<button href=# onclick="return app.getFormID('')" class="btn_new_form">Nouveau formulaire</button>
-		    		<table id="cot_list" class="cot_list_forms">
+            <!-- module d'affichage des messages (erreur ou info) -->
+            <div id="system-message-container">
+            <div id="system-message">
+                <div class="alert fade in" id="message">
+                <a class="close" onclick="return app.closeMsg()">×</a>
+                <p id="msg" class="alert-message">
+                    
+                </p>
+                </div>
+            </div>
+            </div>
+            <!-- page principale -->
+            <div id="contentlist" class="container contenu">            
+            <div class="row">
+                <!-- navbar -->
+                <nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation">
+                        <div id="head" data-role="header">                          
+                            <div id="navbar" data-role="collapsible" data-collapsed-icon="bars" data-expanded-icon="delete" class="ui-button-left">
+                                <h6>Menu</h6>
+                                <ul data-role="listview">
+                                    <li><a href="#" onclick="return app.getFormID('')">Nouveau</a></li>
+                                    <li><a href="#" onclick="return app.showInfoMsg()">Info</a></li>
+                                    <li id="lien-site-menu"><a href="http://oreanet.ird.nc">Voir le site</a></li>
+                                </ul>
+                            </div>
+                            <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-button-right">
+                                <button class="ui-button ui-button-icon-right fa fa-signal" id="onlinelist"></button>            
+                            </div>
+                        </div>
+                    </nav> 
+                <!-- /navbar -->
+            
+                <!-- liste -->
+                <div class="col-lg-12">
+                <div class="cot_admin_list front-end-edit">
+                    <button href=# onclick="return app.getFormID('')" class="btn_new_form">Nouveau formulaire</button>
+                    <table id="cot_list" class="cot_list_forms">
 
-		    			<tr>
-		    				<th>Créé le</th>
-		    				<th><span>Date</span></th>
-		    				<th>Nbr acanthasters</th>
-		    				<th>Lieu</th>
-		    				<th>Supprimer</th>
-		    				<th>Finaliser</th>
-		    			</tr>
+                        <tr>
+                            <th>Créé le</th>
+                            <th><span>Date</span></th>
+                            <th>Nbr acanthasters</th>
+                            <th>Lieu</th>
+                            <th>Supprimer</th>
+                            <th>Finaliser</th>
+                        </tr>
 
-		    		</table>
-				</div>
-		    	</div>
-			</div>
-			</div>
-    	</div>
-	<script language="javascript" type="text/javascript" src="cordova.js"></script>
+                    </table>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    <script language="javascript" type="text/javascript" src="cordova.js"></script>
     <script language="javascript" type="text/javascript" src="js/index.js"></script>
-	<script language="javascript" type="text/javascript" src="js/sql.js"></script>
+    <script language="javascript" type="text/javascript" src="js/sql.js"></script>
     <script language="javascript" type="text/javascript" src="js/dbutils.js"></script>
-	<script language="javascript" type="text/javascript" src="js/addresspicker.js"></script>
+    <script language="javascript" type="text/javascript" src="js/addresspicker.js"></script>
     <script language="javascript" type="text/javascript">
-        	app.initializeList();
+            app.initializeList();
         </script>
     </body>
 </html>

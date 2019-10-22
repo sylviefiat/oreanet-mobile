@@ -23,12 +23,12 @@ var app = {
         if(isOnline){
             online=document.getElementById("onlinelist");
             online.innerText = " En ligne";
-            online.className = "ui-btn ui-btn-icon-right fa fa-signal online";
+            online.className = "ui-button-icon-right fa fa-signal ui-widget ui-button-inherit ui-controlgroup-item ui-button ui-shadow ui-corner-all online";
             online.removeAttribute("disabled");
         } else {
             online=document.getElementById("onlinelist");
             online.innerText = " Hors ligne";
-            online.className = "ui-btn ui-btn-icon-right fa fa-signal";
+            online.className = "ui-button-icon-right fa fa-signal ui-widget ui-button-inherit ui-controlgroup-item ui-button ui-shadow ui-corner-all";
             online.setAttribute("disabled","disabled");
         }
     },
@@ -38,7 +38,7 @@ var app = {
         });
     },
     // Application Constructor
-    initialize: function() {    	
+    initialize: function() {        
         this.bindEvents();
         // set default dateformat
         app.datepickerDefaut();
@@ -86,8 +86,8 @@ var app = {
         );
 
         //dev mobile
-	    //setTimeout(function(){app.onDeviceReady();},500);
-	
+        setTimeout(function(){app.onDeviceReady();},500);
+    
     },
 
     //Initialisation list.html
@@ -126,8 +126,8 @@ var app = {
         invalid = $.grep(elems, function(n){
             return(!n.attributes['disabled'] && !n.validity.valid);
         }),
-        bool = $(invalid).size() == 0;
-        document.getElementById("btn-send").className = "fa fa-paper-plane ui-btn ui-last-child "+(bool?"valid":"invalid");
+        bool = $(invalid).length == 0;
+        document.getElementById("btn-send").className = "fa fa-paper-plane ui-widget ui-button ui-controlgroup-item "+(bool?"valid":"invalid");
         // si c'est un formulaire existant qu'on reprend alors on affiche les champs a completer        
         if(bool){
             app.closeMsg();
@@ -141,7 +141,7 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-	    
+        
         //si il n'y a pas de ID dans url  alors c'est un nouveau formulaire dans index.html
         if(app.getUrlVars()["id"] == null) {
             setTimeout(function(){
@@ -258,31 +258,31 @@ var app = {
         if(range.indexOf("shallow") != -1){
             //console.log("shallow");
             document.getElementById("depth_range0").checked = true;
-            document.getElementById("label_depth_range0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+            document.getElementById("label_depth_range0").className = "ui-button ui-corner-all ui-button-inherit ui-button-icon-left ui-first-child ui-checkbox-on";
         } 
 
         if(range.indexOf("medium") != -1){
             //console.log("medium");
             document.getElementById("depth_range1").checked = true;
-            document.getElementById("label_depth_range1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+            document.getElementById("label_depth_range1").className = "ui-button ui-corner-all ui-button-inherit ui-button-icon-left ui-first-child ui-checkbox-on";
         }
 
         if(range.indexOf("deep") != -1){
             //console.log("deep");
             document.getElementById("depth_range2").checked = true;
-            document.getElementById("label_depth_range2").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+            document.getElementById("label_depth_range2").className = "ui-button ui-corner-all ui-button-inherit ui-button-icon-left ui-first-child ui-checkbox-on";
         }
 
         if(method.indexOf("snorkelling") != -1){
             //console.log("snorkelling");
             document.getElementById("observation_method0").checked = true;
-            document.getElementById("label_observation_method0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+            document.getElementById("label_observation_method0").className = "ui-button ui-corner-all ui-button-inherit ui-button-icon-left ui-first-child ui-checkbox-on";
         }
 
         if (method.indexOf("scuba diving") != -1){
             //console.log("scuba diving");
             document.getElementById("observation_method1").checked = true;
-            document.getElementById("label_observation_method1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+            document.getElementById("label_observation_method1").className = "ui-button ui-corner-all ui-button-inherit ui-button-icon-left ui-first-child ui-checkbox-on";
         }
 
         document.getElementById('remarks').value = remarks;
@@ -319,27 +319,27 @@ var app = {
     },
     // Turn app to offline mode
     turnOffline: function(){
-    	app.updateMsg("L'application est actuellement hors ligne, certaines fonctionnalités ne seront pas disponibles et les données pourront être envoyées à la prochaine connexion.");
+        app.updateMsg("L'application est actuellement hors ligne, certaines fonctionnalités ne seront pas disponibles et les données pourront être envoyées à la prochaine connexion.");
         app.switchOnline(0);
     },
     // Remove splascreen
     open: function(){
         //console.log("OPEN");
 
-    	var parentElement = document.getElementById("deviceready");
+        var parentElement = document.getElementById("deviceready");
         var listeningElement = parentElement.querySelector('.listening');
-    	if(listeningElement != null){
+        if(listeningElement != null){
             listeningElement.className='event connecting row vertical-align';
-    	    listeningElement.addEventListener("transitionend",  function(e) {
-    	    	listeningElement.className='event ready';
-    	    	parentElement.style.visibility = "hidden";
-    	    },false);
-    	}
+            listeningElement.addEventListener("transitionend",  function(e) {
+                listeningElement.className='event ready';
+                parentElement.style.visibility = "hidden";
+            },false);
+        }
     },
     // Sending form wait splashscreen
     sending: function(){
         //console.log("SENDING");
-    	window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
         //test online ou offline
         app.isOnline(
             // si on N'EST PAS connecté alors
@@ -371,7 +371,7 @@ var app = {
     close: function(){
         //console.log("CLOSE");
 
-    	window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
         //test online ou offline
         app.isOnline(
             // si on N'EST PAS connecté alors
@@ -388,15 +388,15 @@ var app = {
         );
 
         var parentElement = document.getElementById("deviceready");
-    	var listeningElement = parentElement.querySelector('.sending');
-    	if(listeningElement != null){
-            listeningElement.className='event sent row vertical-align';    	    
-    	}
+        var listeningElement = parentElement.querySelector('.sending');
+        if(listeningElement != null){
+            listeningElement.className='event sent row vertical-align';            
+        }
         var listeningElement = parentElement.querySelector('.onclose');
         listeningElement.className='event closing row vertical-align';
-    	listeningElement.addEventListener("transitionend",  function(e) {
-	       listeningElement.className='event closed row vertical-align';
-	    },false);
+        listeningElement.addEventListener("transitionend",  function(e) {
+           listeningElement.className='event closed row vertical-align';
+        },false);
     },
 
     // Reload form
@@ -418,23 +418,23 @@ var app = {
 
     updateMsg: function(msg) {
         document.getElementById("msg").innerHTML = msg;
-	    document.getElementById("system-message-container").style.display = "block";
+        document.getElementById("system-message-container").style.display = "block";
     },    
 
     showInfoMsg: function() {
         msg = "L'analyse de la présence des acanthasters nous permet de comprendre pour mieux agir. En nous signalant les acanthasters que vous rencontrez, vous nous aidez à protéger les récifs de Nouvelle-Calédonie.";
-	    app.updateMsg(msg);
+        app.updateMsg(msg);
         $("#navbar").collapsible('collapse');
     }, 
 
     closeMsg: function() {
-	   document.getElementById("system-message-container").style.display = "none";
+       document.getElementById("system-message-container").style.display = "none";
     }, 
 
     addressPicker: function(){
-    	$("#observation_localisation" ).addressPickerWithOL(
-	    {
-	    });	
+        $("#observation_localisation" ).addressPickerWithOL(
+        {
+        });    
     },
 
     addressPickerRedit: function(lat, long){  
@@ -525,21 +525,21 @@ var app = {
     //On utilise la fonction sql pour enregistrer les données
     addSubmitForm: function(){
         var save = "false";
-    	$('#form-cot_admin').submit(function() {
-    		console.log($('#observation_datetime').val());
-    		db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
-    			$('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
-    			$('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
-    			$('#observation_number').val(),$('#observation_culled').val(),
+        $('#form-cot_admin').submit(function() {
+            console.log($('#observation_datetime').val());
+            db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
+                $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
+                $('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
+                $('#observation_number').val(),$('#observation_culled').val(),
                 $('#counting_method_timed_swim').val(), $('#counting_method_distance_swim').val(),$('#counting_method_other').val(),
-    			$('#depth_range0').prop('checked')?$('#depth_range0').val():"",
-    			$('#depth_range1').prop('checked')?$('#depth_range1').val():"",
-    			$('#depth_range2').prop('checked')?$('#depth_range2').val():"",
-    			$('#observation_method0').prop('checked')?$('#observation_method0').val():"",
-    			$('#observation_method1').prop('checked')?$('#observation_method1').val():"",
-    			$('#remarks').val(), app.getDateTime(), save);			
-    		return false;
-	});	
+                $('#depth_range0').prop('checked')?$('#depth_range0').val():"",
+                $('#depth_range1').prop('checked')?$('#depth_range1').val():"",
+                $('#depth_range2').prop('checked')?$('#depth_range2').val():"",
+                $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
+                $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
+                $('#remarks').val(), app.getDateTime(), save);            
+            return false;
+    });    
     },
 
     //on utilise la fonction sql pour modifier les données
@@ -597,8 +597,8 @@ var app = {
     },
 
     submitForm: function(){
-    	if($("#form-cot_admin").valid()){
-    	    app.sending();
+        if($("#form-cot_admin").valid()){
+            app.sending();
             $("#form-cot_admin").submit();
         
             //test online ou offline
@@ -611,15 +611,15 @@ var app = {
                 function(){}
             );
 
-    	} else {
-    	    app.updateMsg("Votre formulaire contient "
-  		        + $("#form-cot_admin" ).validate().numberOfInvalids()
-  		        + "erreur(s), voir le détail ci-dessous.");
-    	}
+        } else {
+            app.updateMsg("Votre formulaire contient "
+                  + $("#form-cot_admin" ).validate().numberOfInvalids()
+                  + "erreur(s), voir le détail ci-dessous.");
+        }
     },
 
     loadForm: function(){
-    	document.getElementById("counting_method_timed_swim_chbx").checked = document.getElementById("counting_method_timed_swim").value.length>0?1:0;
+        document.getElementById("counting_method_timed_swim_chbx").checked = document.getElementById("counting_method_timed_swim").value.length>0?1:0;
         document.getElementById("counting_method_distance_swim_chbx").checked = document.getElementById("counting_method_distance_swim").value.length>0?1:0;
         document.getElementById("counting_method_other_chbx").checked = document.getElementById("counting_method_other").value.length>0?1:0;
 
@@ -659,20 +659,20 @@ var app = {
     },
 
     isOnline: function(no,yes){
-    	var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHttp');
-    	xhr.onload = function(){
+        var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHttp');
+        xhr.onload = function(){
             if(yes instanceof Function){
-            	yes();
+                yes();
             }
-    	}
-    	xhr.onerror = function(){
+        }
+        xhr.onerror = function(){
             if(no instanceof Function){
-            	no();
+                no();
             }
-    	}
+        }
         // l'url du service rest est dans le fichier conf.js
-	    xhr.open("GET",url_oreanet,true);
-    	xhr.send();
+        xhr.open("GET",url_oreanet,true);
+        xhr.send();
     },
     
     //Fonction pour afficher la date correctement

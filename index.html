@@ -8,19 +8,19 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
 		<!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">-->
 	
-	    <link rel="stylesheet" type="text/css" href="css/index.css" />
-	    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.datepicker.css" /> 
-		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+	    <link rel="stylesheet" type="text/css" href="css/index.css" /> 
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.5.0-rc1.min.css" />
+
+	    
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/addresspicker.css" />
 		<link rel="stylesheet" type="text/css" href="css/ol_3.17.1.css" />
 		
-		<script language="javascript" type="text/javascript" src="js/conf.js"></script>
-		<script language="javascript" type="text/javascript" src="js/jquery-1.11.3.min.js"></script>	
-		<script language="javascript" type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
-	  	<script language="javascript" type="text/javascript" src="js/jquery.mobile.datepicker.js"></script>
-		<script language="javascript" type="text/javascript" src="js/jquery.ui.datepicker.js"></script>
+		<script language="javascript" type="text/javascript" src="js/conf.js"></script>	
+		<script language="javascript" type="text/javascript" src="js/jquery-3.4.1.min.js"></script>	
+		<script language="javascript" type="text/javascript" src="js/jquery.mobile-1.5.0-rc1.min.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery-ui.min.js"></script>
 		<script language="javascript" type="text/javascript" src="js/jquery.validate.js"></script>
 		<script language="javascript" type="text/javascript" src="js/additional-methods.js"></script>
 		<script language="javascript" type="text/javascript" src="js/ol_3.17.1.js"></script>
@@ -65,23 +65,26 @@
 			<!-- page principale -->
 			<div id="contentoff" class="container contenu">	    	
 				<div class="row">
-					<!-- navbar -->
 					<nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation">
-						<div data-role="header">
-							<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
-								<button class="ui-btn ui-btn-icon-right fa fa-signal" id="onlinelist"></button>
-								<button id="btn-refresh" onclick="return app.reloadForm()" class="ui-btn ui-btn-icon-right fa fa-refresh"></button>
-								<button id="btn-send" onclick="return app.submitForm()" class="ui-btn ui-btn-icon-right fa fa-paper-plane invalid"></button>
-							</div>
-							<div id="navbar" data-role="collapsible" data-collapsed-icon="bars" data-expanded-icon="delete" class="ui-btn-left ui-mini">
-								<h6>Signaler des Acanthasters</h6>
+						<div id="head" data-role="header">							
+							<div id="navbar" data-role="collapsible" data-collapsed-icon="bars" data-expanded-icon="delete" class="ui-button-left">
+								<h6>Menu</h6>
 								<ul data-role="listview">
+									<li><a href="#" onclick="return app.getFormID('')">Nouveau</a></li>								
+					    			<li><a href="#" onclick="return app.saveForm()">Sauvegarder</a></li>
+					    			<li><a href="#" onclick="return app.cancel()">Ma liste</a></li>
 									<li><a href="#" onclick="return app.showInfoMsg()">Info</a></li>
 									<li id="lien-site-menu"><a href="http://oreanet.ird.nc">Voir le site</a></li>
 								</ul>
 							</div>
-	 					</div>
-	 				</nav>
+							<div data-role="controlgroup" data-type="horizontal">
+								
+								<button id="btn-send" onclick="return app.submitForm()" class="ui-button fa fa-paper-plane invalid "> Envoyer</button>
+								<button class="ui-button ui-button-icon-right fa fa-signal" id="onlinelist"></button>
+												
+							</div>
+						</div>
+					</nav> 				
 					<!-- /navbar -->
 					
 				    <!-- formulaire -->
@@ -96,20 +99,17 @@
 								    	<span class="input-group-addon exergue"><span class="fa fa-user"></span> Observateur</span>
 								    </label>
 							
-								    <div data-role="fieldcontain" class="ui-hide-label">
-								        <label for="observer_name">Observateur</label>	
-								    	<input type="text" name="observer_name" id="observer_name" value="" placeholder="Nom de l'observateur" required/>
+								    <div ddata-role="fieldcontain" class="ui-hide-label">
+								    	<input type="text" data-role="textinput" name="observer_name" id="observer_name" value="" placeholder="Nom de l'observateur" required/>
 								     	<span style="display:none;" >
 							    		    <input type="text" id="id" name="id" readonly="readonly" value="" size="32"/>
 							    	    	</span>
 								    </div>
 								    <div data-role="fieldcontain" class="ui-hide-label">
-										<label for="observer_tel">N° de l'observateur</label>				    		
-								    	<input type="tel" name="observer_tel" id="observer_tel" value="" placeholder="Numéro de téléphone"/>
+								    	<input type="tel" data-role="textinput" name="observer_tel" id="observer_tel" value="" placeholder="Numéro de téléphone"/>
 								    </div>
 								    <div data-role="fieldcontain" class="ui-hide-label">
-										<label for="observer_email">Email</label>				    		
-								    	<input type="email" name="observer_email" id="observer_email" value="" placeholder="Email de l'observateur" required/>
+								    	<input type="email" data-role="textinput" name="observer_email" id="observer_email" value="" placeholder="Email de l'observateur" required/>
 								    </div>
 
 								    <!-- part II -->
@@ -117,35 +117,28 @@
 								    	<span class="input-group-addon exergue"><span class="fa fa-calendar"></span> Date et lieu</span>
 								    </label>	
 								    <div data-role="fieldcontain" class="ui-hide-label">
-										<label for="observation_date">Date</label>				    
-								    	<input name="observation_datetime" id="observation_datetime" placeholder="Date" data-role="date" type="text">
+								    	<input name="observation_datetime" id="observation_datetime" placeholder="Date" data-role="textinput" data-options='{"mode": "calbox", "useNewStyle":true}' type="date">
 								    </div>
 								    <div data-role="fieldcontain" class="ui-hide-label">
-										<label for="observer_location">Contexte</label>				    		
-								    	<textarea name="observation_location" id="observation_location" placeholder="Lieu ou position "></textarea>
+								    	<textarea name="observation_location" data-role="textinput" id="observation_location" placeholder="Lieu ou position "></textarea>
 								    </div>
 
 							    	<div id="offlineForm">
 
 									    <div data-role="fieldcontain" class="ui-hide-label">
-											<label for="observer_localisation">Localisation</label>				    		
-									    	<input type="text" id="observation_localisation" name="observation_localisation" class="formatted_address" value="" size="32" autocomplete="off" placeholder="Sélectionner la localisation sur la carte" required></input>
+									    	<input type="text" data-role="textinput" id="observation_localisation" name="observation_localisation" class="formatted_address" value="" size="32" autocomplete="off" placeholder="Sélectionner la localisation sur la carte" required></input>
 									    </div>
 									    <div data-role="fieldcontain" class="ui-hide-label">
-											<label for="observer_region">Région</label>				    		
-									    	<input type="text" name="observation_region" id="observation_region" value="" class="region form-control" placeholder="Région"/>
+									    	<input type="text" data-role="textinput" name="observation_region" id="observation_region" value="" class="region form-control" placeholder="Région"/>
 									    </div>
 									    <div data-role="fieldcontain" class="ui-hide-label">
-											<label for="observer_pays">Pays</label>				    		
-									    	<input type="text" name="observation_pays" id="observation_pays" value="" class="country form-control" placeholder="Pays"/>
+									    	<input type="text" data-role="textinput" name="observation_pays" id="observation_pays" value="" class="country form-control" placeholder="Pays"/>
 									    </div>
 									    <div data-role="fieldcontain" class="ui-hide-label">
-											<label for="observer_latitude">Latitude</label>				    		
-									    	<input type="text" name="observation_latitude" id="observation_latitude" value="" class="latitude form-control" placeholder="Latitude"/>
+									    	<input type="text" data-role="textinput" name="observation_latitude" id="observation_latitude" value="" class="latitude form-control" placeholder="Latitude"/>
 									    </div>
 									    <div data-role="fieldcontain" class="ui-hide-label">
-											<label for="observer_longitude">Longitude</label>				    		
-									    	<input type="text" name="observation_longitude" id="observation_longitude" value="" class="longitude form-control" placeholder="Longitude"/>
+									    	<input type="text" data-role="textinput" name="observation_longitude" id="observation_longitude" value="" class="longitude form-control" placeholder="Longitude"/>
 									    </div>
 							    	</div>
 
@@ -154,12 +147,10 @@
 								    	<span class="input-group-addon exergue"><span class="fa fa-eye"></span> Acanthasters</span>
 								    </label>
 								    <div data-role="fieldcontain" class="ui-hide-label">
-										<label for="observation_number">Acanthasters observées</label>				    
-								    	<input type="text" name="observation_number" id="observation_number" value="" placeholder="Nombre d'acanthasters observées" required/>
+								    	<input type="text" data-role="textinput" name="observation_number" id="observation_number" value="" placeholder="Nombre d'acanthasters observées" required/>
 								    </div>
 								    <div data-role="fieldcontain" class="ui-hide-label">
-										<label for="observer_culled">Acanthasters Nettoyées</label>				    		
-								    	<input type="hidden" name="observation_culled" id="observation_culled" value="" placeholder="Nombre d'acanthasters nettoyées" value="0"/>
+								    	<input type="hidden" name="observation_culled" id="observation_culled" value="" placeholder="Nombre d'acanthasters nettoyées"/>
 								    </div>
 
 							    	<!-- part IV -->
@@ -168,7 +159,6 @@
 							    	</label>	
 								    <div data-role="fieldcontain" class="ui-hide-label">
 								        <fieldset data-role="controlgroup">
-										    <legend>Méthode d'observation</legend>
 										    <input type="checkbox" name="observation_method0" id="observation_method0" value="snorkelling"/>
 										    <label for="observation_method0" id="label_observation_method0">PMT</label>
 										    <input type="checkbox" name="observation_method1" id="observation_method1" value="scuba diving"/>
@@ -181,7 +171,6 @@
 								    </label>	
 								    <div data-role="fieldcontain" class="ui-hide-label">
 								        <fieldset data-role="controlgroup">
-										    <legend>Tranches de profondeur</legend>
 										    <input type="checkbox" id="depth_range0" name="depth_range0" value="shallow">
 										    <label for="depth_range0" id="label_depth_range0">Moins de 2m</label>
 										    <input type="checkbox" id="depth_range1" name="depth_range1" value="medium">
@@ -196,7 +185,6 @@
 								    </label>
 								    <div data-role="fieldcontain" class="ui-hide-label">
 								        <fieldset data-role="controlgroup" data-type="horizontal">
-										    <legend>Méthode de comptage</legend>
 										    <input type="checkbox" id="counting_method_timed_swim_chbx" name="counting_method_timed_swim_chbx" onclick="app.enable_timed_swim(this.checked)"></input>
 										    <label for="counting_method_timed_swim_chbx">Temps de nage</label>
 										    <input type="checkbox" id="counting_method_distance_swim_chbx" name="counting_method_distance_swim_chbx" onclick="app.enable_distance_swim(this.checked)"></input>
@@ -207,26 +195,25 @@
 								    </div>
 
 							    	<div data-role="fieldcontain" class="ui-hide-label">
-										<label for="counting_method_timed_swim">Temps</label>
-										<input type="text" name="counting_method_timed_swim" id="counting_method_timed_swim" value="" class="form-control" placeholder="Temps de nage" readonly="readonly">
+										<label for="counting_method_timed_swim" class="ui-hidden-accessible">Temps</label>
+										<input type="text" data-role="textinput" name="counting_method_timed_swim" id="counting_method_timed_swim" value="" class="form-control" placeholder="Temps de nage" readonly="readonly">
 							    	</div>
 							   
 								    <div data-role="fieldcontain" class="ui-hide-label">
 										<label for="counting_method_distance_swim" class="ui-hidden-accessible">Distance</label>
-										<input type="text" name="counting_method_distance_swim" id="counting_method_distance_swim" value="" class="form-control" placeholder="Distance parcourue" readonly="readonly"></input>
+										<input type="text" data-role="textinput" name="counting_method_distance_swim" id="counting_method_distance_swim" value="" class="form-control" placeholder="Distance parcourue" readonly="readonly"></input>
 								    </div>
 							    
 								    <div data-role="fieldcontain" class="ui-hide-label">
 										<label for="counting_method_other" class="ui-hidden-accessible">Other</label>
-										<input type="text" name="counting_method_other" id="counting_method_other" value="" class="form-control" placeholder="Autre" readonly="readonly"></input>			
+										<input type="text" data-role="textinput" name="counting_method_other" id="counting_method_other" value="" class="form-control" placeholder="Autre" readonly="readonly"></input>			
 								    </div>
 								    <!-- part VII -->
 								    <label>
-								    	<span class="input-group-addon exergue"><span class="fa fa-comment"></span> Remarques</span>
+								    	<span class="input-group-addon exergue"><span class="fa fa-comment""></span> Remarques</span>
 								    </label>
 							    	<div data-role="fieldcontain" class="ui-hide-label">
-										<label for="remarks">Remarques</label>				    		
-							    		<textarea name="remarks" id="remarks" placeholder="Ex: couverture de corail vivant, coraux morts, blanchiment, présence d'algues…"></textarea>
+							    		<textarea name="remarks" data-role="textinput" id="remarks" placeholder="Ex: couverture de corail vivant, coraux morts, blanchiment, présence d'algues…"></textarea>
 							    	</div>
 								    <!-- part VIII -->
 								    <div id="btns-cancel-save">
