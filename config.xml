@@ -18,7 +18,7 @@
     <preference name="android-targetSdkVersion" value="28" />
    
     <icon src="oreanet_nc_app.png" />
-    <splash src="res/screen/android/oreanet-land-hdpi-screen.png" />
+    <splash src="res/android/screen/oreanet-land-hdpi-screen.png" />
 
     <author href="https://umr-entropie.ird.nc" email="sylvie.fiat@ird.fr">
         Sylvie Fiat | IRD
