@@ -84,7 +84,8 @@ var app = {
         }
     },
     // Application Constructor
-    initialize: function() {        
+    initialize: function() { 
+        db.openDB();       
         this.bindEvents();
         // set default dateformat
         app.datepickerDefaut();
@@ -111,7 +112,7 @@ var app = {
             }
         );
         //dev mobile en ouvrant directement index.html
-        //setTimeout(function(){app.onDeviceReady();},500);
+        setTimeout(function(){app.onDeviceReady();},500);
     },
 
     //Initialisation list.html
@@ -539,19 +540,19 @@ var app = {
     saveForm: function(){
         var save = "true";
         event.preventDefault();
-        if(app.getID()==""){
+        if(app.getID()=="" || app.getID() == null || app.getID() == undefined){
             app.insertCOT(app.getDateTime(), save);
         }
         else {
             app.updateCOT(app.getID(),save);
         }
-        setTimeout(function(){app.cancel();},1000);
+        //setTimeout(function(){app.cancel();},2000);
     },
 
     submitForm: function(){
         if($("#form-cot_admin").valid()){
             app.sending();
-            if(app.getID()==""){
+            if(app.getID()=="" || app.getID() == null || app.getID() == undefined){
                 app.insertCOT(app.getDateTime(), "false");
             }
             else {

@@ -5,11 +5,23 @@ var db = {
 		cotsDb.transaction(function(transaction) {
 		    transaction.executeSql(sql.CREATE, [], function(transaction, results) {
 		    }, function(transaction, error) {
-		    	    console.log("error creating db: "+error.message);
+		    	console.log("error creating db: "+error.message);
 		    });
 		});
 		return cotsDb;
 	},
+
+    executeSQL: function(query, params, call, error){
+        var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+        cotsDb.transaction(function(tx) {
+            tx.executeSql(sql.CREATE,[],  
+            function (transaction, sqlResultSet) {
+                tx.executeSql(query, params, call, error);
+            }, function (transaction, error) {
+                console.log('error on table create: ' + error.message);
+            });
+        });
+    },
 
 	dropDB: function() {
 		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
@@ -27,8 +39,7 @@ var db = {
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
 				depth_range0, depth_range1, depth_range2, observation_method0, observation_method1, remarks, date_enregistrement, save) {
-		var cotsDb = db.openDB();
-
+		//var cotsDb = db.openDB();
 		var depth_range = ( depth_range0.length > 0 ? depth_range0 : "")
 					+((depth_range0.length > 0 && depth_range1.length > 0) ? ", " : ((depth_range0.length>0 && depth_range2.length > 0) ? ", " : ""))
 					+(depth_range1.length>0?depth_range1:"")
@@ -38,8 +49,8 @@ var db = {
 					+((observation_method0.length>0 && observation_method1.length) > 0 ? ", " : "")
 					+(observation_method1.length>0?observation_method1:"");
 
-		cotsDb.transaction(function(transaction) {
-			transaction.executeSql(sql.INSERT, 
+		//cotsDb.transaction(function(transaction) {
+			db.executeSQL(sql.INSERT, 
 				[observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
@@ -57,7 +68,7 @@ var db = {
 		    			console.log("insert error"+e.message);
 				}
 			);
-	    	});
+	    	//});
 	},
 
 	//récupère l'id du nouveau formulaire a envoyé
@@ -67,9 +78,9 @@ var db = {
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
 				depth_range, observation_method, 
 				remarks, date_enregistrement, save) {
-		var cotsDb = db.openDB();
-		cotsDb.transaction(function(transaction) {
-			transaction.executeSql(sql.SELECTidINSERT, [observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
+		//var cotsDb = db.openDB();
+		//cotsDb.transaction(function(transaction) {
+			db.executeSQL(sql.SELECTidINSERT, [observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 					observation_localisation, observation_region, observation_country, 
 					observation_latitude, observation_longitude, observation_number, observation_culled, 
 					counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -82,18 +93,20 @@ var db = {
 				}
 			}, function(transaction, error) {		    
 		    		app.updateMsg("Une erreur est survenue lors de l'envoi du formulaire, merci de bien vouloir réessayer.");
-			});
-	    });
+			}
+            );
+	   // });
 	},
 
 	synchronizeCOTs: function(from, id, save) {
-	    var cotsDb = db.openDB();
+	    //var cotsDb = db.openDB();
 	    if(save == "true"){
-	    	app.updateMsg("Votre formulaire a bien été sauvegardé");
+            //app.cancel();	    	
+            setTimeout(function(){app.updateMsg("Votre formulaire a bien été sauvegardé");},1000);
 	    }
 	    else if (save == "false"){
-		    cotsDb.transaction(function(transaction) {
-				transaction.executeSql(sql.SELECT, [id], function(transaction, results) {
+		    //cotsDb.transaction(function(transaction) {
+				db.executeSQL(sql.SELECT, [id], function(transaction, results) {
 					for(i=0; i<results.rows.length;i++){
 						// parse results in JSON
 				    	var item = JSON.stringify(results.rows.item(i));
@@ -103,7 +116,7 @@ var db = {
 				}, function(e) {
 				    app.updateMsg("Une erreur est survenue lors de l'envoi du formulaire, merci de bien vouloir réessayer.");
 				});
-		    });
+		    //});
 		}
 	},
 
@@ -117,6 +130,7 @@ var db = {
         var url = url_oreanet;
         var xhr = (window.XMLHttpRequest)?new XMLHttpRequest():new ActiveXObject("Microsoft.XMLHTTP");
         if(xhr == null){throw "Error: XMLHttpRequest failed to initiate.";}
+
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var json = JSON.parse(xhr.responseText); 
@@ -147,31 +161,31 @@ var db = {
     },
 
 	updateCOT: function(id) {
-	    var cotsDb = db.openDB();
-	    cotsDb.transaction(function(transaction) {
-			transaction.executeSql(sql.REMOVE, [id], 
-				function(transaction, results) {}, 
+	    //var cotsDb = db.openDB();
+	    //cotsDb.transaction(function(transaction) {
+			db.executeSQL(sql.REMOVE, [id], 
+				function(transaction, results) {}//, 
 				function(transaction, error) {}
 			);
-	    });
+	    //});
 	},
 
 	deleteCOT: function() {
-	    var cotsDb = db.openDB();
-	    cotsDb.transaction(function(transaction) {
-			transaction.executeSql(sql.DELETE, [], function(transaction, results) {
+	    //var cotsDb = db.openDB();
+	    //cotsDb.transaction(function(transaction) {
+			db.executeSQL(sql.DELETE, [], function(transaction, results) {
 			    return 1;
 			}, function(transaction,error) {		    
 			    return 0;
 			});
-	    });
+	    //});
 	},
 
 	//On vérifie si des formulaires existe si oui on redirige ver le lien la list.html
 	listCOTexist: function(){
-		var cotsDb = db.openDB();
-	        cotsDb.transaction(function(transaction) {
-	        transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
+		//var cotsDb = db.openDB();
+	        //cotsDb.transaction(function(transaction) {
+	        db.executeSQL(sql.SELECTexistLIST, [], function(transaction, results) {
 	            if (results.rows.length != 0){	
 	            	app.setNotificationsList(1,results.rows.length );
 	            }
@@ -182,14 +196,14 @@ var db = {
 			    //console.log("some error updating data: list exist "+error.message);
 			    return 0;
 			});
-	    });
+	   // });
     },
 
     //On vérifie si list existe pour l'action new form
     listExistNewForm: function(){
-	var cotsDb = db.openDB();
-    cotsDb.transaction(function(transaction) {
-        transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
+	//var cotsDb = db.openDB();
+    //cotsDb.transaction(function(transaction) {
+        db.executeSQL(sql.SELECTexistLIST, [], function(transaction, results) {
             //console.log("Liste exist "+results.rows.length);
                 if(results.rows.length !=0){
                 	if($('#btn-cancel').length){  
@@ -199,14 +213,14 @@ var db = {
             }, function(transaction,error) {		    
     		    return 0;
     		});
-        });
+        //});
     },
 
     //On vérifie si list existe pour CLOSE
     listExistCLOSE: function(){
-    	var cotsDb = db.openDB();
-        cotsDb.transaction(function(transaction) {
-            transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
+    	//var cotsDb = db.openDB();
+        //cotsDb.transaction(function(transaction) {
+            db.executeSQL(sql.SELECTexistLIST, [], function(transaction, results) {
                 //console.log("Liste exist "+results.rows.length);
                 if(results.rows.length !=0){
                 	//retour a la liste a la fin de finaliser ou nouveau
@@ -217,16 +231,16 @@ var db = {
             }, function(transaction,error) {		    
     		    return 0;
     		});
-        });
+        //});
     },
 
     //Affichage de la liste
 	listCOT: function(){
     	var parentElement = document.getElementById("contentlist");
         var listeningElement = parentElement.querySelector('.cot_admin_list');
-    	var cotsDb = db.openDB();
-    	cotsDb.transaction(function(transaction) {
-            transaction.executeSql(sql.SELECTCOTLIST, [], function(transaction, results) {
+    	//var cotsDb = db.openDB();
+    	//cotsDb.transaction(function(transaction) {
+            db.executeSQL(sql.SELECTCOTLIST, [], function(transaction, results) {
             	app.updateMsg("Il vous reste " + results.rows.length + " formulaire(s) à finaliser. Merci de nous aider à protéger les récifs de Nouvelle-Calédonie.");
                 for (i = 0; i < results.rows.length; i++){                 	
               		//on remplit le tableau
@@ -248,7 +262,7 @@ var db = {
     		    //console.log("some error updating data: "+error.message);
     		    return 0;
     		});
-        });
+        //});
     },
 
     //On récupère l'id d'un formulaire pour charger ses données
@@ -308,7 +322,7 @@ var db = {
 							depth_range0, depth_range1, depth_range2, 
 							observation_method0, observation_method1, 
 							remarks, id, save) {
-		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+		//var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
 		
 		var depth_range = ( depth_range0.length > 0 ? depth_range0 : "")
 					+((depth_range0.length > 0 && depth_range1.length > 0) ? ", " : ((depth_range0.length>0 && depth_range2.length > 0) ? ", " : ""))
@@ -319,8 +333,8 @@ var db = {
 					+((observation_method0.length>0 && observation_method1.length) > 0 ? ", " : "")
 					+(observation_method1.length>0?observation_method1:"");
 
-		cotsDb.transaction(function(transaction) {
-			transaction.executeSql(sql.UPDATEFORM, 
+		//cotsDb.transaction(function(transaction) {
+			db.executeSQL(sql.UPDATEFORM, 
 				[	observer_name, observer_tel, observer_email, 
 					observation_datetime, observation_location, 
 					observation_localisation, observation_region, observation_country, 
@@ -335,7 +349,7 @@ var db = {
 		    		return 0;
 				}
 			);
-	    });
+	   // });
 	}
 }
 
