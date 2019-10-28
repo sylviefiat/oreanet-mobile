@@ -18,6 +18,7 @@
     <preference name="android-targetSdkVersion" value="28" />
    
     <icon src="oreanet_nc_app.png" />
+    <splash src="res/screen/android/oreanet-land-hdpi-screen.png" />
 
     <author href="https://umr-entropie.ird.nc" email="sylvie.fiat@ird.fr">
         Sylvie Fiat | IRD
@@ -34,6 +35,18 @@
         <resource-file src="res/android/mipmap-xhdpi/launcher.png" target="res/mipmap-xhdpi/ic_launcher.png" />
         <resource-file src="res/android/mipmap-xxhdpi/launcher.png" target="res/mipmap-xxhdpi/ic_launcher.png" />
         <resource-file src="res/android/mipmap-xxxhdpi/launcher.png" target="res/mipmap-xxxhdpi/ic_launcher.png" />
+        <splash density="land-ldpi" src="res/screen/android/oreanet-land-ldpi-screen.png" />
+        <splash density="land-mdpi" src="res/screen/android/oreanet-land-mdpi-screen.png" />
+        <splash density="land-hdpi" src="res/screen/android/oreanet-land-hdpi-screen.png" />
+        <splash density="land-xhdpi" src="res/screen/android/oreanet-land-xhdpi-screen.png" />
+        <splash density="land-xxhdpi" src="res/screen/android/oreanet-land-xxhdpi-screen.png" />
+        <splash density="land-xxxhdpi" src="res/screen/android/oreanet-land-xxxhdpi-screen.png" />
+        <splash density="port-ldpi" src="res/screen/android/oreanet-port-ldpi-screen.png" />
+        <splash density="port-mdpi" src="res/screen/android/oreanet-port-mdpi-screen.png" />
+        <splash density="port-hdpi" src="res/screen/android/oreanet-port-hdpi-screen.png" />
+        <splash density="port-xhdpi" src="res/screen/android/oreanet-port-xhdpi-screen.png" />
+        <splash density="port-xxhdpi" src="res/screen/android/oreanet-port-xxhdpi-screen.png" />
+        <splash density="port-xxxhdpi" src="res/screen/android/oreanet-port-xxxhdpi-screen.png" />
     </platform>    
     
     <!--
