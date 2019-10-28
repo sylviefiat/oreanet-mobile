@@ -68,7 +68,7 @@
 					<nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation">
 						<div id="head" data-role="header">							
 							<div id="navbar" data-role="collapsible" data-collapsed-icon="bars" data-expanded-icon="delete" class="ui-button-left">
-								<h6>Menu</h6>
+								<h6 class="listState">Menu <sup id="notEmptyListMenu"></sup></h6>
 								<ul data-role="listview">
 									<li><a href="#" onclick="return app.getFormID('')">Nouveau</a></li>								
 					    			<li><a href="#" onclick="return app.saveForm()">Sauvegarder</a></li>
@@ -117,7 +117,7 @@
 								    	<span class="input-group-addon exergue"><span class="fa fa-calendar"></span> Date et lieu</span>
 								    </label>	
 								    <div data-role="fieldcontain" class="ui-hide-label">
-								    	<input name="observation_datetime" id="observation_datetime" placeholder="Date" data-role="textinput" data-options='{"mode": "calbox", "useNewStyle":true}' type="date">
+								    	<input name="observation_datetime" id="observation_datetime" placeholder="Date" data-role="textinput" type="date" required/>
 								    </div>
 								    <div data-role="fieldcontain" class="ui-hide-label">
 								    	<textarea name="observation_location" data-role="textinput" id="observation_location" placeholder="Lieu ou position "></textarea>
@@ -217,7 +217,6 @@
 							    	</div>
 								    <!-- part VIII -->
 								    <div id="btns-cancel-save">
-					    				<button id="btn-cancel" style="display:none;" href="#" onclick="return app.cancel()">Retour à la liste</button>
 					    				<button id="btn-save" style="display:none;" href="#" onclick="return app.saveForm()">Sauvegarder</button>
 					    			</div>	
 								</form>

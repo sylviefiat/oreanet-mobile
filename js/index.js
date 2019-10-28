@@ -17,25 +17,71 @@
  * under the License.
  */
 
-/* gloabl app management */
+/* global app management */
 var app = {
+    changeState: function(id,toState) {
+        let oldState = toState === "on" ? "off":"";
+        let newState = toState === "on" ? "":"off";
+        if(document.getElementById(id+oldState)){
+            document.getElementById(id+oldState).id = id+newState;
+        }
+    },
     switchOnline: function(isOnline){
         if(isOnline){
+            //On affiche le formulaire
+            app.changeState("content","on");
+            //Changement de menu
+            app.changeState("lien-site-menu","on");
+            // Réinitialisation de l'adresse picker
+            app.addressPicker();
+            // fermeture des messages d'infos
+            app.closeMsg();
+            //Passage de l'indicateur à l'état "en ligne"
             online=document.getElementById("onlinelist");
             online.innerText = " En ligne";
             online.className = "ui-button-icon-right fa fa-signal ui-widget ui-button-inherit ui-controlgroup-item ui-button ui-shadow ui-corner-all online";
+            // Affichage du bouton pour sauvgarder le formulaire
+            if($('#btn-save').length){  
+                $('#btn-save').show();
+            }
             online.removeAttribute("disabled");
         } else {
+            //On affiche le formulaire
+            app.changeState("content","on");
+            //Changement de menu
+            app.changeState("lien-site-menu","off");
+            //Affichage du message 
+            app.updateMsg("L'application est actuellement hors ligne, certaines fonctionnalités ne seront pas disponibles et les données pourront être envoyées à la prochaine connexion.");
+            //Passage de l'indicateur à l'état "hors ligne"
             online=document.getElementById("onlinelist");
             online.innerText = " Hors ligne";
             online.className = "ui-button-icon-right fa fa-signal ui-widget ui-button-inherit ui-controlgroup-item ui-button ui-shadow ui-corner-all";
             online.setAttribute("disabled","disabled");
         }
+    },    
+    // Turn app to online mode
+    turnOnline: function(){  
+        app.switchOnline(1);
+    },
+    // Turn app to offline mode
+    turnOffline: function(){
+        app.switchOnline(0);
     },
     datepickerDefaut: function(){
         $.datepicker.setDefaults({
             dateFormat: 'yy-mm-dd'
         });
+    },
+    setNotificationsList: function(hasElements,nbElements) {
+        if(hasElements){
+            $("#notEmptyListMenu").show();
+            $("#notEmptyListMenu").html(nbElements);
+            $("#notEmptyListItem").show();
+            $("#notEmptyListItem").html(nbElements);
+        } else {
+            $("#notEmptyListMenu").hide();
+            $("#notEmptyListItem").hide();
+        }
     },
     // Application Constructor
     initialize: function() {        
@@ -46,58 +92,34 @@ var app = {
         app.switchOnline(1);
         // supprime tout message afficher (si il y en a)
         app.closeMsg();
+        //On vérifie l’existence d'une liste - si oui on redirige vers la liste
+        setTimeout(function(){db.listCOTexist();},500);
         //test online ou offline
         app.isOnline(
             // si on N'EST PAS connecté alors
             function(){
-                //On remet le splascreen
-                document.getElementById("devicereadyoff").id = "deviceready";
-                //console.log("On remet le splascreen");
-                //On est sur la page index.html et offline
                 app.switchOnline(0);
-                //On enlève le lien site dans le menu
-                document.getElementById("lien-site-menu").id = "lien-site-menu-off";
-                //On affiche le formulaire
-                document.getElementById("contentoff").id = "content";
-                //console.log("On affiche le formulaire");
-             },
+            },
             // si on EST connecté
             function(){
-                if($('#btn-save').length){  
-                    $('#btn-save').show();
-                }
                 //Si on est sur la page index.html et on est online alors
                 if(app.getUrlVars()["id"] == null){
                     app.switchOnline(1);
-                    //on remet le splascreen
-                    document.getElementById("devicereadyoff").id = "deviceready";
-                    //console.log("On remet le splascreen");
-                    //On vérifie l’existence d'une liste
-                    setTimeout(function(){ db.listCOTexist();},500);
-                    //On affiche le formulaire
-                    document.getElementById("contentoff").id = "content";
-                    //console.log("On affiche le formulaire");
                 }else {
-                    //On affiche le formulaire
-                    document.getElementById("contentoff").id = "content";
-                    //console.log("On affiche le formulaire");
+                    app.changeState("content","on");
                 }
             }
         );
-
-        //dev mobile
-        setTimeout(function(){app.onDeviceReady();},500);
-    
+        //dev mobile en ouvrant directement index.html
+        //setTimeout(function(){app.onDeviceReady();},500);
     },
 
     //Initialisation list.html
     initializeList: function() {
         //On affiche online
         app.switchOnline(1);
-
         var parentElement = document.getElementById("contentlist");
         var listeningElement = parentElement.querySelector('.cot_admin_list');
-        
         //afficher la liste
         db.listCOT();
     },
@@ -134,40 +156,34 @@ var app = {
             $(elems).removeClass("error");
         } else {
             if(idform!="" && idform!=null){
-                app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $(invalid).size() +" champ(s) à remplir." +  " <a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
+                app.updateMsg("Voici votre formulaire à finaliser. Il vous reste "+ $(invalid).length +" champ(s) à remplir." +  " <a href='#' onclick='return app.cancel()'>Retour à la liste</a>");
             }
             $(invalid).addClass("error");
         }
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        
         //si il n'y a pas de ID dans url  alors c'est un nouveau formulaire dans index.html
         if(app.getUrlVars()["id"] == null) {
             setTimeout(function(){
-
                 //console.log("<<<<<formulaire non existant offline>>>>");
-
-                if(document.getElementById("deviceready") != null){
-                    
+                if(document.getElementById("deviceready") != null){                   
                     //On enleve les champs Select/Regi/Pays/Lat/Long
                     document.getElementById("offlineForm").style.display = "none";
                     // on met les input cachés en disabled
                     $('#offlineForm').find('input').attr("disabled", true);
-                    // enlevé le splashscreen et affiche le formulaire
+                    // enleve le splashscreen et affiche le formulaire
                     app.open();
                 }
                 // supprime tout message afficher (si il y en a)
                 app.closeMsg();
                 // passer en status hors ligne
-                app.turnOffline();
+                //app.turnOffline();
                 // ajouter un listener sur le formulaire
                 app.addSubmitForm();
                 // ajouter un "validateur" de formulaire
                 app.validForm();
-
                 $('input:required').change(app.checkStatus);
-
             }, 2000);
 
         }
@@ -175,8 +191,7 @@ var app = {
         else if(app.getUrlVars()["id"] == "") {
             setTimeout(function(){
             //console.log("<<<<<formulaire non existant online>>>>");
-
-            // supprime tout message afficher (si il y en a)
+            // supprime tout message affiché (si il y en a)
             app.closeMsg();
             // démarrer le plugin addressPicker
             app.addressPicker();
@@ -184,10 +199,8 @@ var app = {
             app.addSubmitForm();
             // ajouter un "validateur" de formulaire
             app.validForm();
-
             $('input:required').change(app.checkStatus);
-
-            //teste liste exist ajout du retour a la liste
+            //test liste existe ajout du retour a la liste
             db.listExistNewForm();
 
             }, 0);
@@ -216,7 +229,7 @@ var app = {
 
             $('input:required').change(app.checkStatus);
                 
-            //teste liste exist ajout du retour a la liste
+            //test liste existe ajout du retour a la liste
             db.listExistNewForm();
             }, 0);
         }
@@ -239,7 +252,6 @@ var app = {
 
     //on remplit le formulaire chargé avec ces données
     reditForm: function(name,tel,email,datetime,location,localisation,region,country,latitude,longitude,number,culled,timed_swim,distance_swim,other_chbx,range,method,remarks){
-
         document.getElementById('observer_name').value = name;
         document.getElementById('observer_tel').value = tel;
         document.getElementById('observer_email').value = email;
@@ -309,23 +321,8 @@ var app = {
         return vars;
     },
 
-    // Turn app to online mode
-    turnOnline: function(){
-        app.addressPicker();
-        online=document.getElementById("onlinelist");
-        app.switchOnline(1);
-        online.addClass = "online";
-        app.reloadForm();
-    },
-    // Turn app to offline mode
-    turnOffline: function(){
-        app.updateMsg("L'application est actuellement hors ligne, certaines fonctionnalités ne seront pas disponibles et les données pourront être envoyées à la prochaine connexion.");
-        app.switchOnline(0);
-    },
     // Remove splascreen
     open: function(){
-        //console.log("OPEN");
-
         var parentElement = document.getElementById("deviceready");
         var listeningElement = parentElement.querySelector('.listening');
         if(listeningElement != null){
@@ -338,70 +335,42 @@ var app = {
     },
     // Sending form wait splashscreen
     sending: function(){
-        //console.log("SENDING");
         window.scrollTo(0, 0);
-        //test online ou offline
-        app.isOnline(
-            // si on N'EST PAS connecté alors
-            function(){
-                var parentElement = document.getElementById("deviceready");
-                parentElement.style.visibility = "visible";
-                var listeningElement = parentElement.querySelector('.onsend');
-                if(listeningElement != null){
-                    listeningElement.className='event sending row vertical-align';          
-                }
-            },
-            // si on EST connecté
-            function(){
-                if(document.getElementById("devicereadyoff") != null){
-                    document.getElementById("devicereadyoff").id = 'deviceready';
-                }
-                document.getElementById("deviceready").style.visibility = 'hidden';
-                document.querySelector('.listening').className = 'event ready';
-                var parentElement = document.getElementById("deviceready");
-                parentElement.style.visibility = "visible";
-                var listeningElement = parentElement.querySelector('.onsend');
-                if(listeningElement != null){
-                    listeningElement.className='event sending row vertical-align';          
-                }
-            }
-        );
-    },
-    // ser closing screen
-    close: function(){
-        //console.log("CLOSE");
-
-        window.scrollTo(0, 0);
-        //test online ou offline
-        app.isOnline(
-            // si on N'EST PAS connecté alors
-            function(){
-                document.getElementById("lien-site-web").id = "lien-site-web-off";
-                
-                document.getElementById("msg-fin-enregistre").innerHTML = "Votre formulaire à bien été enregistré et vous pourrez l'envoyer lors de votre prochaine connexion à internet.";
-            },
-            // si on EST connecté
-            function(){
-                //on affiche le lien retour a la liste si elle exist
-                db.listExistCLOSE();
-            }
-        );
-
+        app.changeState("deviceready","on");
+        document.querySelector('.listening').className = 'event ready';
         var parentElement = document.getElementById("deviceready");
-        var listeningElement = parentElement.querySelector('.sending');
+        parentElement.style.visibility = "visible";                
+        var listeningElement = parentElement.querySelector('.onsend');
         if(listeningElement != null){
-            listeningElement.className='event sent row vertical-align';            
+            listeningElement.className='event sending row vertical-align';
         }
-        var listeningElement = parentElement.querySelector('.onclose');
-        listeningElement.className='event closing row vertical-align';
-        listeningElement.addEventListener("transitionend",  function(e) {
-           listeningElement.className='event closed row vertical-align';
-        },false);
+    },
+    // set closing screen
+    close: function(wasSent){
+        window.scrollTo(0, 0);
+        //test online ou offline
+        if(!wasSent){
+                window.location.href="./list.html";
+                //document.getElementById("lien-site-web").id = "lien-site-web-off";                
+                alert("Votre formulaire n'a pas pu être envoyé, vous pourrez l'envoyer lors de votre prochaine connexion à internet.");
+        } else {
+            //on affiche le lien retour a la liste si elle exist
+            db.listExistCLOSE();
+            var parentElement = document.getElementById("deviceready");
+            var listeningElement = parentElement.querySelector('.sending');
+            if(listeningElement != null){
+                listeningElement.className='event sent row vertical-align';            
+            }
+            var listeningElement = parentElement.querySelector('.onclose');
+            listeningElement.className='event closing row vertical-align';
+            listeningElement.addEventListener("transitionend",  function(e) {
+               listeningElement.className='event closed row vertical-align';
+            },false);
+        }
     },
 
     // Reload form
     reloadForm: function() {
-
         app.isOnline(
             // si on N'EST PAS connecté alors
             function(){
@@ -413,7 +382,6 @@ var app = {
                 app.getFormID("");
             }
         );
-        
     },
 
     updateMsg: function(msg) {
@@ -432,9 +400,7 @@ var app = {
     }, 
 
     addressPicker: function(){
-        $("#observation_localisation" ).addressPickerWithOL(
-        {
-        });    
+        $("#observation_localisation" ).addressPickerWithOL({});    
     },
 
     addressPickerRedit: function(lat, long){  
@@ -472,7 +438,8 @@ var app = {
                             email: true
                         },
                         observation_datetime: {
-                            required: true
+                            required: true,
+                            date: true
                         },
                         observation_location: {
                             required: true
@@ -499,7 +466,8 @@ var app = {
                             email: true
                         },
                         observation_datetime: {
-                            required: true
+                            required: true,
+                            date: true
                         },
                         observation_localisation: {
                             required: true
@@ -522,12 +490,8 @@ var app = {
         );
     },
 
-    //On utilise la fonction sql pour enregistrer les données
-    addSubmitForm: function(){
-        var save = "false";
-        $('#form-cot_admin').submit(function() {
-            console.log($('#observation_datetime').val());
-            db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
+    insertCOT: function(id, save) {
+         db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
                 $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
                 $('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
                 $('#observation_number').val(),$('#observation_culled').val(),
@@ -537,61 +501,49 @@ var app = {
                 $('#depth_range2').prop('checked')?$('#depth_range2').val():"",
                 $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
                 $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
-                $('#remarks').val(), app.getDateTime(), save);            
+                $('#remarks').val(), id, save); 
+    },
+
+    updateCOT: function(id,save){
+        db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
+                $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
+                $('#observation_pays').val(), $('#observation_latitude').val(), $('#observation_longitude').val(),
+                $('#observation_number').val(), $('#observation_culled').val(), 
+                $('#counting_method_timed_swim').val(), $('#counting_method_distance_swim').val(), $('#counting_method_other').val(),
+                $('#depth_range0').prop('checked')?$('#depth_range0').val():"",
+                $('#depth_range1').prop('checked')?$('#depth_range1').val():"",
+                $('#depth_range2').prop('checked')?$('#depth_range2').val():"",
+                $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
+                $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
+                $('#remarks').val(), id, save);  
+    },
+
+    //On utilise la fonction sql pour enregistrer les données
+    addSubmitForm: function(){
+        var save = "false";
+        $('#form-cot_admin').submit(function() {
+            app.insertCOT(app.getDateTime(), save);       
             return false;
-    });    
+        });    
     },
 
     //on utilise la fonction sql pour modifier les données
     addSubmitExistForm: function(id){
         var save = "false";
         $('#form-cot_admin').submit(function() {
-            //console.log("form submit");
-            db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
-                $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
-                $('#observation_pays').val(), $('#observation_latitude').val(), $('#observation_longitude').val(),
-                $('#observation_number').val(), $('#observation_culled').val(), 
-                $('#counting_method_timed_swim').val(), $('#counting_method_distance_swim').val(), $('#counting_method_other').val(),
-                $('#depth_range0').prop('checked')?$('#depth_range0').val():"",
-                $('#depth_range1').prop('checked')?$('#depth_range1').val():"",
-                $('#depth_range2').prop('checked')?$('#depth_range2').val():"",
-                $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
-                $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
-                $('#remarks').val(), id, save);          
+            app.updateCOT(id,save);
             return false;
-    }); 
+        }); 
     },
 
     saveForm: function(){
         var save = "true";
         event.preventDefault();
         if(app.getID()==""){
-            //console.log("allo insert id");
-            db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
-                $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
-                $('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
-                $('#observation_number').val(),$('#observation_culled').val(),
-                $('#counting_method_timed_swim').val(), $('#counting_method_distance_swim').val(),$('#counting_method_other').val(),
-                $('#depth_range0').prop('checked')?$('#depth_range0').val():"",
-                $('#depth_range1').prop('checked')?$('#depth_range1').val():"",
-                $('#depth_range2').prop('checked')?$('#depth_range2').val():"",
-                $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
-                $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
-                $('#remarks').val(), app.getDateTime(), save);  
+            app.insertCOT(app.getDateTime(), save);
         }
         else {
-            //console.log("allo save finaliz");
-            db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_datetime').val(),
-                $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
-                $('#observation_pays').val(), $('#observation_latitude').val(), $('#observation_longitude').val(),
-                $('#observation_number').val(), $('#observation_culled').val(), 
-                $('#counting_method_timed_swim').val(), $('#counting_method_distance_swim').val(), $('#counting_method_other').val(),
-                $('#depth_range0').prop('checked')?$('#depth_range0').val():"",
-                $('#depth_range1').prop('checked')?$('#depth_range1').val():"",
-                $('#depth_range2').prop('checked')?$('#depth_range2').val():"",
-                $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
-                $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
-                $('#remarks').val(), app.getID(), save);  
+            app.updateCOT(app.getID(),save);
         }
         setTimeout(function(){app.cancel();},1000);
     },
@@ -599,22 +551,16 @@ var app = {
     submitForm: function(){
         if($("#form-cot_admin").valid()){
             app.sending();
-            $("#form-cot_admin").submit();
-        
-            //test online ou offline
-            app.isOnline(
-                // si on N'EST PAS connecté alors
-                function(){
-                    window.setTimeout("app.close()", 800);
-                },
-                // si on EST connecté
-                function(){}
-            );
-
+            if(app.getID()==""){
+                app.insertCOT(app.getDateTime(), "false");
+            }
+            else {
+                app.updateCOT(app.getID(),"false");
+            }            
         } else {
             app.updateMsg("Votre formulaire contient "
-                  + $("#form-cot_admin" ).validate().numberOfInvalids()
-                  + "erreur(s), voir le détail ci-dessous.");
+                + $("#form-cot_admin" ).validate().numberOfInvalids()
+                + "erreur(s), voir le détail ci-dessous.");
         }
     },
 
@@ -659,13 +605,14 @@ var app = {
     },
 
     isOnline: function(no,yes){
-        var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHttp');
+
+        var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHttp');        
         xhr.onload = function(){
             if(yes instanceof Function){
                 yes();
             }
         }
-        xhr.onerror = function(){
+        xhr.onerror = function(){            
             if(no instanceof Function){
                 no();
             }
