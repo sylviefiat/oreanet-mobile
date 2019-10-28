@@ -27,19 +27,19 @@
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" />
         </edit-config>
-        <resource-file src="res/android/drawable/launcher_background.xml" target="app/src/main/res/drawable/ic_launcher_background.xml" />
-        <resource-file src="res/android/mipmap-anydpi-v26/launcher.xml" target="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" />
-        <resource-file src="res/android/mipmap-anydpi-v26/launcher_round.xml" target="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" />
-        <resource-file src="res/android/mipmap-hdpi/launcher.png" target="app/src/main/res/mipmap-hdpi/ic_launcher.png" />
-        <resource-file src="res/android/mipmap-hdpi/launcher_round.png" target="app/src/main/res/mipmap-hdpi/ic_launcher_round.png" />
-        <resource-file src="res/android/mipmap-mdpi/launcher.png" target="app/src/main/res/mipmap-mdpi/ic_launcher.png" />
-        <resource-file src="res/android/mipmap-mdpi/launcher_round.png" target="app/src/main/res/mipmap-mdpi/ic_launcher_round.png" />
-        <resource-file src="res/android/mipmap-xhdpi/launcher.png" target="app/src/main/res/mipmap-xhdpi/ic_launcher.png" />
-        <resource-file src="res/android/mipmap-xhdpi/launcher_round.png" target="app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" />
-        <resource-file src="res/android/mipmap-xxhdpi/launcher.png" target="app/src/main/res/mipmap-xxhdpi/ic_launcher.png" />
-        <resource-file src="res/android/mipmap-xxhdpi/launcher_round.png" target="app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" />
-        <resource-file src="res/android/mipmap-xxxhdpi/launcher.png" target="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
-        <resource-file src="res/android/mipmap-xxxhdpi/launcher_round.png" target="app/src/main/res/m ipmap-xxxhdpi/ic_launcher_round.png" />
+        <resource-file src="res/android/drawable/launcher_background.xml" target="res/drawable/ic_launcher_background.xml" />
+        <resource-file src="res/android/mipmap-anydpi-v26/launcher.xml" target="res/mipmap-anydpi-v26/ic_launcher.xml" />
+        <resource-file src="res/android/mipmap-anydpi-v26/launcher_round.xml" target="res/mipmap-anydpi-v26/ic_launcher_round.xml" />
+        <resource-file src="res/android/mipmap-hdpi/launcher.png" target="res/mipmap-hdpi/ic_launcher.png" />
+        <resource-file src="res/android/mipmap-hdpi/launcher_round.png" target="res/mipmap-hdpi/ic_launcher_round.png" />
+        <resource-file src="res/android/mipmap-mdpi/launcher.png" target="res/mipmap-mdpi/ic_launcher.png" />
+        <resource-file src="res/android/mipmap-mdpi/launcher_round.png" target="res/mipmap-mdpi/ic_launcher_round.png" />
+        <resource-file src="res/android/mipmap-xhdpi/launcher.png" target="res/mipmap-xhdpi/ic_launcher.png" />
+        <resource-file src="res/android/mipmap-xhdpi/launcher_round.png" target="res/mipmap-xhdpi/ic_launcher_round.png" />
+        <resource-file src="res/android/mipmap-xxhdpi/launcher.png" target="res/mipmap-xxhdpi/ic_launcher.png" />
+        <resource-file src="res/android/mipmap-xxhdpi/launcher_round.png" target="res/mipmap-xxhdpi/ic_launcher_round.png" />
+        <resource-file src="res/android/mipmap-xxxhdpi/launcher.png" target="res/mipmap-xxxhdpi/ic_launcher.png" />
+        <resource-file src="res/android/mipmap-xxxhdpi/launcher_round.png" target="res/m ipmap-xxxhdpi/ic_launcher_round.png" />
     </platform>    
     
     <!--
