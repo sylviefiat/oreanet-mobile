@@ -112,7 +112,7 @@ var app = {
             }
         );
         //dev mobile en ouvrant directement index.html
-        setTimeout(function(){app.onDeviceReady();},500);
+        //setTimeout(function(){app.onDeviceReady();},500);
     },
 
     //Initialisation list.html
