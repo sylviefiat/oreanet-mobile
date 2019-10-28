@@ -35,18 +35,18 @@
         <resource-file src="res/android/mipmap-xhdpi/launcher.png" target="res/mipmap-xhdpi/ic_launcher.png" />
         <resource-file src="res/android/mipmap-xxhdpi/launcher.png" target="res/mipmap-xxhdpi/ic_launcher.png" />
         <resource-file src="res/android/mipmap-xxxhdpi/launcher.png" target="res/mipmap-xxxhdpi/ic_launcher.png" />
-        <splash density="land-ldpi" src="res/screen/android/oreanet-land-ldpi-screen.png" />
-        <splash density="land-mdpi" src="res/screen/android/oreanet-land-mdpi-screen.png" />
-        <splash density="land-hdpi" src="res/screen/android/oreanet-land-hdpi-screen.png" />
-        <splash density="land-xhdpi" src="res/screen/android/oreanet-land-xhdpi-screen.png" />
-        <splash density="land-xxhdpi" src="res/screen/android/oreanet-land-xxhdpi-screen.png" />
-        <splash density="land-xxxhdpi" src="res/screen/android/oreanet-land-xxxhdpi-screen.png" />
-        <splash density="port-ldpi" src="res/screen/android/oreanet-port-ldpi-screen.png" />
-        <splash density="port-mdpi" src="res/screen/android/oreanet-port-mdpi-screen.png" />
-        <splash density="port-hdpi" src="res/screen/android/oreanet-port-hdpi-screen.png" />
-        <splash density="port-xhdpi" src="res/screen/android/oreanet-port-xhdpi-screen.png" />
-        <splash density="port-xxhdpi" src="res/screen/android/oreanet-port-xxhdpi-screen.png" />
-        <splash density="port-xxxhdpi" src="res/screen/android/oreanet-port-xxxhdpi-screen.png" />
+        <splash density="land-ldpi" src="res/android/screen/oreanet-land-ldpi-screen.png" />
+        <splash density="land-mdpi" src="res/android/screen/oreanet-land-mdpi-screen.png" />
+        <splash density="land-hdpi" src="res/android/screen/oreanet-land-hdpi-screen.png" />
+        <splash density="land-xhdpi" src="res/android/screen/oreanet-land-xhdpi-screen.png" />
+        <splash density="land-xxhdpi" src="res/android/screen/oreanet-land-xxhdpi-screen.png" />
+        <splash density="land-xxxhdpi" src="res/android/screen/oreanet-land-xxxhdpi-screen.png" />
+        <splash density="port-ldpi" src="res/android/screen/oreanet-port-ldpi-screen.png" />
+        <splash density="port-mdpi" src="res/android/screen/oreanet-port-mdpi-screen.png" />
+        <splash density="port-hdpi" src="res/android/screen/oreanet-port-hdpi-screen.png" />
+        <splash density="port-xhdpi" src="res/android/screen/oreanet-port-xhdpi-screen.png" />
+        <splash density="port-xxhdpi" src="res/android/screen/oreanet-port-xxhdpi-screen.png" />
+        <splash density="port-xxxhdpi" src="res/android/screen/oreanet-port-xxxhdpi-screen.png" />
     </platform>    
     
     <!--
