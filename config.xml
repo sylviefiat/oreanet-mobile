@@ -19,7 +19,7 @@
    
     <icon src="oreanet_nc_app.png" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="10000" />
+    <preference name="SplashScreenDelay" value="5000" />
 
     <author href="https://umr-entropie.ird.nc" email="sylvie.fiat@ird.fr">
         Sylvie Fiat | IRD
