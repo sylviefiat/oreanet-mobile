@@ -39,7 +39,7 @@
         <resource-file src="res/android/mipmap-xxhdpi/launcher.png" target="res/mipmap-xxhdpi/ic_launcher.png" />
         <resource-file src="res/android/mipmap-xxhdpi/launcher_round.png" target="res/mipmap-xxhdpi/ic_launcher_round.png" />
         <resource-file src="res/android/mipmap-xxxhdpi/launcher.png" target="res/mipmap-xxxhdpi/ic_launcher.png" />
-        <resource-file src="res/android/mipmap-xxxhdpi/launcher_round.png" target="res/m ipmap-xxxhdpi/ic_launcher_round.png" />
+        <resource-file src="res/android/mipmap-xxxhdpi/launcher_round.png" target="res/mipmap-xxxhdpi/ic_launcher_round.png" />
     </platform>    
     
     <!--
