@@ -164,7 +164,7 @@ var db = {
 	    //var cotsDb = db.openDB();
 	    //cotsDb.transaction(function(transaction) {
 			db.executeSQL(sql.REMOVE, [id], 
-				function(transaction, results) {}//, 
+				function(transaction, results) {}, 
 				function(transaction, error) {}
 			);
 	    //});
