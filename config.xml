@@ -3,8 +3,8 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id          = "nc.oreanet.mobile"
-        versionCode = "1.0.5" 
-        version     = "1.0.5" >
+        versionCode = "1.0.8" 
+        version     = "1.0.8" >
 
     <!-- versionCode is optional and Android only -->
 
@@ -32,7 +32,7 @@
         <resource-file src="res/android/mipmap-anydpi-v26/ic_launcher_round.xml" target="res/mipmap-anydpi-v26/ic_launcher_round.xml" />
         <resource-file src="res/android/mipmap-hdpi/ic_launcher.png" target="res/mipmap-hdpi/ic_launcher.png" />
         <resource-file src="res/android/mipmap-hdpi/ic_launcher_round.png" target="res/mipmap-hdpi/ic_launcher_round.png" />
-        <resource-file src="res/android/mipmap-mdpi/ic_launcher.png" target="mipmap-mdpi/ic_launcher.png" />
+        <resource-file src="res/android/mipmap-mdpi/ic_launcher.png" target="res/mipmap-mdpi/ic_launcher.png" />
         <resource-file src="res/android/mipmap-mdpi/ic_launcher_round.png" target="res/mipmap-mdpi/ic_launcher_round.png" />
         <resource-file src="res/android/mipmap-xhdpi/ic_launcher.png" target="res/mipmap-xhdpi/ic_launcher.png" />
         <resource-file src="res/android/mipmap-xhdpi/ic_launcher_round.png" target="res/mipmap-xhdpi/ic_launcher_round.png" />
