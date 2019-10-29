@@ -1,4 +1,4 @@
-# oreanet-mobile
+# oreanet-mobile => migré gitlab in2p3 29/10/2019
 Signalement participatif d'acanthasters en Nouvelle-Calédonie
 
 OREANET-NC est une application de signalement participatif d'Acanthasters planci, une étoile de mer qui se nourrit entre autres de coraux, pour la Nouvelle-Calédonie. 
